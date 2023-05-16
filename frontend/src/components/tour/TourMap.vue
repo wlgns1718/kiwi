@@ -1,5 +1,8 @@
 <template>
-  <div id="map"></div>
+  <div class="map-wrapper">
+    <div id="map"></div>
+    <div class="result"></div>
+  </div>
 </template>
 
 <script>
@@ -59,8 +62,18 @@ export default {
 </script>
 
 <style scoped>
+.map-wrapper {
+  width: 100%;
+  height: 500px;
+}
 #map {
   width: 500px;
   height: 500px;
+}
+
+.result {
+  height: 500px;
+  border: 100px black;
+  border-radius: 16px;
 }
 </style>
