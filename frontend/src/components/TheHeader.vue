@@ -218,7 +218,7 @@ export default {
 
 <style scope>
 img {
-  width: 100px;
+  width: 80px;
 }
 
 ul,
@@ -241,7 +241,7 @@ header {
   /* position: fixed; */
   width: 100%;
   border-bottom: 1px solid var(--colorBg1);
-  height: 70px;
+  height: 50px;
   text-align: center;
   z-index: 2000;
 }
@@ -253,18 +253,18 @@ header {
 
 .header-left {
   float: left;
-  padding-top: 8px;
+  /* padding-top: 8px; */
 }
 
 .header-center {
   display: inline-block;
-  padding-top: 10px;
+  /* padding-top: 10px; */
 }
 
 .header-right {
   float: right;
   font-size: 20px;
-  padding-top: 18px;
+  padding-top: 10px;
   padding-right: 40px;
 }
 

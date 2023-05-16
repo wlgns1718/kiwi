@@ -26,11 +26,15 @@ export default {
   font-family: pretendard, Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
 }
 
 a {
   text-decoration: none;
+}
+
+.app_title {
+  font-size: 36px;
+  /* padding-left: 20px; */
 }
 
 :root {
