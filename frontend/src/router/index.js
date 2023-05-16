@@ -1,15 +1,23 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-// import HomeView from "../views/HomeView.vue";
+
+//views
+import AppMain from "@/views/AppMain.vue";
+import AppTour from "@/views/AppTour.vue";
 
 Vue.use(VueRouter);
 
 const routes = [
-  // {
-  //   path: "/",
-  //   name: "main",
-  //   component: AppMain,
-  // },
+  {
+    path: "/",
+    name: "main",
+    component: AppMain,
+  },
+  {
+    path: "/tour",
+    name: "tour",
+    component: AppTour,
+  },
   // {
   //   path: '/about',
   //   name: 'about',
