@@ -4,6 +4,7 @@ import VueRouter from "vue-router";
 //views
 import AppMain from "@/views/AppMain.vue";
 import AppTour from "@/views/AppTour.vue";
+import AppUser from "@/views/AppUser";
 
 Vue.use(VueRouter);
 
@@ -18,6 +19,11 @@ const routes = [
     name: "tour",
     component: AppTour,
   },
+  {
+    path: "/user/login",
+    name: "user",
+    component: AppUser,
+  }
   // {
   //   path: '/about',
   //   name: 'about',
