@@ -5,7 +5,6 @@ import VueRouter from "vue-router";
 import AppMain from "@/views/AppMain.vue";
 import AppTour from "@/views/AppTour.vue";
 import AppUser from "@/views/AppUser";
-
 Vue.use(VueRouter);
 
 const routes = [
@@ -23,6 +22,26 @@ const routes = [
     path: "/user/login",
     name: "user",
     component: AppUser,
+  },
+  {
+    path: "/board",
+    name: "board",
+    component: () => import("@/views/AppBoard"),
+    redirect: "/board/list",
+    children: [
+      {
+        path: "list",
+        name: "bardlist",
+        component: () => import("@/components/board/BoardList"),
+      },
+      {
+        path: "detail",
+        name: "boarddetail",
+        component: () => import("@/components/board/BoardDetail"),
+
+      }
+    ]
+
   }
   // {
   //   path: '/about',

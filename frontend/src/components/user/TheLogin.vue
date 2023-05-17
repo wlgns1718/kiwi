@@ -7,24 +7,58 @@
       <div class="signin">
         <h2>로그인</h2>
         <div>
-          <input type="text" class="input" placeholder="아이디를 입력하세요." />
+          <input
+            type="text"
+            class="Logininput"
+            placeholder="아이디를 입력하세요."
+            :id="Id"
+          />
           <input
             style="margin: 10px 0 0 0"
             type="password"
-            class="input"
+            class="Logininput"
             placeholder="비밀번호를 입력하세요."
           />
+          <button class="LoginBtn" @click="login">로그인</button>
+          <div class="option">
+            <input type="checkbox" id="LoginCheckbox" />
+            <label for="LoginCheckbox">로그인 상태 유지</label>
+            <router-link to="#" class="regist">회원가입</router-link>
+          </div>
         </div>
+        <div></div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-export default {};
+// import { mapState, mapActions } from "vuex";
+
+export default {
+  data() {
+    return {
+      user: {
+        userid: null,
+        userpwd: null,
+      },
+    };
+  },
+  created() {},
+  methods: {
+    login() {},
+  },
+};
 </script>
 
 <style scoped>
+.regist {
+  margin: 0 0 0 77px;
+}
+input[id="LoginCheckbox"] {
+  /* display: none; */
+}
+
 .Sign_Wrap {
   margin: auto;
   margin-top: 80px;
@@ -38,7 +72,7 @@ export default {};
   text-align: left;
   padding: 20px;
 }
-.input {
+.Logininput {
   border-radius: 6px 6px 6px 6px;
   font-size: 16px;
   font-weight: normal;
@@ -50,12 +84,24 @@ export default {};
   padding: 10px 0 10px 5px;
   margin: 30px 0 0 0;
 }
-.input:focus {
+.Logininput:focus {
   border: 2px solid;
-  border-color: rgb(8, 234, 50);
+  border-color: rgb(105, 228, 128);
   outline: none;
 }
 h2 {
   margin: 0;
+}
+.LoginBtn {
+  border: 0;
+  margin: 30px 0 20px 0;
+  width: 100%;
+  border-radius: 6px 6px 6px 6px;
+  font-weight: bold;
+  padding: 10px 0 10px 0;
+  font-size: 18px;
+  color: rgb(255, 255, 255);
+  background-color: rgb(105, 228, 128);
+  cursor: pointer;
 }
 </style>

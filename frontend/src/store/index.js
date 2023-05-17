@@ -1,19 +1,30 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import http from "@/api/http";
-
+import createPersistedState from "vuex-persistedstate";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
+  plugins: [
+    createPersistedState({
+      storage: sessionStorage,
+    })
+  ],
   state: {
     sidos: [{ value: "", text: "선택하세요" }],
     guguns: [{ value: "", text: "선택하세요" }],
     tourtype: "",
     tours: [],
     tour: null,
+    //user에 대한 state 정보
+    userinfo: {
+      userid: "",
+      username: "",
+    }
   },
   getters: {},
   mutations: {
+    //지도에 대한 mutations--------------------------------------------------------------
     SET_SIDO_LIST(state, sidos) {
       sidos.forEach((sido) => {
         state.sidos.push({ value: sido.code, text: sido.name });
@@ -43,6 +54,15 @@ export default new Vuex.Store({
     SET_DETAIL_TOUR(state, tour) {
       state.tour = tour;
     },
+    // 유저에 대한 mutations--------------------------------------------
+    SET_USER_INFO(state, userInfo) {
+      state.userinfo.userid = userInfo.userid;
+      state.userinfo.username = userInfo.username;
+    },
+    //보드에 대한 mutations--------------------------------------------------
+
+
+
   },
   actions: {
     getSido({ commit }) {
@@ -73,6 +93,15 @@ export default new Vuex.Store({
           console.log(data);
           commit("SET_TOUR_LIST", data);
         })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    getUser({ commit }, userInfo) {
+      http.post(`/vue/user/login`, JSON.stringify(userInfo)).then(({ data }) => {
+        console.log(data);
+        commit("SET_USER_INFO", data);
+      })
         .catch((error) => {
           console.log(error);
         });

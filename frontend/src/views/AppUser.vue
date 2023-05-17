@@ -19,7 +19,7 @@ export default {
 <style scoped>
 .header {
   margin-top: 100px;
-  color: rgb(8, 234, 50);
+  color: rgb(105, 228, 128);
 }
 div {
   text-align: center;
