@@ -78,4 +78,11 @@ public class BoardDto {
 		this.nickname = nickname;
 	}
 
+	@Override
+	public String toString() {
+		return "BoardDto [boardno=" + boardno + ", title=" + title + ", content=" + content + ", createdate="
+				+ createdate + ", hit=" + hit + ", scope=" + scope + ", userno=" + userno + ", nickname=" + nickname
+				+ "]";
+	}
+
 }

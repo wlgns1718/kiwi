@@ -11,4 +11,10 @@ public interface BoardService {
 	void updateHit(int boardno) throws Exception;
 
 	BoardDto getArticle(int boardno) throws Exception;
+
+	boolean modifyArticle(BoardDto boardDto) throws Exception;
+
+	boolean deleteArticle(int boardno) throws Exception;
+
+	boolean writeArticle(BoardDto boardDto) throws Exception;
 }
