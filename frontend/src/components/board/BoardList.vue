@@ -6,11 +6,16 @@
         <tr v-for="board in boards" :key="board.boardno">
           <td>{{ board.boardno }}</td>
           <td>
-            <router-link :to="`/board/detail/${board.boardno}`">{{ board.title }}</router-link>
+            <router-link :to="`/board/detail/${board.boardno}`">{{
+              board.title
+            }}</router-link>
           </td>
           <td>{{ board.hit }}</td>
           <td>{{ board.createdate }}</td>
         </tr>
+        <div style="margin-top: 40px">
+          <router-link to="/board/write">글작성</router-link>
+        </div>
       </table>
     </div>
   </div>
