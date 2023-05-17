@@ -18,7 +18,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(["tours", "markers", "selectedInfoWindow"]),
+    ...mapState(["tours"]),
   },
   created() {},
   mounted() {
