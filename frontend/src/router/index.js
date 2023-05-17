@@ -35,11 +35,12 @@ const routes = [
         component: () => import("@/components/board/BoardList"),
       },
       {
-        path: "detail",
+        path: "detail/:no",
         name: "boarddetail",
         component: () => import("@/components/board/BoardDetail"),
 
-      }
+      },
+
     ]
 
   }
