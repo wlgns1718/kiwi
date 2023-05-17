@@ -12,6 +12,7 @@ public class BoardDto {
 	private int hit;
 	private int scope;
 	private int userno;
+	private String nickname;
 
 	public int getBoardno() {
 		return boardno;
@@ -67,6 +68,14 @@ public class BoardDto {
 
 	public void setUserno(int userno) {
 		this.userno = userno;
+	}
+
+	public String getNickname() {
+		return nickname;
+	}
+
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
 	}
 
 }

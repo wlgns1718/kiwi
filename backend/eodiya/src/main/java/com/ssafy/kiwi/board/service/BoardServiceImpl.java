@@ -21,4 +21,14 @@ public class BoardServiceImpl implements BoardService {
 	public List<BoardDto> getList() throws Exception {
 		return boardMapper.getList();
 	}
+
+	@Override
+	public void updateHit(int boardno) throws Exception {
+		boardMapper.updateHit();
+	}
+
+	@Override
+	public BoardDto getArticle(int boardno) throws Exception {
+		return boardMapper.getArticle(boardno);
+	}
 }

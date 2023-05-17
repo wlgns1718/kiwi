@@ -12,10 +12,25 @@
 		<result column="hit" property="hit" />
 		<result column="scope" property="scope" />
 		<result column="user_no" property="userno" />
+		<result column="create_date" property="createdate" />
+		<result column="nickname" property="nickname" />
 	</resultMap>
 
-	<select id="getList" parameterType="map" resultMap="board">
-		select * from board
+	<select id="getList" resultMap="board">
+		select b.board_no, b.title, b.create_date, b.hit, b.scope, u.user_no, u.nickname
+		from board b join user u on b.user_no = u.user_no
 	</select>
+	
+	<select id="getArticle" parameterType="int" resultMap="board">
+		select b.board_no, b.title, b.content, b.create_date, b.hit, b.scope, u.user_no, u.nickname
+		from board b join user u on b.user_no = u.user_no
+		where board_no = #{boardno}
+	</select>
+	
+	<update id="updateHit" parameterType="int">
+		update board
+		set hit = hit + 1
+		where board_no = #{boardno}
+	</update>
 
 </mapper>

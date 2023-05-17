@@ -10,4 +10,8 @@ import com.ssafy.kiwi.board.model.BoardDto;
 public interface BoardMapper {
 
 	List<BoardDto> getList() throws Exception;
+
+	void updateHit() throws Exception;
+
+	BoardDto getArticle(int boardno) throws Exception;
 }
