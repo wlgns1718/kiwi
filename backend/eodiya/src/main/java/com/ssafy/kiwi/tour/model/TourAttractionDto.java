@@ -12,6 +12,7 @@ public class TourAttractionDto {
 	String firstImage2;
 	String latitude;
 	String longitude;
+	String overview;
 
 	public String getTitle() {
 		return title;
@@ -68,12 +69,20 @@ public class TourAttractionDto {
 	public void setLongitude(String longitude) {
 		this.longitude = longitude;
 	}
+	
+	public String getOverview() {
+		return overview;
+	}
+
+	public void setOverview(String overview) {
+		this.overview = overview;
+	}
 
 	@Override
 	public String toString() {
 		return "TourAttractionDto [title=" + title + ", addr1=" + addr1 + ", addr2=" + addr2 + ", firstImage="
 				+ firstImage + ", firstImage2=" + firstImage2 + ", latitude=" + latitude + ", longitude=" + longitude
-				+ "]";
+				+ ", overview=" + overview + "]";
 	}
-
+	
 }

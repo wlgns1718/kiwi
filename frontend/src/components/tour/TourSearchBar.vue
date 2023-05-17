@@ -3,22 +3,14 @@
     <div class="selectWrapper">
       <div class="select-box">
         <select v-model="sidoCode" @change="gugunList">
-          <option
-            v-for="(item, index) in sidos"
-            :key="index"
-            :value="item.value"
-          >
+          <option v-for="(item, index) in sidos" :key="index" :value="item.value">
             {{ item.text }}
           </option>
         </select>
       </div>
       <div class="select-box">
         <select v-model="gugunCode">
-          <option
-            v-for="(item, index) in guguns"
-            :key="index"
-            :value="item.value"
-          >
+          <option v-for="(item, index) in guguns" :key="index" :value="item.value">
             {{ item.text }}
           </option>
         </select>
@@ -37,7 +29,7 @@
         </select>
       </div>
     </div>
-    <input type="button" value="검색" @click="searchTour" />
+    <input class="searchBtn" type="button" value="검색" @click="searchTour" />
   </div>
 </template>
 
@@ -58,10 +50,11 @@ export default {
   },
   created() {
     this.CLEAR_SIDO_LIST();
+    this.CLEAR_TOUR_LIST();
     this.getSido();
   },
   methods: {
-    ...mapActions(["getSido", "getGugun", "getTourList"]),
+    ...mapActions(["getSido", "getGugun", "getTourList", "displayMarker"]),
     ...mapMutations(["CLEAR_SIDO_LIST", "CLEAR_GUGUN_LIST", "CLEAR_TOUR_LIST"]),
     gugunList() {
       this.CLEAR_GUGUN_LIST();
@@ -69,8 +62,10 @@ export default {
       if (this.sidoCode) this.getGugun(this.sidoCode);
     },
     searchTour() {
-      if (this.gugunCode)
+      if (this.gugunCode) {
         this.getTourList([this.sidoCode, this.gugunCode, this.tourType]);
+        this.displayMarker();
+      }
     },
   },
 };
@@ -80,8 +75,8 @@ export default {
 .searchBarWrapper {
   display: flex;
   width: 1200px;
-  margin-top: -10px;
-  margin-bottom: 10px;
+  margin-top: 20px;
+  margin-bottom: 30px;
 }
 
 .selectWrapper {
@@ -91,7 +86,8 @@ export default {
 .select-box {
   position: relative;
   display: inline-block;
-  width: 153px;
+  width: 365px;
+  margin-right: 10px;
   height: 40px;
   background-color: white;
   border: 1px solid #eeeeee;
@@ -122,5 +118,12 @@ export default {
   transform: translateY(-50%);
   font-size: 14px;
   color: #666;
+}
+
+.searchBtn {
+  background: #eee;
+  border: 1px solid #666;
+  border-radius: 14px;
+  padding: 0 20px;
 }
 </style>

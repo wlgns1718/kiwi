@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.ssafy.eodiya.tour.mapper.TourMapper">
+<mapper namespace="com.ssafy.kiwi.tour.mapper.TourMapper">
 
 	<resultMap type="tourSidoDto" id="tourSido">
 		<result column="sido_code" property="code" />
@@ -21,7 +21,7 @@
 		<result column="first_image2" property="firstImage2" />
 		<result column="latitude" property="latitude" />
 		<result column="longitude" property="longitude" />
-		
+		<result column="overview" property="overview" />
 	</resultMap>
 	
 	<select id="getSidoList" parameterType="map" resultMap="tourSido">
@@ -33,7 +33,7 @@
 	</select>
 	
 	<select id="getTourList" parameterType="map" resultMap="tourAttraction">
-		select * from attraction_info where sido_code = #{areaCode}
+		select * from attraction_info i left join attraction_description d on i.content_id = d.content_id where sido_code = #{areaCode}
 		
 		<if test="gugunCode != '0'.toString()">
 			and gugun_code = #{gugunCode}
