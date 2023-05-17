@@ -49,10 +49,10 @@ export default {
 <style scoped>
 .result-wrap {
   border-radius: 12px;
-  padding: 10px 20px;
+  padding: 4px 20px;
   /* border: 2px solid var(--colorFg16); */
-  background: #f9f9f9;
-  height: 483px;
+  background: #ebecee;
+  height: 492px;
   width: calc(1200px - 560px);
   overflow-y: auto;
 }
@@ -61,7 +61,7 @@ export default {
   border-radius: 12px;
   background: white;
   padding: 20px;
-  margin: 10px 0;
+  margin: 16px 0;
   display: flex;
 }
 
@@ -101,12 +101,12 @@ p {
 }
 
 .result-wrap::-webkit-scrollbar-thumb {
-  background-color: #dddddd;
+  background-color: #cccccc;
   border-radius: 12px;
 }
 
 .result-wrap::-webkit-scrollbar-track {
-  background-color: #f9f9f9;
+  background-color: #ebecee;
   border-radius: 12px;
 }
 </style>

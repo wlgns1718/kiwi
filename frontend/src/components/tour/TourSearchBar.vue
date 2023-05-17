@@ -50,10 +50,11 @@ export default {
   },
   created() {
     this.CLEAR_SIDO_LIST();
+    this.CLEAR_TOUR_LIST();
     this.getSido();
   },
   methods: {
-    ...mapActions(["getSido", "getGugun", "getTourList"]),
+    ...mapActions(["getSido", "getGugun", "getTourList", "displayMarker"]),
     ...mapMutations(["CLEAR_SIDO_LIST", "CLEAR_GUGUN_LIST", "CLEAR_TOUR_LIST"]),
     gugunList() {
       this.CLEAR_GUGUN_LIST();
@@ -61,7 +62,10 @@ export default {
       if (this.sidoCode) this.getGugun(this.sidoCode);
     },
     searchTour() {
-      if (this.gugunCode) this.getTourList([this.sidoCode, this.gugunCode, this.tourType]);
+      if (this.gugunCode) {
+        this.getTourList([this.sidoCode, this.gugunCode, this.tourType]);
+        this.displayMarker();
+      }
     },
   },
 };
