@@ -40,6 +40,11 @@ const routes = [
         component: () => import("@/components/board/BoardDetail"),
       },
       {
+        path: "modify/:no",
+        name: "boardmodify",
+        component: () => import("@/components/board/BoardModify"),
+      },
+      {
         path: "write",
         name: "boardwrite",
         component: () => import("@/components/board/BoardWrite"),
