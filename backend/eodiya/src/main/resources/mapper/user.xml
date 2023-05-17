@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.ssafy.eodiya.user.mapper.UserMapper">
+<mapper namespace="com.ssafy.kiwi.user.mapper.UserMapper">
 
 
 	<!-- int addUser(String name, String id, String pw, String email) throws 

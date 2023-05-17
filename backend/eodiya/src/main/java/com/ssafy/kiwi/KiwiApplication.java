@@ -1,13 +1,13 @@
-package com.ssafy.eodiya;
+package com.ssafy.kiwi;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class EodiyaApplication {
+public class KiwiApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(EodiyaApplication.class, args);
+		SpringApplication.run(KiwiApplication.class, args);
 	}
 
 }

@@ -1,7 +1,6 @@
 <template>
   <div class="map-wrapper">
     <div id="map"></div>
-    <div class="result"></div>
   </div>
 </template>
 
@@ -69,11 +68,7 @@ export default {
 #map {
   width: 500px;
   height: 500px;
+  display: inline-block;
 }
 
-.result {
-  height: 500px;
-  border: 100px black;
-  border-radius: 16px;
-}
 </style>

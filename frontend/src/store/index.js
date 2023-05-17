@@ -70,6 +70,9 @@ export default new Vuex.Store({
       http
         .get(`/tour/tourList/${params[0]}/${params[1]}/${params[2]}`)
         .then(({ data }) => {
+          data.forEach((d) => {
+            d["expanded"] = false;
+          });
           console.log(data);
           commit("SET_TOUR_LIST", data);
         })
