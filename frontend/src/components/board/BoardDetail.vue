@@ -10,7 +10,7 @@
       {{ board.userno }}
     </div>
     <div>수정</div>
-    <div @click="deleteBoard">삭제</div>
+    <a @click="deleteBoard">삭제</a>
   </div>
 </template>
 
@@ -39,8 +39,25 @@ export default {
       this.board = data;
     });
   },
-  methods: {},
+  methods: {
+    deleteBoard() {
+      // console.log(this.board.boardno);
+      http
+        .delete(`/board/${this.board.boardno}`)
+        .then(({ data }) => {
+          alert(data);
+          this.$router.replace("/board/list");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+  },
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+a {
+  cursor: pointer;
+}
+</style>
