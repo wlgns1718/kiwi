@@ -1,16 +1,9 @@
 <template>
   <div>
-    <div>
-      {{ board.boardno }}
-      {{ board.content }}
-      {{ board.createdate }}
-      {{ board.hit }}
-      {{ board.scope }}
-      {{ board.title }}
-      {{ board.userno }}
-    </div>
-    <router-link :to="`/board/modify/${board.boardno}`">수정</router-link>
-    <a @click="deleteBoard">삭제</a>
+    <div>게시글 번호 : {{ board.boardno }}</div>
+    <input type="text" v-model="board.title" />
+    <input type="text" v-model="board.content" />
+    <a @click="modify">수정</a>
   </div>
 </template>
 
@@ -18,8 +11,6 @@
 import http from "@/api/http";
 
 export default {
-  name: "BoardDetail",
-  components: {},
   data() {
     return {
       board: {
@@ -33,6 +24,7 @@ export default {
       },
     };
   },
+
   created() {
     http.get(`/board/${this.$route.params.no}`).then(({ data }) => {
       console.log(data);
@@ -40,10 +32,9 @@ export default {
     });
   },
   methods: {
-    deleteBoard() {
-      // console.log(this.board.boardno);
+    modify() {
       http
-        .delete(`/board/${this.board.boardno}`)
+        .put(`/board`, JSON.stringify(this.board))
         .then(({ data }) => {
           alert(data);
           this.$router.replace("/board/list");
