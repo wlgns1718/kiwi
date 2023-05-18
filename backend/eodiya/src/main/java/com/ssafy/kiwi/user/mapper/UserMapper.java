@@ -11,11 +11,15 @@ public interface UserMapper {
 
 	UserDto login(String id, String pw) throws Exception;
 
+	String findSalt(String id) throws Exception;
+
+	UserDto userInfo(String id) throws Exception;
+
 	void saveRefreshToken(Map<String, String> map) throws Exception;
 
 	Object getRefreshToken(String userid) throws Exception;
 
 	void deleteRefreshToken(Map<String, String> map) throws Exception;
 
-	String findSalt(String id) throws Exception;
+
 }

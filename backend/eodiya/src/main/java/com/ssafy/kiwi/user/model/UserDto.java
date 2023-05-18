@@ -101,4 +101,11 @@ public class UserDto {
 		this.isRestrict = isRestrict;
 	}
 
+	@Override
+	public String toString() {
+		return "UserDto [userno=" + userno + ", id=" + id + ", password=" + password + ", salt=" + salt + ", email="
+				+ email + ", nickname=" + nickname + ", age=" + age + ", createdate=" + createdate + ", logintime="
+				+ logintime + ", gender=" + gender + ", isRestrict=" + isRestrict + "]";
+	}
+
 }
