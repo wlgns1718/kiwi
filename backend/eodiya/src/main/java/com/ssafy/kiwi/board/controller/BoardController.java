@@ -6,7 +6,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,18 +14,18 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.kiwi.board.model.BoardDto;
 import com.ssafy.kiwi.board.model.BoardViewDto;
 import com.ssafy.kiwi.board.service.BoardService;
-import com.ssafy.kiwi.tour.controller.TourController;
 
-@Controller
+@RestController
 @RequestMapping("/board")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class BoardController {
 
-	private final Logger logger = LoggerFactory.getLogger(TourController.class);
+	private final Logger logger = LoggerFactory.getLogger(BoardController.class);
 	private static final String SUCCESS = "success";
 	private static final String FAIL = "fail";
 

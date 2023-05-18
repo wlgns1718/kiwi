@@ -29,21 +29,21 @@ public class AdminController {
 		this.userService = userService;
 	}
 
-	@GetMapping("/user")
-	public ResponseEntity<?> userList() {
-		logger.debug("userList call");
-		try {
-			List<UserDto> list = userService.listMember(null);
-			if (list != null && !list.isEmpty()) {
-				return new ResponseEntity<List<UserDto>>(list, HttpStatus.OK);
-			} else {
-				return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
-			}
-		} catch (Exception e) {
-			return exceptionHandling(e);
-		}
-
-	}
+//	@GetMapping("/user")
+//	public ResponseEntity<?> userList() {
+//		logger.debug("userList call");
+//		try {
+//			List<UserDto> list = userService.listMember(null);
+//			if (list != null && !list.isEmpty()) {
+//				return new ResponseEntity<List<UserDto>>(list, HttpStatus.OK);
+//			} else {
+//				return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+//			}
+//		} catch (Exception e) {
+//			return exceptionHandling(e);
+//		}
+//
+//	}
 
 //	@GetMapping(value = "/user/{userid}")
 //	public ResponseEntity<?> userInfo(@PathVariable("userid") String userId) {
