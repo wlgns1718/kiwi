@@ -1,6 +1,6 @@
 package com.ssafy.kiwi.user.service;
 
-import java.util.List;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,57 +25,30 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public UserDto login(String id, String pw) throws Exception {
-		String salt = (String) userMapper.findSalt(id);
+		String salt = userMapper.findSalt(id);
 		String npw = util.Hashing(pw, salt);
 		return userMapper.login(id, npw);
 	}
 
 	@Override
-	public int addUser(String name, String id, String pw, String email) throws Exception {
-		String salt = util.getSalt();
-		String npw = util.Hashing(pw, salt);
-		return userMapper.addUser(name, id, npw, email, salt);
-
+	public void saveRefreshToken(String userid, String refreshToken) throws Exception {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("userid", userid);
+		map.put("token", refreshToken);
+		userMapper.saveRefreshToken(map);
 	}
 
 	@Override
-	public boolean checkUser(String id) throws Exception {
-		return userMapper.checkUser(id);
+	public Object getRefreshToken(String userid) throws Exception {
+		return userMapper.getRefreshToken(userid);
 	}
 
 	@Override
-	public int edit(String name, String id, String pw, String email) throws Exception {
-		String salt = (String) userMapper.findSalt(id);
-		String npw = util.Hashing(pw, salt);
-		
-		return userMapper.edit(name, id, npw, email);
-		
-	}
-
-	@Override
-	public int delete(String id) throws Exception {
-		
-		return userMapper.delete(id);
-	}
-
-	@Override
-	public List<UserDto> listMember(Map<String, Object> map) throws Exception {
-		return userMapper.listMember(map);
-	}
-
-	@Override
-	public UserDto getMember(String userId) throws Exception {
-		return userMapper.getMember(userId);
-	}
-
-	@Override
-	public void updateMember(UserDto memberDto) throws Exception {
-		userMapper.updateMember(memberDto);
-	}
-
-	@Override
-	public void deleteMember(String userid) throws Exception {
-		userMapper.deleteMember(userid);
+	public void deleRefreshToken(String userid) throws Exception {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("userid", userid);
+		map.put("token", null);
+		userMapper.deleteRefreshToken(map);
 	}
 
 }
