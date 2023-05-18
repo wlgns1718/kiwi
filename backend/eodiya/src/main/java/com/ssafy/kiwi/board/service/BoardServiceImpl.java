@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.ssafy.kiwi.board.mapper.BoardMapper;
 import com.ssafy.kiwi.board.model.BoardDto;
+import com.ssafy.kiwi.board.model.BoardViewDto;
 
 @Service
 public class BoardServiceImpl implements BoardService {
@@ -18,8 +19,18 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public List<BoardDto> getList() throws Exception {
-		return boardMapper.getList();
+	public List<BoardDto> getList(BoardViewDto boardviewDto) throws Exception {
+		if(boardviewDto.getUserno() == 0) {
+			return boardMapper.getListWhenNoUserInfo();
+		}
+		else if(boardviewDto.getIsFollowSelect()==0) {
+			return boardMapper.getListWhenUserInfoExistAndNotFollowSelect(boardviewDto.getUserno());
+		}
+		else {
+			return boardMapper.getListWhenUserInfoExistAndFollowSelect(boardviewDto.getUserno());
+		}
+		
+		
 	}
 
 	@Override

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.ssafy.kiwi.board.model.BoardDto;
+import com.ssafy.kiwi.board.model.BoardViewDto;
 import com.ssafy.kiwi.board.service.BoardService;
 import com.ssafy.kiwi.tour.controller.TourController;
 
@@ -36,13 +37,13 @@ public class BoardController {
 		this.boardService = boardService;
 	}
 
-	@GetMapping
-	public ResponseEntity<List<BoardDto>> listArticle() throws Exception {
+	@PostMapping
+	public ResponseEntity<List<BoardDto>> listArticle(@RequestBody BoardViewDto boardviewDto) throws Exception {
 		logger.info("listArticle - 호출");
-		return new ResponseEntity<List<BoardDto>>(boardService.getList(), HttpStatus.OK);
+		return new ResponseEntity<List<BoardDto>>(boardService.getList(boardviewDto), HttpStatus.OK);
 	}
 	
-	@PostMapping
+	@PostMapping("/write")
 	public ResponseEntity<String> writeArticle(@RequestBody BoardDto boardDto) throws Exception {
 		logger.info("writeArticle - 호출");
 		if (boardService.writeArticle(boardDto)) {

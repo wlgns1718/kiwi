@@ -9,7 +9,11 @@ import com.ssafy.kiwi.board.model.BoardDto;
 @Mapper
 public interface BoardMapper {
 
-	List<BoardDto> getList() throws Exception;
+	List<BoardDto> getListWhenNoUserInfo() throws Exception;
+	
+	List<BoardDto> getListWhenUserInfoExistAndNotFollowSelect(int userno) throws Exception;
+	
+	List<BoardDto> getListWhenUserInfoExistAndFollowSelect(int userno) throws Exception;
 
 	void updateHit() throws Exception;
 

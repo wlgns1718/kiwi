@@ -13,6 +13,34 @@ public class BoardDto {
 	private int scope;
 	private int userno;
 	private String nickname;
+	private int cntLike;
+	private int cntReply;
+	private int islike;
+	
+	
+	public int getCntLike() {
+		return cntLike;
+	}
+
+	public void setCntLike(int cntLike) {
+		this.cntLike = cntLike;
+	}
+
+	public int getCntReply() {
+		return cntReply;
+	}
+
+	public void setCntReply(int cntReply) {
+		this.cntReply = cntReply;
+	}
+
+	public int getIslike() {
+		return islike;
+	}
+
+	public void setIslike(int islike) {
+		this.islike = islike;
+	}
 
 	public int getBoardno() {
 		return boardno;
