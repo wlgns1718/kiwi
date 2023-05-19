@@ -1,12 +1,9 @@
 <template>
   <div>
-    KIWI는 자신만이 간직한 아름다운 여행지를<br />
-    공유하는 커뮤니티 사이트입니다.
-
     <div class="Sign_Wrap">
       <div class="signin">
         <h2>로그인</h2>
-        <div>
+        <div class="temp">
           <input
             v-model="user.id"
             type="text"
@@ -16,22 +13,25 @@
           />
           <input
             v-model="user.password"
-            style="margin: 10px 0 0 0"
             type="password"
             class="Logininput"
             placeholder="비밀번호를 입력하세요."
             @keyup.enter="confirm"
           />
-          <button class="LoginBtn" @click="confirm">로그인</button>
-          <div class="option">
-            <input type="checkbox" id="LoginCheckbox" />
-            <label for="LoginCheckbox">로그인 상태 유지</label>
-            <router-link to="#" class="regist">회원가입</router-link>
+          <span id="validityPWD">{{ plzCheckYourIdPw }}</span>
+          <div>
+            <button class="LoginBtn" @click="confirm">로그인</button>
+            <div class="option">
+              <input type="checkbox" id="LoginCheckbox" />
+              <label for="LoginCheckbox">로그인 상태 유지</label>
+              <router-link to="/user/regist" class="regist"
+                >회원가입</router-link
+              >
+            </div>
           </div>
         </div>
       </div>
     </div>
-    <div style="margin-top: 20px; color: red">{{ plzCheckYourIdPw }}</div>
   </div>
 </template>
 
@@ -77,6 +77,9 @@ export default {
 </script>
 
 <style scoped>
+.temp {
+  position: relative;
+}
 .regist {
   margin: 0 0 0 77px;
 }
@@ -89,6 +92,7 @@ input[id="LoginCheckbox"] {
   margin-top: 80px;
   width: 300px;
   border: 2px;
+  height: 350px;
   border-style: solid;
   border-radius: 12px 12px 12px 12px;
   background-color: rgb(255, 255, 255);
@@ -107,15 +111,17 @@ input[id="LoginCheckbox"] {
   box-sizing: border-box;
   line-height: 23px;
   padding: 10px 0 10px 5px;
-  margin: 30px 0 0 0;
+  margin: 10px 0 10px 0;
+  position: relative;
 }
 .Logininput:focus {
-  border: 2px solid;
+  border: 1px solid;
   border-color: rgb(105, 228, 128);
   outline: none;
 }
 h2 {
   margin: 0;
+  padding-bottom: 30px;
 }
 .LoginBtn {
   border: 0;
@@ -128,5 +134,19 @@ h2 {
   color: rgb(255, 255, 255);
   background-color: rgb(105, 228, 128);
   cursor: pointer;
+  box-sizing: border-box;
+}
+
+#validityPWD {
+  position: absolute;
+  top: 125px;
+  left: 0;
+  color: rgb(240, 6, 6);
+}
+#validityID {
+  position: absolute;
+  top: 85px;
+  left: 0;
+  color: rgb(2, 141, 25);
 }
 </style>

@@ -21,5 +21,9 @@ public interface UserMapper {
 
 	void deleteRefreshToken(Map<String, String> map) throws Exception;
 
+	String idCheck(String id) throws Exception;
+
+	String nickCheck(String nickname) throws Exception;
+
 
 }

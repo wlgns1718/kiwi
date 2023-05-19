@@ -29,6 +29,10 @@ export default {
   components: {},
   data() {
     return {
+      boardView: {
+        userno: 1,
+        isFollowSelect: 0,
+      },
       boards: [
         // {
         //   articleno: 5,
@@ -79,7 +83,7 @@ export default {
   methods: {
     getBoard() {
       http
-        .get(`/board`)
+        .post(`/board`, JSON.stringify(this.boardView))
         .then(({ data }) => {
           console.log(data);
           this.boards = data;

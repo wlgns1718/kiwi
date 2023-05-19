@@ -64,5 +64,15 @@
 		where id =
 		#{userid}
 	</update>
-
+	
+	<select id="idCheck" parameterType="String" resultType="String">
+	select id
+	from user
+	where id=#{id}
+	</select>
+	<select id="nickCheck" parameterType="String" resultType="String">
+	select nickname
+	from user
+	where nickname= #{nickname}
+	</select>
 </mapper>

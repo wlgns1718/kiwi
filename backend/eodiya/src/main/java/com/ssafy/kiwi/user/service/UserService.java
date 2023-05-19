@@ -14,4 +14,8 @@ public interface UserService {
 
 	void deleRefreshToken(String userid) throws Exception;
 
+	String idCheck(String id) throws Exception;
+
+	String nickCheck(String nickname) throws Exception;
+
 }

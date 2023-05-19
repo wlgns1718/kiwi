@@ -56,4 +56,15 @@ public class UserServiceImpl implements UserService {
 		userMapper.deleteRefreshToken(map);
 	}
 
+	@Override
+	public String idCheck(String id) throws Exception {
+		return userMapper.idCheck(id);
+	}
+
+	@Override
+	public String nickCheck(String nickname) throws Exception {
+		
+		return userMapper.nickCheck(nickname);
+	}
+
 }
