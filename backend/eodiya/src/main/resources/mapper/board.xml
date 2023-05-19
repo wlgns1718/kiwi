@@ -9,16 +9,20 @@
 		<result column="board_no" property="boardno" />
 		<result column="title" property="title" />
 		<result column="content" property="content" />
+		<result column="create_date" property="createdate" />
 		<result column="hit" property="hit" />
 		<result column="scope" property="scope" />
 		<result column="user_no" property="userno" />
-		<result column="create_date" property="createdate" />
 		<result column="nickname" property="nickname" />
+		<result column="cnt_like" property="cntLike"/>
+		<result column="cnt_reply" property="cntReply"/>
+		<result column="islike" property="islike"/>
+		
 	</resultMap>
 
-	<!-- <select id="getListWhenNoUserInfo" parameterType="map"
+	 <select id="getListWhenNoUserInfo"
 		resultMap="board">
-		select b.board_no, b.title, b.content, b.hit, b.scope, u.nickname, count(l.user_no) `cnt_like`, count(r.reply_no) `cnt_reply`
+		select b.board_no, b.title, b.content, b.create_date, b.hit, b.scope, u.user_no ,u.nickname, count(l.user_no) `cnt_like`, count(r.reply_no) `cnt_reply`, if(l.board_no is NOT NULL ,1,0) `islike`
 		from board b join user u
 		on b.user_no = u.user_no
 		left outer join likes l
@@ -29,9 +33,9 @@
 		Group by b.board_no;
 	</select>
 
-	<select id="getListWhenUserInfoExistAndNotFollowSelect"
+	 <select id="getListWhenUserInfoExistAndNotFollowSelect"
 		parameterType="Integer" resultMap="board">
-		select b.board_no, b.title, b.content, b.hit, b.scope, u.nickname, count(l.user_no) `cnt_like`, count(r.reply_no) `cnt_reply`, if(l.board_no is NOT NULL ,1,0) `islike`
+		select b.board_no, b.title, b.content, b.create_date, b.hit, b.scope, u.user_no ,u.nickname, count(l.user_no) `cnt_like`, count(r.reply_no) `cnt_reply`, if(l.board_no is NOT NULL ,1,0) `islike`
 		from board b join user u
 		on b.user_no = u.user_no
 		left outer join likes l
@@ -42,9 +46,9 @@
 		Group by b.board_no;
 	</select>
 
-	<select id="getListWhenUserInfoExistAndNotFollowSelect"
+	<select id="getListWhenUserInfoExistAndFollowSelect"
 		parameterType="Integer" resultMap="board">
-		select b.board_no, b.title, b.content, b.hit, b.scope, u.nickname, count(l.user_no) `cnt_like`,count(r.reply_no) `cnt_reply`, if(l.board_no is NOT NULL ,1,0) `islike`
+		select b.board_no, b.title, b.content, b.create_date, b.hit, b.scope, u.user_no ,u.nickname, count(l.user_no) `cnt_like`, count(r.reply_no) `cnt_reply`, if(l.board_no is NOT NULL ,1,0) `islike`
 		from board b join user u
 		on b.user_no = u.user_no
 		left outer join likes l
@@ -53,7 +57,7 @@
 		on b.board_no=r.board_no
 		where b.scope=1 and b.user_no = (select followee from follow where user_no = #{userno})
 		Group by b.board_no;
-	</select> -->
+	</select>
 
 	<insert id="writeArticle" parameterType="boardDto">
 		insert into board(title,
