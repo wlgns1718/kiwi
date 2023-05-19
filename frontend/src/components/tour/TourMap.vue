@@ -18,7 +18,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(["tours"]),
+    ...mapState("tourStore", ["tours"]),
   },
   created() {},
   mounted() {

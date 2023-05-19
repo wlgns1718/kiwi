@@ -46,7 +46,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(["sidos", "guguns", "tours"]),
+    ...mapState("tourStore", ["sidos", "guguns", "tours"]),
   },
   created() {
     this.CLEAR_SIDO_LIST();
@@ -54,8 +54,8 @@ export default {
     this.getSido();
   },
   methods: {
-    ...mapActions(["getSido", "getGugun", "getTourList", "displayMarker"]),
-    ...mapMutations(["CLEAR_SIDO_LIST", "CLEAR_GUGUN_LIST", "CLEAR_TOUR_LIST"]),
+    ...mapActions("tourStore", ["getSido", "getGugun", "getTourList"]),
+    ...mapMutations("tourStore", ["CLEAR_SIDO_LIST", "CLEAR_GUGUN_LIST", "CLEAR_TOUR_LIST"]),
     gugunList() {
       this.CLEAR_GUGUN_LIST();
       this.gugunCode = "";
@@ -64,7 +64,7 @@ export default {
     searchTour() {
       if (this.gugunCode) {
         this.getTourList([this.sidoCode, this.gugunCode, this.tourType]);
-        this.displayMarker();
+        // this.displayMarker();
       }
     },
   },

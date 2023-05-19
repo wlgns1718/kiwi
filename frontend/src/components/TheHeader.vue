@@ -9,8 +9,8 @@
       <div class="header-center">
         <ul>
           <li v-if="homeBtnOff">
-            <router-link to="/" @click.native="navBtnToggle"
-              ><svg
+            <router-link to="/" @click.native="navBtnToggle">
+              <svg
                 width="36"
                 height="36"
                 viewBox="0 0 28 28"
@@ -30,8 +30,9 @@
                   stroke-width="1.2"
                   stroke-linecap="round"
                   stroke-linejoin="round"
-                ></path></svg
-            ></router-link>
+                ></path>
+              </svg>
+            </router-link>
           </li>
           <li v-if="homeBtnOn">
             <router-link to="/" @click.native="navBtnToggle"
@@ -56,8 +57,9 @@
                   stroke-width="1.2"
                   stroke-linecap="round"
                   stroke-linejoin="round"
-                ></path></svg
-            ></router-link>
+                ></path>
+              </svg>
+            </router-link>
           </li>
           <li v-if="boardBtnOff">
             <router-link to="/board" @click.native="navBtnToggle">
@@ -99,8 +101,9 @@
                 ></path>
                 <circle cx="18.5" cy="14" r="1" fill="white"></circle>
                 <circle cx="10.5" cy="14" r="1" fill="white"></circle>
-                <circle cx="14.5" cy="14" r="1" fill="white"></circle></svg
-            ></router-link>
+                <circle cx="14.5" cy="14" r="1" fill="white"></circle>
+              </svg>
+            </router-link>
           </li>
           <li style="padding-top: 5px" v-if="tourBtnOff">
             <router-link to="/tour" @click.native="navBtnToggle">
@@ -131,8 +134,8 @@
             </router-link>
           </li>
           <li style="padding-top: 5px" v-if="tourBtnOn">
-            <router-link to="/tour" @click.native="navBtnToggle"
-              ><svg
+            <router-link to="/tour" @click.native="navBtnToggle">
+              <svg
                 width="30"
                 height="30"
                 viewBox="0 0 100 100"
@@ -152,8 +155,9 @@
                     fill="#0060FF"
                     fill-rule="evenodd"
                   ></path>
-                </g></svg
-            ></router-link>
+                </g>
+              </svg>
+            </router-link>
           </li>
         </ul>
       </div>
@@ -188,7 +192,7 @@ export default {
     ...mapActions("userStore", ["userLogout"]),
     navBtnToggle() {
       let path = this.$route.path;
-      console.log(path);
+      // console.log(path);
       if (path === "/") {
         this.homeBtnOn = true;
         this.homeBtnOff = false;

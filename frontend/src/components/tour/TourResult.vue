@@ -30,7 +30,7 @@ export default {
   name: "TourResult",
   components: {},
   computed: {
-    ...mapState(["tours"]),
+    ...mapState("tourStore", ["tours"]),
   },
   data() {
     return {

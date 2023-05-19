@@ -1,6 +1,7 @@
 import http from "@/api/http";
 
 const tourStore = {
+  namespaced: true,
   state: {
     sidos: [{ value: "", text: "선택하세요" }],
     guguns: [{ value: "", text: "선택하세요" }],
@@ -10,7 +11,6 @@ const tourStore = {
   },
   getters: {},
   mutations: {
-    //지도에 대한 mutations--------------------------------------------------------------
     SET_SIDO_LIST(state, sidos) {
       sidos.forEach((sido) => {
         state.sidos.push({ value: sido.code, text: sido.name });
@@ -70,7 +70,7 @@ const tourStore = {
           data.forEach((d) => {
             d["expanded"] = false;
           });
-          console.log(data);
+          // console.log(data);
           commit("SET_TOUR_LIST", data);
         })
         .catch((error) => {
