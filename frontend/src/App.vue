@@ -22,7 +22,11 @@ export default {
 <style>
 @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard.css");
 
-*, #app, body, input, select {
+*,
+#app,
+body,
+input,
+select {
   font-family: pretendard, Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -35,6 +39,12 @@ a {
 .app_title {
   font-size: 36px;
   /* padding-left: 20px; */
+}
+
+.view-content {
+  width: 1200px;
+  margin: 0 auto;
+  margin-top: 0px;
 }
 
 :root {

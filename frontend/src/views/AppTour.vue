@@ -1,5 +1,5 @@
 <template>
-  <div class="tour-content">
+  <div class="view-content">
     <h3 class="app_title">관광지 명소</h3>
     <div class="tour-wrap">
       <div>
@@ -41,12 +41,6 @@ export default {
 </script>
 
 <style scoped>
-.tour-content {
-  width: 1200px;
-  margin: 0 auto;
-  margin-top: 0px;
-}
-
 .tour-wrap {
   height: 100%;
 }
