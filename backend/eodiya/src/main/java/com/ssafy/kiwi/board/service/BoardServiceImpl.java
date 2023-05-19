@@ -21,7 +21,10 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public List<BoardDto> getList(BoardViewDto boardviewDto) throws Exception {
 		if(boardviewDto.getUserno() == 0) {
-			return boardMapper.getListWhenNoUserInfo();
+			List<BoardDto> list = boardMapper.getListWhenNoUserInfo();
+			System.out.println(list);
+			return list;
+			
 		}
 		else if(boardviewDto.getIsFollowSelect()==0) {
 			return boardMapper.getListWhenUserInfoExistAndNotFollowSelect(boardviewDto.getUserno());
