@@ -19,15 +19,15 @@ import com.ssafy.kiwi.user.service.UserService;
 @RequestMapping("/admin")
 public class AdminController {
 
-	private final Logger logger = LoggerFactory.getLogger(TourController.class);
-
-	private UserService userService;
-
-	@Autowired
-	public AdminController(UserService userService) {
-		super();
-		this.userService = userService;
-	}
+//	private final Logger logger = LoggerFactory.getLogger(TourController.class);
+//
+//	private UserService userService;
+//
+//	@Autowired
+//	public AdminController(UserService userService) {
+//		super();
+//		this.userService = userService;
+//	}
 
 //	@GetMapping("/user")
 //	public ResponseEntity<?> userList() {

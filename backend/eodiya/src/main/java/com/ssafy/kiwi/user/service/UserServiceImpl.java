@@ -63,7 +63,6 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public String nickCheck(String nickname) throws Exception {
-		
 		return userMapper.nickCheck(nickname);
 	}
 
