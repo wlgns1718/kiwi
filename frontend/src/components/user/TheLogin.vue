@@ -12,6 +12,7 @@
             type="text"
             class="Logininput"
             placeholder="아이디를 입력하세요."
+            @keyup.enter="confirm"
           />
           <input
             v-model="user.password"
@@ -28,9 +29,9 @@
             <router-link to="#" class="regist">회원가입</router-link>
           </div>
         </div>
-        <div></div>
       </div>
     </div>
+    <div style="margin-top: 20px; color: red">{{ plzCheckYourIdPw }}</div>
   </div>
 </template>
 
@@ -38,15 +39,19 @@
 import { mapState, mapActions } from "vuex";
 
 export default {
+  name: "UserLogin",
   data() {
     return {
       user: {
         id: null,
         password: null,
       },
+      plzCheckYourIdPw: "",
     };
   },
-  created() {},
+  created() {
+    this.plzCheckYourIdPw = "";
+  },
   computed: {
     ...mapState("userStore", ["isLogin", "isLoginError", "userInfo"]),
   },
@@ -60,7 +65,12 @@ export default {
         await this.getUserInfo(token);
         // console.log("4. confirm() userInfo :: ", this.userInfo);
         this.$router.push({ name: "main" });
+      } else {
+        this.plzCheckYourIdPw = "아이디 또는 비밀번호를 확인해주세요.";
       }
+    },
+    movePage() {
+      this.$router.push({ name: "join" });
     },
   },
 };

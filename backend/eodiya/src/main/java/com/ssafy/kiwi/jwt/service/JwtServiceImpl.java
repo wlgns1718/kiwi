@@ -83,12 +83,8 @@ public class JwtServiceImpl implements JwtService {
 			logger.debug("claims: {}", claims);
 			return true;
 		} catch (Exception e) {
-			if (logger.isInfoEnabled()) {
-				e.printStackTrace();
-			} else {
-				logger.error(e.getMessage());
-			}
-			throw new UnAuthorizedException();
+			logger.error(e.getMessage());
+			return false;
 		}
 	}
 

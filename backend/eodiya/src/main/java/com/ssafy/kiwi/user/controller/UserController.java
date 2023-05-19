@@ -27,28 +27,22 @@ import com.ssafy.kiwi.user.service.UserService;
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class UserController {
 
-	private final Logger logger = LoggerFactory.getLogger(UserController.class);
+	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 	private static final String SUCCESS = "success";
 	private static final String FAIL = "fail";
 	private static final String SERVERFAIL = "server error";
 
+	@Autowired
 	private UserService userService;
 
 	@Autowired
 	private JwtServiceImpl jwtService;
 
-	@Autowired
-	public UserController(UserService userService) {
-		super();
-		this.userService = userService;
-	}
-
 	@PostMapping("/login")
-	public ResponseEntity<Map<String, Object>> login(@RequestBody() UserDto userDto) {
+	public ResponseEntity<Map<String, Object>> login(@RequestBody UserDto userDto) {
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = null;
 		try {
-			System.out.println(userDto);
 			UserDto loginUser = userService.login(userDto.getId(), userDto.getPassword());
 			if (loginUser != null) {
 				String accessToken = jwtService.createAccessToken("userid", loginUser.getId());
@@ -72,11 +66,12 @@ public class UserController {
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
 
-	@GetMapping("/info/{id}")
-	public ResponseEntity<Map<String, Object>> getInfo(@PathVariable("id") String id, HttpServletRequest request) {
+	@GetMapping("/info/{userid}")
+	public ResponseEntity<Map<String, Object>> getInfo(@PathVariable("userid") String id, HttpServletRequest request) {
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = HttpStatus.UNAUTHORIZED;
 		if (jwtService.checkToken(request.getHeader("access-token"))) {
+//			logger.info("사용 가능한 토큰!!!");
 			try {
 				UserDto userDto = userService.userInfo(id);
 				resultMap.put("userInfo", userDto);
@@ -88,7 +83,7 @@ public class UserController {
 				status = HttpStatus.INTERNAL_SERVER_ERROR;
 			}
 		} else {
-			logger.error("사용 불가능 토큰!!!");
+//			logger.error("사용 불가능 토큰!!!");
 			resultMap.put("message", FAIL);
 			status = HttpStatus.UNAUTHORIZED;
 		}

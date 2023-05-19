@@ -119,11 +119,7 @@
                 stroke-width="0.0005"
               >
                 <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                <g
-                  id="SVGRepo_tracerCarrier"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                ></g>
+                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
                 <g id="SVGRepo_iconCarrier">
                   <path
                     d="M86.49.088a2.386 2.386 0 0 0-.882.463L11.34 62.374a2.386 2.386 0 0 0 1.62 4.218l37.957-1.478l17.7 33.612a2.386 2.386 0 0 0 4.462-.707l16.406-95.23a2.386 2.386 0 0 0-2.994-2.7zm-2.808 8.277L69.567 90.29L54.439 61.558a2.386 2.386 0 0 0-2.203-1.272L19.79 61.551z"
@@ -149,11 +145,7 @@
                 fill="#0060FF"
               >
                 <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                <g
-                  id="SVGRepo_tracerCarrier"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                ></g>
+                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
                 <g id="SVGRepo_iconCarrier">
                   <path
                     d="M87.13 0a2.386 2.386 0 0 0-.64.088a2.386 2.386 0 0 0-.883.463L11.34 62.373a2.386 2.386 0 0 0 1.619 4.219l37.959-1.479l17.697 33.614a2.386 2.386 0 0 0 4.465-.707L89.486 2.79A2.386 2.386 0 0 0 87.131 0z"
@@ -166,13 +158,16 @@
         </ul>
       </div>
       <div class="header-right">
-        <router-link to="/user/login">로그인</router-link>
+        <router-link v-if="!userInfo" to="/user/login">로그인</router-link>
+        <a v-else @click.prevent="onClickLogout">로그아웃</a>
       </div>
     </div>
   </header>
 </template>
 
 <script>
+import { mapState, mapGetters, mapActions } from "vuex";
+
 export default {
   name: "TheHeader",
   data() {
@@ -185,7 +180,12 @@ export default {
       tourBtnOff: true,
     };
   },
+  computed: {
+    ...mapState("userStore", ["isLogin", "userInfo"]),
+    ...mapGetters(["checkUserInfo"]),
+  },
   methods: {
+    ...mapActions("userStore", ["userLogout"]),
     navBtnToggle() {
       let path = this.$route.path;
       console.log(path);
@@ -196,7 +196,7 @@ export default {
         this.boardBtnOff = true;
         this.tourBtnOn = false;
         this.tourBtnOff = true;
-      } else if (path === "/board") {
+      } else if (path.includes("/board")) {
         this.homeBtnOn = false;
         this.homeBtnOff = true;
         this.boardBtnOn = true;
@@ -211,6 +211,20 @@ export default {
         this.tourBtnOn = true;
         this.tourBtnOff = false;
       }
+    },
+    onClickLogout() {
+      // this.SET_IS_LOGIN(false);
+      // this.SET_USER_INFO(null);
+      // sessionStorage.removeItem("access-token");
+      // if (this.$route.path != "/") this.$router.push({ name: "main" });
+      // console.log(this.userInfo.id);
+      //vuex actions에서 userLogout 실행(Backend에 저장 된 리프레시 토큰 없애기
+      //+ satate에 isLogin, userInfo 정보 변경)
+      // this.$store.dispatch("userLogout", this.userInfo.userid);
+      this.userLogout(this.userInfo.id);
+      sessionStorage.removeItem("access-token"); //저장된 토큰 없애기
+      sessionStorage.removeItem("refresh-token"); //저장된 토큰 없애기
+      if (this.$route.path != "/") this.$router.push({ name: "main" });
     },
   },
 };

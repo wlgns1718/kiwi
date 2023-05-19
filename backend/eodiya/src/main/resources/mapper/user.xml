@@ -15,6 +15,7 @@
 		<result column="login_date" property="logindate" />
 		<result column="gender" property="gender" />
 		<result column="is_restrict" property="isRestrict" />
+		<result column="user_no" property="userno" />
 	</resultMap>
 
 	<select id="login" parameterType="String" resultMap="user">
@@ -36,7 +37,7 @@
 
 	<select id="userInfo" parameterType="string"
 		resultType="userDto">
-		select user_no, nickname, email
+		select user_no, id, nickname, email
 		from user
 		where id = #{id}
 	</select>
