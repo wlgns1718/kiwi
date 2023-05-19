@@ -10,6 +10,12 @@ import { mapState } from "vuex";
 export default {
   name: "TourMap",
   components: {},
+  props: {
+    location: {
+      type: Object,
+      default: () => ({}),
+    },
+  },
   data() {
     return {
       map: null,
@@ -35,6 +41,9 @@ export default {
       this.markers = [];
       this.selectedInfoWindow = null;
       this.displayMarker();
+    },
+    location() {
+      this.moveCenter(this.location.latitude, this.location.longitude);
     },
   },
   methods: {

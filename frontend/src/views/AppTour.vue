@@ -7,10 +7,10 @@
       </div>
       <div class="tour-map-result-wrap">
         <div class="left">
-          <tour-map></tour-map>
+          <tour-map :location="location"></tour-map>
         </div>
         <div class="right">
-          <tour-result></tour-result>
+          <tour-result @moveCenter="moveCenterHandler"></tour-result>
         </div>
       </div>
     </div>
@@ -28,10 +28,15 @@ export default {
   data() {
     return {
       message: "",
+      location: {},
     };
   },
   created() {},
-  methods: {},
+  methods: {
+    moveCenterHandler(location) {
+      this.location = location;
+    },
+  },
 };
 </script>
 

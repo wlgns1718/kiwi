@@ -8,7 +8,9 @@
       </div>
       <div class="item-detail">
         <div class="title-wrap">
-          <div class="title">{{ tour.title }}</div>
+          <div class="title">
+            <a @click.prevent="moveCenter(tour.latitude, tour.longitude)">{{ tour.title }}</a>
+          </div>
           <div>{{ tour.addr1 }}</div>
         </div>
         <div class="overview">
@@ -41,6 +43,9 @@ export default {
   methods: {
     toggleExpansion(item) {
       item.expanded = !item.expanded;
+    },
+    moveCenter(latitude, longitude) {
+      this.$emit("moveCenter", { latitude, longitude });
     },
   },
 };
