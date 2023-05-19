@@ -1,5 +1,5 @@
 <template>
-  <div class="tour-content">
+  <div class="view-content">
     <h3 class="app_title">관광지 명소</h3>
     <div class="tour-wrap">
       <div>
@@ -7,10 +7,10 @@
       </div>
       <div class="tour-map-result-wrap">
         <div class="left">
-          <tour-map></tour-map>
+          <tour-map :location="location"></tour-map>
         </div>
         <div class="right">
-          <tour-result></tour-result>
+          <tour-result @moveCenter="moveCenterHandler"></tour-result>
         </div>
       </div>
     </div>
@@ -28,20 +28,19 @@ export default {
   data() {
     return {
       message: "",
+      location: {},
     };
   },
   created() {},
-  methods: {},
+  methods: {
+    moveCenterHandler(location) {
+      this.location = location;
+    },
+  },
 };
 </script>
 
 <style scoped>
-.tour-content {
-  width: 1200px;
-  margin: 0 auto;
-  margin-top: 0px;
-}
-
 .tour-wrap {
   height: 100%;
 }

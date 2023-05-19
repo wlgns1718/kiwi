@@ -10,6 +10,12 @@ import { mapState } from "vuex";
 export default {
   name: "TourMap",
   components: {},
+  props: {
+    location: {
+      type: Object,
+      default: () => ({}),
+    },
+  },
   data() {
     return {
       map: null,
@@ -35,6 +41,9 @@ export default {
       this.markers = [];
       this.selectedInfoWindow = null;
       this.displayMarker();
+    },
+    location() {
+      this.moveCenter(this.location.latitude, this.location.longitude);
     },
   },
   methods: {
@@ -85,19 +94,24 @@ export default {
         const marker = new window.kakao.maps.Marker({
           // map: map, // 마커를 표시할 지도
           position: markerPosition, // 마커를 표시할 위치
-          title: this.tours[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
           image: markerImage, // 마커 이미지
         });
         marker.setMap(this.map);
 
-        // 생성된 마커를 배열에 추가합니다
-        this.markers.push(marker);
-
         // infowindow
         const infowindow = new window.kakao.maps.InfoWindow({
-          content: this.tours[i].title,
-          position: this.tours[i].latitude,
+          content: `<div style="padding: 5px;">${this.tours[i].title}</div>`,
         });
+
+        window.kakao.maps.event.addListener(marker, "mouseover", () => {
+          infowindow.open(this.map, marker);
+        });
+        window.kakao.maps.event.addListener(marker, "mouseout", () => {
+          infowindow.close(this.map, marker);
+        });
+
+        // 생성된 마커를 배열에 추가합니다
+        this.markers.push(marker);
 
         // 마커 이벤트 추가 (누르면 정보 오버레이 표시)
         this.map.addListener(marker, "click", this.makeClickListener(marker, infowindow));
