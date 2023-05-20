@@ -4,8 +4,36 @@
       <div class="container">
         <div class="fixed-section">
           <h3 class="app_title">커뮤니티</h3>
+          <div v-if="this.userInfo">
+            <label class="radio-button" :class="{ active: viewMode === 'all' }">
+              <input
+                type="radio"
+                name="viewMode"
+                value="all"
+                v-model="viewMode"
+                @change="changeViewMode"
+              />
+              <span>전체 보기</span>
+            </label>
+            <label
+              class="radio-button"
+              :class="{ active: viewMode === 'follow' }"
+            >
+              <input
+                type="radio"
+                name="viewMode"
+                value="follow"
+                v-model="viewMode"
+                @change="changeViewMode"
+              />
+              <span>팔로우만 보기</span>
+            </label>
+          </div>
         </div>
         <div class="scrollable-section">
+          <div v-if="boards.length == 0">
+            <div class="post">비었습니다..!</div>
+          </div>
           <div class="post" v-for="(board, index) in boards" :key="index">
             <div class="post-header">
               <div class="profile-image"></div>
@@ -98,6 +126,7 @@ export default {
   },
   data() {
     return {
+      viewMode: "all",
       isFollowSelect: 0,
       boards: [],
     };
@@ -107,6 +136,7 @@ export default {
   },
   methods: {
     getBoard() {
+      this.boards = [];
       const boardInfo = {
         isFollowSelect: this.isFollowSelect,
         userno: this.userInfo ? this.userInfo.userno : 0,
@@ -155,6 +185,10 @@ export default {
             console.log(error);
           });
       }
+    },
+    changeViewMode() {
+      this.isFollowSelect = this.isFollowSelect == 0 ? 1 : 0;
+      this.getBoard();
     },
   },
 };
@@ -263,5 +297,42 @@ svg {
   margin-left: 5px;
   margin-right: 10px;
   font-size: 14px;
+}
+
+.radio-button {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 9999px;
+  padding: 10px 16px;
+  background-color: #fff;
+  color: #555;
+  cursor: pointer;
+  border: 1px solid #ccc;
+  margin-right: 10px;
+  /* transition: border-color 0.3s ease; */
+}
+
+.radio-button.active {
+  border-color: #2979ff;
+}
+
+.radio-button input[type="radio"] {
+  display: none;
+}
+
+.radio-button input[type="radio"]:checked + span {
+  color: #2979ff;
+}
+
+.radio-button input[type="radio"]:checked + span:before {
+  background-color: #2979ff;
+}
+
+.radio-button input[type="radio"]:focus + span {
+  outline: none;
+}
+
+.radio-button input[type="radio"]:focus + span:before {
+  box-shadow: 0 0 3px rgb(0, 96, 255);
 }
 </style>
