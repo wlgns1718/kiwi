@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.ssafy.kiwi.board.model.BoardDto;
 import com.ssafy.kiwi.board.model.BoardViewDto;
+import com.ssafy.kiwi.board.model.LikesDto;
 
 public interface BoardService {
 
@@ -18,4 +19,8 @@ public interface BoardService {
 	boolean deleteArticle(int boardno) throws Exception;
 
 	boolean writeArticle(BoardDto boardDto) throws Exception;
+
+	boolean addLikes(LikesDto likesDto) throws Exception;
+
+	boolean deleteLikes(LikesDto likesDto) throws Exception;
 }
