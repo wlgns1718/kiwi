@@ -9,9 +9,7 @@
       <div class="item-detail">
         <div class="title-wrap">
           <div class="title">
-            <a @click.prevent="moveCenter(tour.latitude, tour.longitude)">{{
-              tour.title
-            }}</a>
+            <a @click.prevent="moveCenter(tour.latitude, tour.longitude)">{{ tour.title }}</a>
           </div>
           <div>{{ tour.addr1 }}</div>
         </div>
@@ -19,9 +17,7 @@
           <p v-if="tour.overview != null && tour.expanded">
             {{ tour.overview }}
           </p>
-          <p v-else>
-            {{ tour.overview != null && tour.overview.substring(0, 100) }} ...
-          </p>
+          <p v-else>{{ tour.overview != null && tour.overview.substring(0, 100) }}...</p>
           <button class="moreBtn" @click="toggleExpansion(tour)">
             {{ tour.expanded ? "접기" : "더보기" }}
           </button>
