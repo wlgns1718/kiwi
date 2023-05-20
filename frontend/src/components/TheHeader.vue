@@ -8,7 +8,7 @@
       </nav>
       <div class="header-center">
         <ul>
-          <li v-if="homeBtnOff">
+          <li v-if="navBtn.homeBtnOff">
             <router-link to="/" @click.native="navBtnToggle">
               <svg
                 width="36"
@@ -34,7 +34,7 @@
               </svg>
             </router-link>
           </li>
-          <li v-if="homeBtnOn">
+          <li v-if="navBtn.homeBtnOn">
             <router-link to="/" @click.native="navBtnToggle"
               ><svg
                 width="36"
@@ -61,8 +61,8 @@
               </svg>
             </router-link>
           </li>
-          <li v-if="boardBtnOff">
-            <router-link to="/board" @click.native="navBtnToggle">
+          <li v-if="navBtn.boardBtnOff">
+            <router-link to="/board/list" @click.native="navBtnToggle">
               <svg
                 width="36"
                 height="36"
@@ -80,8 +80,8 @@
               </svg>
             </router-link>
           </li>
-          <li v-if="boardBtnOn">
-            <router-link to="/board" @click.native="navBtnToggle">
+          <li v-if="navBtn.boardBtnOn">
+            <router-link to="/board/list" @click.native="navBtnToggle">
               <svg
                 width="36"
                 height="36"
@@ -105,7 +105,7 @@
               </svg>
             </router-link>
           </li>
-          <li style="padding-top: 5px" v-if="tourBtnOff">
+          <li style="padding-top: 5px" v-if="navBtn.tourBtnOff">
             <router-link to="/tour" @click.native="navBtnToggle">
               <svg
                 width="30"
@@ -122,7 +122,11 @@
                 stroke-width="0.0005"
               >
                 <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                <g
+                  id="SVGRepo_tracerCarrier"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                ></g>
                 <g id="SVGRepo_iconCarrier">
                   <path
                     d="M86.49.088a2.386 2.386 0 0 0-.882.463L11.34 62.374a2.386 2.386 0 0 0 1.62 4.218l37.957-1.478l17.7 33.612a2.386 2.386 0 0 0 4.462-.707l16.406-95.23a2.386 2.386 0 0 0-2.994-2.7zm-2.808 8.277L69.567 90.29L54.439 61.558a2.386 2.386 0 0 0-2.203-1.272L19.79 61.551z"
@@ -133,7 +137,7 @@
               </svg>
             </router-link>
           </li>
-          <li style="padding-top: 5px" v-if="tourBtnOn">
+          <li style="padding-top: 5px" v-if="navBtn.tourBtnOn">
             <router-link to="/tour" @click.native="navBtnToggle">
               <svg
                 width="30"
@@ -148,7 +152,11 @@
                 fill="#0060FF"
               >
                 <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                <g
+                  id="SVGRepo_tracerCarrier"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                ></g>
                 <g id="SVGRepo_iconCarrier">
                   <path
                     d="M87.13 0a2.386 2.386 0 0 0-.64.088a2.386 2.386 0 0 0-.883.463L11.34 62.373a2.386 2.386 0 0 0 1.619 4.219l37.959-1.479l17.697 33.614a2.386 2.386 0 0 0 4.465-.707L89.486 2.79A2.386 2.386 0 0 0 87.131 0z"
@@ -177,47 +185,19 @@ import { mapState, mapGetters, mapActions } from "vuex";
 
 export default {
   name: "TheHeader",
-  data() {
-    return {
-      homeBtnOn: true,
-      homeBtnOff: false,
-      boardBtnOn: false,
-      boardBtnOff: true,
-      tourBtnOn: false,
-      tourBtnOff: true,
-    };
-  },
   computed: {
     ...mapState("userStore", ["isLogin", "userInfo"]),
+    ...mapState("headerStore", ["navBtn"]),
     ...mapGetters(["checkUserInfo"]),
+  },
+  created() {
+    this.navToggle(this.$route.path);
   },
   methods: {
     ...mapActions("userStore", ["userLogout"]),
+    ...mapActions("headerStore", ["navToggle"]),
     navBtnToggle() {
-      let path = this.$route.path;
-      // console.log(path);
-      if (path === "/") {
-        this.homeBtnOn = true;
-        this.homeBtnOff = false;
-        this.boardBtnOn = false;
-        this.boardBtnOff = true;
-        this.tourBtnOn = false;
-        this.tourBtnOff = true;
-      } else if (path.includes("/board")) {
-        this.homeBtnOn = false;
-        this.homeBtnOff = true;
-        this.boardBtnOn = true;
-        this.boardBtnOff = false;
-        this.tourBtnOn = false;
-        this.tourBtnOff = true;
-      } else if (path === "/tour") {
-        this.homeBtnOn = false;
-        this.homeBtnOff = true;
-        this.boardBtnOn = false;
-        this.boardBtnOff = true;
-        this.tourBtnOn = true;
-        this.tourBtnOff = false;
-      }
+      this.navToggle(this.$route.path);
     },
     onClickLogout() {
       // this.SET_IS_LOGIN(false);

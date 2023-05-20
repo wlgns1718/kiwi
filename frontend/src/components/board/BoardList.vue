@@ -4,18 +4,46 @@
       <div class="container">
         <div class="fixed-section">
           <h3 class="app_title">커뮤니티</h3>
+          <div v-if="this.userInfo">
+            <label class="radio-button" :class="{ active: viewMode === 'all' }">
+              <input
+                type="radio"
+                name="viewMode"
+                value="all"
+                v-model="viewMode"
+                @change="changeViewMode"
+              />
+              <span>전체 보기</span>
+            </label>
+            <label
+              class="radio-button"
+              :class="{ active: viewMode === 'follow' }"
+            >
+              <input
+                type="radio"
+                name="viewMode"
+                value="follow"
+                v-model="viewMode"
+                @change="changeViewMode"
+              />
+              <span>팔로우만 보기</span>
+            </label>
+          </div>
         </div>
         <div class="scrollable-section">
+          <div v-if="boards.length == 0">
+            <div class="post">비었습니다..!</div>
+          </div>
           <div class="post" v-for="(board, index) in boards" :key="index">
             <div class="post-header">
               <div class="profile-image"></div>
               <div class="post-info">
-                <h2 class="post-title">{{ board.nickname }}</h2>
+                <div class="post-nickname">{{ board.nickname }}</div>
                 <p class="post-date">{{ board.createdate }}</p>
               </div>
             </div>
             <div class="post-content">
-              <h4>{{ board.title }}</h4>
+              <h3>{{ board.title }}</h3>
               <p>{{ board.content }}</p>
             </div>
             <div class="post-footer">
@@ -88,6 +116,7 @@
 <script>
 import http from "@/api/http";
 import { mapState } from "vuex";
+import { onlyAuthUser } from "@/api/logincheck";
 
 export default {
   name: "BoardList",
@@ -97,21 +126,23 @@ export default {
   },
   data() {
     return {
-      boardView: {
-        userno: 0,
-        isFollowSelect: 0,
-      },
+      viewMode: "all",
+      isFollowSelect: 0,
       boards: [],
     };
   },
   created() {
-    if (this.userInfo) this.userno = this.userInfo.userno;
     this.getBoard();
   },
   methods: {
     getBoard() {
+      this.boards = [];
+      const boardInfo = {
+        isFollowSelect: this.isFollowSelect,
+        userno: this.userInfo ? this.userInfo.userno : 0,
+      };
       http
-        .post(`/board`, JSON.stringify(this.boardView))
+        .post(`/board`, JSON.stringify(boardInfo))
         .then(({ data }) => {
           // console.log(data);
           this.boards = data;
@@ -121,6 +152,9 @@ export default {
         });
     },
     toggleLikes(board) {
+      onlyAuthUser();
+      if (this.userInfo === null) return;
+
       let likesInfo = {
         boardno: board.boardno,
         userno: this.userInfo.userno,
@@ -151,6 +185,10 @@ export default {
             console.log(error);
           });
       }
+    },
+    changeViewMode() {
+      this.isFollowSelect = this.isFollowSelect == 0 ? 1 : 0;
+      this.getBoard();
     },
   },
 };
@@ -197,21 +235,24 @@ export default {
   height: 40px;
   border-radius: 50%;
   background-color: #ccc;
-  margin-right: 10px;
+  margin-right: 15px;
 }
 
 .post-info {
   flex-grow: 1;
 }
 
-.post-title {
-  font-size: 18px;
+.post-nickname {
+  font-size: 16px;
+  font-weight: 500;
   margin: 0;
 }
 
 .post-date {
   color: #888;
-  margin: 0;
+  margin: 4px 0 0 0;
+  font-size: 14px;
+  font-weight: 500;
 }
 
 .post-content {
@@ -256,5 +297,42 @@ svg {
   margin-left: 5px;
   margin-right: 10px;
   font-size: 14px;
+}
+
+.radio-button {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 9999px;
+  padding: 10px 16px;
+  background-color: #fff;
+  color: #555;
+  cursor: pointer;
+  border: 1px solid #ccc;
+  margin-right: 10px;
+  /* transition: border-color 0.3s ease; */
+}
+
+.radio-button.active {
+  border-color: #2979ff;
+}
+
+.radio-button input[type="radio"] {
+  display: none;
+}
+
+.radio-button input[type="radio"]:checked + span {
+  color: #2979ff;
+}
+
+.radio-button input[type="radio"]:checked + span:before {
+  background-color: #2979ff;
+}
+
+.radio-button input[type="radio"]:focus + span {
+  outline: none;
+}
+
+.radio-button input[type="radio"]:focus + span:before {
+  box-shadow: 0 0 3px rgb(0, 96, 255);
 }
 </style>

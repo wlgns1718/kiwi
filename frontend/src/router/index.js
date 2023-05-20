@@ -1,9 +1,12 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
+import { onlyAuthUser } from "@/api/logincheck";
+// import store from "@/store/index";
 
 //views
 import AppMain from "@/views/AppMain.vue";
 import AppTour from "@/views/AppTour.vue";
+import AppBoard from "@/views/AppBoard.vue";
 Vue.use(VueRouter);
 
 const routes = [
@@ -26,7 +29,7 @@ const routes = [
       {
         path: "login",
         name: "UserLogin",
-        component: () => import("@/components/user/TheLogin")
+        component: () => import("@/components/user/TheLogin"),
       },
       {
         path: "regist",
@@ -36,15 +39,14 @@ const routes = [
       {
         path: "mypage",
         name: "UserMypage",
-        component:() => import("@/components/user/TheMypage")
-      }
-    ]
+        component: () => import("@/components/user/TheMypage"),
+      },
+    ],
   },
   {
     path: "/board",
     name: "board",
-    component: () => import("@/views/AppBoard"),
-    redirect: "/board/list",
+    component: AppBoard,
     children: [
       {
         path: "list",
@@ -54,16 +56,19 @@ const routes = [
       {
         path: "detail/:no",
         name: "boarddetail",
+        beforeEnter: onlyAuthUser,
         component: () => import("@/components/board/BoardDetail"),
       },
       {
         path: "modify/:no",
         name: "boardmodify",
+        beforeEnter: onlyAuthUser,
         component: () => import("@/components/board/BoardModify"),
       },
       {
         path: "write",
         name: "boardwrite",
+        beforeEnter: onlyAuthUser,
         component: () => import("@/components/board/BoardWrite"),
       },
     ],
@@ -75,5 +80,9 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes,
 });
+
+// router.beforeEach(() => {
+//   store.dispatch("headerStore/navToggle");
+// });
 
 export default router;
