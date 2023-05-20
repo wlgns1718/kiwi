@@ -1,5 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
+import { onlyAuthUser } from "@/api/logincheck";
 
 //views
 import AppMain from "@/views/AppMain.vue";
@@ -26,7 +27,7 @@ const routes = [
       {
         path: "login",
         name: "UserLogin",
-        component: () => import("@/components/user/TheLogin")
+        component: () => import("@/components/user/TheLogin"),
       },
       {
         path: "regist",
@@ -36,9 +37,9 @@ const routes = [
       {
         path: "mypage",
         name: "UserMypage",
-        component:() => import("@/components/user/TheMypage")
-      }
-    ]
+        component: () => import("@/components/user/TheMypage"),
+      },
+    ],
   },
   {
     path: "/board",
@@ -54,16 +55,19 @@ const routes = [
       {
         path: "detail/:no",
         name: "boarddetail",
+        beforeEnter: onlyAuthUser,
         component: () => import("@/components/board/BoardDetail"),
       },
       {
         path: "modify/:no",
         name: "boardmodify",
+        beforeEnter: onlyAuthUser,
         component: () => import("@/components/board/BoardModify"),
       },
       {
         path: "write",
         name: "boardwrite",
+        beforeEnter: onlyAuthUser,
         component: () => import("@/components/board/BoardWrite"),
       },
     ],

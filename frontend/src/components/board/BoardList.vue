@@ -88,6 +88,7 @@
 <script>
 import http from "@/api/http";
 import { mapState } from "vuex";
+import { onlyAuthUser } from "@/api/logincheck";
 
 export default {
   name: "BoardList",
@@ -121,6 +122,9 @@ export default {
         });
     },
     toggleLikes(board) {
+      onlyAuthUser();
+      if (this.userInfo === null) return;
+
       let likesInfo = {
         boardno: board.boardno,
         userno: this.userInfo.userno,
@@ -197,7 +201,7 @@ export default {
   height: 40px;
   border-radius: 50%;
   background-color: #ccc;
-  margin-right: 10px;
+  margin-right: 15px;
 }
 
 .post-info {
@@ -211,7 +215,9 @@ export default {
 
 .post-date {
   color: #888;
-  margin: 0;
+  margin: 4px 0 0 0;
+  font-size: 14px;
+  font-weight: 500;
 }
 
 .post-content {
