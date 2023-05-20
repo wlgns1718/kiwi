@@ -36,7 +36,7 @@
 	</select>
 
 	<select id="userInfo" parameterType="string"
-		resultType="userDto">
+		resultMap="user">
 		select user_no, id, nickname, email
 		from user
 		where id = #{id}

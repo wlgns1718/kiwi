@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import com.ssafy.kiwi.board.mapper.BoardMapper;
 import com.ssafy.kiwi.board.model.BoardDto;
 import com.ssafy.kiwi.board.model.BoardViewDto;
+import com.ssafy.kiwi.board.model.LikesDto;
 
 @Service
 public class BoardServiceImpl implements BoardService {
@@ -20,20 +21,19 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public List<BoardDto> getList(BoardViewDto boardviewDto) throws Exception {
-		if(boardviewDto.getUserno() == 0) {
+		if (boardviewDto.getUserno() == 0) {
 			List<BoardDto> list = boardMapper.getListWhenNoUserInfo();
-			System.out.println(list);
+			System.out.println(1);
 			return list;
-			
-		}
-		else if(boardviewDto.getIsFollowSelect()==0) {
+
+		} else if (boardviewDto.getIsFollowSelect() == 0) {
+			System.out.println(2);
 			return boardMapper.getListWhenUserInfoExistAndNotFollowSelect(boardviewDto.getUserno());
-		}
-		else {
+		} else {
+			System.out.println(3);
 			return boardMapper.getListWhenUserInfoExistAndFollowSelect(boardviewDto.getUserno());
 		}
-		
-		
+
 	}
 
 	@Override
@@ -60,5 +60,16 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public boolean writeArticle(BoardDto boardDto) throws Exception {
 		return boardMapper.writeArticle(boardDto);
+	}
+
+	@Override
+	public boolean addLikes(LikesDto likesDto) throws Exception {
+		return boardMapper.addLikes(likesDto);
+	}
+
+	@Override
+	public boolean deleteLikes(LikesDto likesDto) throws Exception {
+		// TODO Auto-generated method stub
+		return boardMapper.deleteLikes(likesDto);
 	}
 }

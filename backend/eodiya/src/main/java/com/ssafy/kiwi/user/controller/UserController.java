@@ -65,48 +65,51 @@ public class UserController {
 		}
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
+
 	@PostMapping("/register")
-	public ResponseEntity<Map<String,Object>> checkNick(@RequestBody UserDto userDto){
-		Map<String,Object> resultMap = new HashMap<>();
+	public ResponseEntity<Map<String, Object>> checkNick(@RequestBody UserDto userDto) {
+		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = HttpStatus.UNAUTHORIZED;
 		try {
 			String nickName = userService.nickCheck(userDto.getNickname());
-			if(nickName == null) {
+			if (nickName == null) {
 				resultMap.put("isVaild", "true");
-			}else {
+			} else {
 				resultMap.put("isVaild", "false");
 			}
 			resultMap.put("message", SUCCESS);
-			status=HttpStatus.ACCEPTED;
-		}catch(Exception e) {
-			logger.error("정보조회 실패: {}",e);
-			resultMap.put("message",e.getMessage());
-			status=HttpStatus.INTERNAL_SERVER_ERROR;
+			status = HttpStatus.ACCEPTED;
+		} catch (Exception e) {
+			logger.error("정보조회 실패: {}", e);
+			resultMap.put("message", e.getMessage());
+			status = HttpStatus.INTERNAL_SERVER_ERROR;
 		}
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
+
 	@GetMapping("/register/{userid}")
-	public ResponseEntity<Map<String,Object>> checkId(@PathVariable("userid") String id){
+	public ResponseEntity<Map<String, Object>> checkId(@PathVariable("userid") String id) {
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = HttpStatus.UNAUTHORIZED;
 		try {
 			String userId = userService.idCheck(id);
-			if(userId == null) {
+			if (userId == null) {
 				resultMap.put("isVaild", "true");
-			}else {
+			} else {
 				resultMap.put("isVaild", "false");
 			}
 			resultMap.put("message", SUCCESS);
-			status=HttpStatus.ACCEPTED;
-			
-		}catch(Exception e) {
-			logger.error("정보조회 실패: {}",e);
-			resultMap.put("message",e.getMessage());
-			status=HttpStatus.INTERNAL_SERVER_ERROR;
+			status = HttpStatus.ACCEPTED;
+
+		} catch (Exception e) {
+			logger.error("정보조회 실패: {}", e);
+			resultMap.put("message", e.getMessage());
+			status = HttpStatus.INTERNAL_SERVER_ERROR;
 		}
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
-		
+
 	}
+
 	@GetMapping("/info/{userid}")
 	public ResponseEntity<Map<String, Object>> getInfo(@PathVariable("userid") String id, HttpServletRequest request) {
 		Map<String, Object> resultMap = new HashMap<>();
@@ -130,7 +133,7 @@ public class UserController {
 		}
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
-	
+
 	@GetMapping("/logout/{userid}")
 	public ResponseEntity<?> removeToken(@PathVariable("userid") String userid) {
 		Map<String, Object> resultMap = new HashMap<>();
@@ -149,8 +152,7 @@ public class UserController {
 	}
 
 	@PostMapping("/refresh")
-	public ResponseEntity<?> refreshToken(@RequestBody UserDto userDto, HttpServletRequest request)
-			throws Exception {
+	public ResponseEntity<?> refreshToken(@RequestBody UserDto userDto, HttpServletRequest request) throws Exception {
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = HttpStatus.ACCEPTED;
 		String token = request.getHeader("refresh-token");

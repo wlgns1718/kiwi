@@ -5,14 +5,15 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.ssafy.kiwi.board.model.BoardDto;
+import com.ssafy.kiwi.board.model.LikesDto;
 
 @Mapper
 public interface BoardMapper {
 
 	List<BoardDto> getListWhenNoUserInfo() throws Exception;
-	
+
 	List<BoardDto> getListWhenUserInfoExistAndNotFollowSelect(int userno) throws Exception;
-	
+
 	List<BoardDto> getListWhenUserInfoExistAndFollowSelect(int userno) throws Exception;
 
 	void updateHit() throws Exception;
@@ -24,4 +25,8 @@ public interface BoardMapper {
 	boolean deleteArticle(int boardno) throws Exception;
 
 	boolean writeArticle(BoardDto boardDto) throws Exception;
+
+	boolean addLikes(LikesDto likesDto) throws Exception;
+
+	boolean deleteLikes(LikesDto likesDto) throws Exception;
 }

@@ -87,20 +87,25 @@
 
 <script>
 import http from "@/api/http";
+import { mapState } from "vuex";
 
 export default {
   name: "BoardList",
   components: {},
+  computed: {
+    ...mapState("userStore", ["userInfo"]),
+  },
   data() {
     return {
       boardView: {
-        userno: 1,
+        userno: 0,
         isFollowSelect: 0,
       },
       boards: [],
     };
   },
   created() {
+    if (this.userInfo) this.userno = this.userInfo.userno;
     this.getBoard();
   },
   methods: {
@@ -108,6 +113,7 @@ export default {
       http
         .post(`/board`, JSON.stringify(this.boardView))
         .then(({ data }) => {
+          // console.log(data);
           this.boards = data;
         })
         .catch((error) => {
@@ -115,7 +121,36 @@ export default {
         });
     },
     toggleLikes(board) {
-      board.islike = board.islike == 1 ? 0 : 1;
+      let likesInfo = {
+        boardno: board.boardno,
+        userno: this.userInfo.userno,
+      };
+
+      if (board.islike === 0) {
+        http
+          .post(`/board/addlikes`, JSON.stringify(likesInfo))
+          .then(({ data }) => {
+            if (data === "success") {
+              board.islike = 1;
+              board.cntLike += 1;
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      } else {
+        http
+          .post(`/board/deletelikes/`, JSON.stringify(likesInfo))
+          .then(({ data }) => {
+            if (data === "success") {
+              board.islike = 0;
+              board.cntLike -= 1;
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
     },
   },
 };
@@ -194,6 +229,7 @@ export default {
   display: flex;
   align-items: center;
   margin-right: 10px;
+  width: 50px;
 }
 
 svg {
