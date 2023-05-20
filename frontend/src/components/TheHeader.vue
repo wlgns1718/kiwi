@@ -259,12 +259,16 @@ header {
   /* display: flex; */
   /* justify-content: space-between; */
   /* padding: 30px; */
-  /* position: fixed; */
+  position: fixed;
   width: 100%;
   border-bottom: 1px solid var(--colorBg1);
   height: 50px;
+  top: 25px;
   text-align: center;
-  z-index: 2000;
+  margin-top: -25px;
+  padding-top: 10px;
+  background-color: white;
+  /* z-index: 2000; */
 }
 
 .wrap-header {

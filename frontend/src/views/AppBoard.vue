@@ -1,6 +1,5 @@
 <template>
   <div class="view-content">
-    <h3 class="app_title">커뮤니티</h3>
     <router-view></router-view>
   </div>
 </template>
@@ -19,4 +18,8 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+/* .app_title {
+  position: fixed;
+} */
+</style>

@@ -22,6 +22,9 @@ export default {
 <style>
 @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard.css");
 
+#app {
+  padding-top: 60px;
+}
 *,
 #app,
 body,
@@ -38,6 +41,7 @@ a {
 
 .app_title {
   font-size: 36px;
+
   /* padding-left: 20px; */
 }
 
