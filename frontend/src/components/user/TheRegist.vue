@@ -43,19 +43,9 @@
           />
           <div class="message">{{ messageNick }}</div>
           <div>나이</div>
-          <input
-            v-model="user.age"
-            type="number"
-            class="registInput"
-            id="age"
-          />
+          <input v-model="user.age" type="number" class="registInput" id="age" />
           <div>이메일</div>
-          <input
-            v-model="user.email"
-            type="email"
-            class="registInput"
-            id="email"
-          />
+          <input v-model="user.email" type="email" class="registInput" id="email" />
           <button class="registBtn" @click="comfirm">회원가입</button>
         </div>
       </div>
@@ -128,39 +118,45 @@ export default {
       this.messagePwck = "";
     },
     nickck() {
-      http
-        .post("/user/register", JSON.stringify(this.user))
-        .then(({ data }) => {
-          if (data.isVaild == "false") {
-            this.messageNick = "중복된 닉네임입니다.";
-          } else {
-            this.messageNick = "";
-            this.check = true;
-          }
-        });
+      http.post("/user/register", JSON.stringify(this.user)).then(({ data }) => {
+        if (data.isVaild == "false") {
+          this.messageNick = "중복된 닉네임입니다.";
+        } else {
+          this.messageNick = "";
+          this.check = true;
+        }
+      });
     },
     comfirm() {
-        var reg_email = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
-        if(document.querySelector(#id).length < 4){
-            this.check= false;
-        }
-        if(document.querySelector(#password).length < 4){
-            this.check= false;
-        }
-        if(document.querySelector(#passwordck).length < 4){
-            this.check= false;
-        }
-        if(document.querySelector(#age).length ===0){
-            this.check= false;
-        }
-        if(document.querySelector(#nickname).length < 4){
-            this.check= false;
-        }
-        if(!reg_email.test(document.querySelector(#email))){
-            this.check= false;
-        }
+      // eslint-disable-next-line
+      var reg_email = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
+      console.log(this.check);
+      if (this.user.id == null || this.user.id.length < 4) {
+        alert("제대로 써!1");
+        return;
+      }
+      if (this.user.password == null || this.user.password.length < 4) {
+        alert("제대로 써!2");
+        return;
+      }
+      if (this.user.passwordck == null || this.user.passwordck.length < 4) {
+        alert("제대로 써!3");
+        return;
+      }
+      if (this.user.age == null || this.user.age <= 0) {
+        alert("제대로 써!4");
+        return;
+      }
+      if (this.user.nickname == null) {
+        alert("제대로 써!5");
+        return;
+      }
+      if (this.user.email == null || !reg_email.test(this.user.email)) {
+        alert("제대로 써!6");
+        return;
+      }
       if (!this.check) {
-        alert("제대로 써!");
+        alert("제대로 써!7");
         return;
       } else {
         alert("성공!!");
