@@ -32,6 +32,11 @@ const routes = [
         path: "regist",
         name: "UserRegist",
         component: () => import("@/components/user/TheRegist"),
+      },
+      {
+        path: "mypage",
+        name: "UserMypage",
+        component:() => import("@/components/user/TheMypage")
       }
     ]
   },

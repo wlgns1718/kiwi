@@ -1,5 +1,8 @@
 <template>
   <div>
+    <h1 class="header">KIWI</h1>
+    KIWI는 자신만이 간직한 아름다운 여행지를<br />
+    공유하는 커뮤니티 사이트입니다.
     <div class="Regist_Wrap">
       <div class="regist">
         <h2>회원가입</h2>
@@ -224,5 +227,9 @@ h2 {
   color: red;
   font-size: 10pt;
   padding-bottom: 8px;
+}
+.header {
+  margin-top: 70px;
+  color: rgb(105, 228, 128);
 }
 </style>
