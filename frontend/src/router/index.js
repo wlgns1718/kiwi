@@ -1,10 +1,12 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import { onlyAuthUser } from "@/api/logincheck";
+// import store from "@/store/index";
 
 //views
 import AppMain from "@/views/AppMain.vue";
 import AppTour from "@/views/AppTour.vue";
+import AppBoard from "@/views/AppBoard.vue";
 Vue.use(VueRouter);
 
 const routes = [
@@ -44,8 +46,7 @@ const routes = [
   {
     path: "/board",
     name: "board",
-    component: () => import("@/views/AppBoard"),
-    redirect: "/board/list",
+    component: AppBoard,
     children: [
       {
         path: "list",
@@ -79,5 +80,9 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes,
 });
+
+// router.beforeEach(() => {
+//   store.dispatch("headerStore/navToggle");
+// });
 
 export default router;

@@ -10,12 +10,12 @@
             <div class="post-header">
               <div class="profile-image"></div>
               <div class="post-info">
-                <h2 class="post-title">{{ board.nickname }}</h2>
+                <div class="post-nickname">{{ board.nickname }}</div>
                 <p class="post-date">{{ board.createdate }}</p>
               </div>
             </div>
             <div class="post-content">
-              <h4>{{ board.title }}</h4>
+              <h3>{{ board.title }}</h3>
               <p>{{ board.content }}</p>
             </div>
             <div class="post-footer">
@@ -98,21 +98,21 @@ export default {
   },
   data() {
     return {
-      boardView: {
-        userno: 0,
-        isFollowSelect: 0,
-      },
+      isFollowSelect: 0,
       boards: [],
     };
   },
   created() {
-    if (this.userInfo) this.userno = this.userInfo.userno;
     this.getBoard();
   },
   methods: {
     getBoard() {
+      const boardInfo = {
+        isFollowSelect: this.isFollowSelect,
+        userno: this.userInfo ? this.userInfo.userno : 0,
+      };
       http
-        .post(`/board`, JSON.stringify(this.boardView))
+        .post(`/board`, JSON.stringify(boardInfo))
         .then(({ data }) => {
           // console.log(data);
           this.boards = data;
@@ -208,8 +208,9 @@ export default {
   flex-grow: 1;
 }
 
-.post-title {
-  font-size: 18px;
+.post-nickname {
+  font-size: 16px;
+  font-weight: 500;
   margin: 0;
 }
 
