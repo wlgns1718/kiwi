@@ -1,5 +1,8 @@
 <template>
   <div>
+    <h1 class="header">KIWI</h1>
+    KIWI는 자신만이 간직한 아름다운 여행지를<br />
+    공유하는 커뮤니티 사이트입니다.
     <div class="Sign_Wrap">
       <div class="signin">
         <h2>로그인</h2>
@@ -24,9 +27,7 @@
             <div class="option">
               <input type="checkbox" id="LoginCheckbox" />
               <label for="LoginCheckbox">로그인 상태 유지</label>
-              <router-link to="/user/regist" class="regist"
-                >회원가입</router-link
-              >
+              <router-link to="/user/regist" class="regist">회원가입</router-link>
             </div>
           </div>
         </div>
@@ -63,7 +64,7 @@ export default {
       // console.log("1. confirm() token >> " + token);
       if (this.isLogin) {
         await this.getUserInfo(token);
-        // console.log("4. confirm() userInfo :: ", this.userInfo);
+        console.log("4. confirm() userInfo :: ", this.userInfo);
         this.$router.push({ name: "main" });
       } else {
         this.plzCheckYourIdPw = "아이디 또는 비밀번호를 확인해주세요.";
@@ -148,5 +149,9 @@ h2 {
   top: 85px;
   left: 0;
   color: rgb(2, 141, 25);
+}
+.header {
+  margin-top: 70px;
+  color: rgb(105, 228, 128);
 }
 </style>
