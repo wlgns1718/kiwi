@@ -9,13 +9,19 @@
       <div class="item-detail">
         <div class="title-wrap">
           <div class="title">
-            <a @click.prevent="moveCenter(tour.latitude, tour.longitude)">{{ tour.title }}</a>
+            <a @click.prevent="moveCenter(tour.latitude, tour.longitude)">{{
+              tour.title
+            }}</a>
           </div>
           <div>{{ tour.addr1 }}</div>
         </div>
         <div class="overview">
-          <p v-if="tour.overview != null && tour.expanded">{{ tour.overview }}</p>
-          <p v-else>{{ tour.overview != null && tour.overview.substring(0, 100) }} ...</p>
+          <p v-if="tour.overview != null && tour.expanded">
+            {{ tour.overview }}
+          </p>
+          <p v-else>
+            {{ tour.overview != null && tour.overview.substring(0, 100) }} ...
+          </p>
           <button class="moreBtn" @click="toggleExpansion(tour)">
             {{ tour.expanded ? "접기" : "더보기" }}
           </button>
@@ -113,5 +119,9 @@ p {
 .result-wrap::-webkit-scrollbar-track {
   background-color: #ebecee;
   border-radius: 12px;
+}
+
+a {
+  cursor: pointer;
 }
 </style>
