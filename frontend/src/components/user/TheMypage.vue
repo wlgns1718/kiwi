@@ -10,13 +10,13 @@
             <img src="@/assets/yoon.jpg" alt="프로필사진" class="profile" />
             <div class="FollowWrap">
               <span>게시글</span>
-              <span>팔로우</span>
+              <span>팔로워</span>
               <span>팔로잉</span>
             </div>
             <div class="FollowWrap1">
-              <a @click="showPost">1개</a>
-              <a @click="showFollower">2명</a>
-              <a @click="showFolloweeing">2명</a>
+              <a @click="showPost">{{ posts.length }}개</a>
+              <a @click="showFollower">{{ followerList.length }}명</a>
+              <a @click="showFolloweeing">{{ followeeList.length }}명</a>
             </div>
           </div>
         </div>
@@ -44,7 +44,7 @@
         </ul> -->
       </div>
       <div class="right-container" v-else-if="Follower">
-        <h3>팔로우 목록</h3>
+        <h3>팔로워 목록</h3>
         <div style="height: 100px">test</div>
         <div style="height: 100px">test</div>
         <div style="height: 100px">test</div>
@@ -94,8 +94,8 @@ export default {
       Follower: false,
       Followeeing: false,
       posts: [],
-      follower: [],
-      folloing: [],
+      followerList: [],
+      followeeList: [],
     };
   },
   methods: {
@@ -129,6 +129,31 @@ export default {
         .catch((error) => {
           console.log(error);
         });
+
+      http
+        .get(`/user/getfollowee/${this.user.no}`)
+        .then(({ data }) => {
+          this.followeeList = data.followeeList;
+          //   console.log(this.followee, "안녕");
+          //   console.log(data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+
+      http
+        .get(`/user/getfollower/${this.user.no}`)
+        .then(({ data }) => {
+          //   console.log(this.user.no);
+          //   console.log(data, "asdsjj");
+          this.followerList = data.followerList;
+          //   console.log(this.followerList, "asd");
+          //   console.log(this.followerList.length, "asd");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      //   console.log("teset", this.followerList);
     },
   },
   created() {
