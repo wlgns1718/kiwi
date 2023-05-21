@@ -5,6 +5,8 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
+
 export default {
   name: "BoardView",
   components: {},
@@ -13,8 +15,12 @@ export default {
       message: "",
     };
   },
-  created() {},
-  methods: {},
+  created() {
+    this.navToggle(this.$route.path);
+  },
+  methods: {
+    ...mapActions("headerStore", ["navToggle"]),
+  },
 };
 </script>
 

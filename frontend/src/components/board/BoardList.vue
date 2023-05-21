@@ -197,6 +197,7 @@ export default {
 <style scoped>
 .container {
   display: flex;
+  overflow: auto;
 }
 
 .fixed-section {

@@ -9,7 +9,7 @@
       <div class="header-center">
         <ul>
           <li v-if="navBtn.homeBtnOff">
-            <router-link to="/" @click.native="navBtnToggle">
+            <router-link to="/">
               <svg
                 width="36"
                 height="36"
@@ -35,7 +35,7 @@
             </router-link>
           </li>
           <li v-if="navBtn.homeBtnOn">
-            <router-link to="/" @click.native="navBtnToggle"
+            <router-link to="/"
               ><svg
                 width="36"
                 height="36"
@@ -62,7 +62,7 @@
             </router-link>
           </li>
           <li v-if="navBtn.boardBtnOff">
-            <router-link to="/board/list" @click.native="navBtnToggle">
+            <router-link to="/board/list">
               <svg
                 width="36"
                 height="36"
@@ -81,7 +81,7 @@
             </router-link>
           </li>
           <li v-if="navBtn.boardBtnOn">
-            <router-link to="/board/list" @click.native="navBtnToggle">
+            <router-link to="/board/list">
               <svg
                 width="36"
                 height="36"
@@ -106,7 +106,7 @@
             </router-link>
           </li>
           <li style="padding-top: 5px" v-if="navBtn.tourBtnOff">
-            <router-link to="/tour" @click.native="navBtnToggle">
+            <router-link to="/tour">
               <svg
                 width="30"
                 height="30"
@@ -138,7 +138,7 @@
             </router-link>
           </li>
           <li style="padding-top: 5px" v-if="navBtn.tourBtnOn">
-            <router-link to="/tour" @click.native="navBtnToggle">
+            <router-link to="/tour">
               <svg
                 width="30"
                 height="30"
@@ -196,9 +196,6 @@ export default {
   methods: {
     ...mapActions("userStore", ["userLogout"]),
     ...mapActions("headerStore", ["navToggle"]),
-    navBtnToggle() {
-      this.navToggle(this.$route.path);
-    },
     onClickLogout() {
       // this.SET_IS_LOGIN(false);
       // this.SET_USER_INFO(null);

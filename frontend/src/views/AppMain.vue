@@ -6,11 +6,18 @@
 
 <script>
 import MainImageSwiper from "@/components/main/MainImageSwiper.vue";
+import { mapActions } from "vuex";
 
 export default {
   name: "AppMain",
   components: {
     MainImageSwiper,
+  },
+  created() {
+    this.navToggle(this.$route.path);
+  },
+  methods: {
+    ...mapActions("headerStore", ["navToggle"]),
   },
 };
 </script>

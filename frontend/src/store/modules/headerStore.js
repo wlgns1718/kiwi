@@ -12,7 +12,7 @@ const headerStore = {
   },
   mutations: {
     SET_TOGGLE(state, path) {
-      console.log(path);
+      // console.log(path);
       if (path === "/") {
         state.navBtn.homeBtnOn = true;
         state.navBtn.homeBtnOff = false;
@@ -35,8 +35,8 @@ const headerStore = {
         state.navBtn.tourBtnOn = true;
         state.navBtn.tourBtnOff = false;
       } else {
-        state.navBtn.homeBtnOn = true;
-        state.navBtn.homeBtnOff = false;
+        state.navBtn.homeBtnOn = false;
+        state.navBtn.homeBtnOff = true;
         state.navBtn.boardBtnOn = false;
         state.navBtn.boardBtnOff = true;
         state.navBtn.tourBtnOn = false;

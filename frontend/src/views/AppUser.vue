@@ -6,11 +6,19 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
+
 export default {
   name: "UserView",
   components: {},
   data() {
     return {};
+  },
+  created() {
+    this.navToggle(this.$route.path);
+  },
+  methods: {
+    ...mapActions("headerStore", ["navToggle"]),
   },
 };
 </script>

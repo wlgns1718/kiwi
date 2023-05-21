@@ -21,6 +21,7 @@
 import TourMap from "@/components/tour/TourMap.vue";
 import TourSearchBar from "@/components/tour/TourSearchBar.vue";
 import TourResult from "@/components/tour/TourResult.vue";
+import { mapActions } from "vuex";
 
 export default {
   name: "AppTour",
@@ -31,11 +32,14 @@ export default {
       location: {},
     };
   },
-  created() {},
+  created() {
+    this.navToggle(this.$route.path);
+  },
   methods: {
     moveCenterHandler(location) {
       this.location = location;
     },
+    ...mapActions("headerStore", ["navToggle"]),
   },
 };
 </script>
