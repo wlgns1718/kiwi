@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.ssafy.kiwi.board.model.BoardDto;
+import com.ssafy.kiwi.board.model.BoardViewDto;
 import com.ssafy.kiwi.board.model.LikesDto;
 
 @Mapper
@@ -18,7 +19,7 @@ public interface BoardMapper {
 
 	void updateHit() throws Exception;
 
-	BoardDto getArticle(int boardno) throws Exception;
+	BoardDto getArticle(BoardViewDto boardViewDto) throws Exception;
 
 	boolean modifyArticle(BoardDto boardDto) throws Exception;
 

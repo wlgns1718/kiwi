@@ -12,7 +12,7 @@ public interface BoardService {
 
 	void updateHit(int boardno) throws Exception;
 
-	BoardDto getArticle(int boardno) throws Exception;
+	BoardDto getArticle(BoardViewDto boardviewDto) throws Exception;
 
 	boolean modifyArticle(BoardDto boardDto) throws Exception;
 

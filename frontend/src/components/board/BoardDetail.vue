@@ -1,43 +1,66 @@
 <template>
-  <div>
-    <div>
-      {{ board.boardno }}
-      {{ board.content }}
-      {{ board.createdate }}
-      {{ board.hit }}
-      {{ board.scope }}
-      {{ board.title }}
-      {{ board.userno }}
+  <div class="container">
+    <div class="fixed-section">
+      <div class="back-arrow" @click="goBack">
+        <svg
+          height="60"
+          viewBox="0 0 21 21"
+          width="60"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <g
+            fill="none"
+            fill-rule="evenodd"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            transform="translate(3 6)"
+          >
+            <path d="m4.499.497-3.999 4.002 4 4.001" />
+            <path d="m13.5 4.5h-13" />
+          </g>
+        </svg>
+      </div>
     </div>
-    <router-link :to="`/board/modify/${board.boardno}`">수정</router-link>
-    <a @click="deleteBoard">삭제</a>
+    <div class="board-detail-wrap">
+      <board-post-item :board="board"></board-post-item>
+      <router-link :to="`/board/modify/${board.boardno}`">수정</router-link>
+      <a @click="deleteBoard">삭제</a>
+    </div>
   </div>
 </template>
 
 <script>
 import http from "@/api/http";
+import BoardPostItem from "./BoardPostItem.vue";
+import { mapState } from "vuex";
 
 export default {
   name: "BoardDetail",
-  components: {},
+  components: { BoardPostItem },
+  computed: {
+    ...mapState("userStore", ["userInfo"]),
+  },
   data() {
     return {
-      board: {
-        boardno: "",
-        content: "",
-        createdate: "",
-        hit: "",
-        scope: "",
-        title: "",
-        userno: "",
-      },
+      board: {},
     };
   },
   created() {
-    http.get(`/board/${this.$route.params.no}`).then(({ data }) => {
-      console.log(data);
-      this.board = data;
-    });
+    const boardInfo = {
+      boardno: this.$route.params.no,
+      userno: this.userInfo.userno,
+    };
+    // console.log(boardInfo);
+    http
+      .post(`/board/detail`, JSON.stringify(boardInfo))
+      .then(({ data }) => {
+        // console.log(data);
+        this.board = data;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   },
   methods: {
     deleteBoard() {
@@ -52,12 +75,36 @@ export default {
           console.log(error);
         });
     },
+    goBack() {
+      this.$router.go(-1);
+    },
   },
 };
 </script>
 
 <style scoped>
-a {
+.container {
+  display: flex;
+  overflow: auto;
+}
+
+.fixed-section {
+  position: fixed;
+  width: 240px;
+  height: calc(100vh - 70px);
+}
+
+.board-detail-wrap {
+  width: 680px;
+  margin: 0 240px;
+  padding: 0 100px;
+  padding-top: 40px;
+}
+
+.back-arrow {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 25px;
   cursor: pointer;
 }
 </style>

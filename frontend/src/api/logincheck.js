@@ -2,7 +2,7 @@ import store from "@/store";
 import router from "@/router/index";
 
 // https://v3.router.vuejs.org/kr/guide/advanced/navigation-guards.html
-export const onlyAuthUser = async () => {
+export const onlyAuthUser = async (to, from, next) => {
   const checkUserInfo = store.getters["userStore/checkUserInfo"];
   const checkToken = store.getters["userStore/checkToken"];
   let token = sessionStorage.getItem("access-token");
@@ -18,6 +18,6 @@ export const onlyAuthUser = async () => {
     router.push({ name: "UserLogin" });
   } else {
     // console.log("로그인 했다!!!!!!!!!!!!!.");
-    // next();
+    if (next) next();
   }
 };

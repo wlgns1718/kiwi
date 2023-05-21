@@ -53,11 +53,12 @@ public class BoardController {
 		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
 	}
 
-	@GetMapping("/{boardno}")
-	public ResponseEntity<BoardDto> getArticle(@PathVariable("boardno") int boardno) throws Exception {
-		logger.info("getArticle - 호출 : " + boardno);
-		boardService.updateHit(boardno);
-		return new ResponseEntity<BoardDto>(boardService.getArticle(boardno), HttpStatus.OK);
+	@PostMapping("/detail")
+	public ResponseEntity<BoardDto> getArticle(@RequestBody BoardViewDto boardviewDto) throws Exception {
+		logger.info("getArticle - 호출 : " + boardviewDto);
+		System.out.println(boardviewDto);
+//		boardService.updateHit(boardviewDto);
+		return new ResponseEntity<BoardDto>(boardService.getArticle(boardviewDto), HttpStatus.OK);
 	}
 
 	@PutMapping
@@ -82,7 +83,6 @@ public class BoardController {
 	@PostMapping("/addlikes")
 	public ResponseEntity<String> addLikes(@RequestBody LikesDto likesDto) throws Exception {
 		logger.info("addLikes - 호출");
-		System.out.println(likesDto);
 		if (boardService.addLikes(likesDto)) {
 			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 		}

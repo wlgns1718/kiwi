@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 public class BoardViewDto {
 
 	private int userno;
+	private int boardno;
 	private int isFollowSelect;
 
 	public int getUserno() {
@@ -24,9 +25,17 @@ public class BoardViewDto {
 		this.isFollowSelect = isFollowSelect;
 	}
 
+	public int getBoardno() {
+		return boardno;
+	}
+
+	public void setBoardno(int boardno) {
+		this.boardno = boardno;
+	}
+
 	@Override
 	public String toString() {
-		return "BoardViewDto [userno=" + userno + ", isFollowSelect=" + isFollowSelect + "]";
+		return "BoardViewDto [userno=" + userno + ", boardno=" + boardno + ", isFollowSelect=" + isFollowSelect + "]";
 	}
 
 }
