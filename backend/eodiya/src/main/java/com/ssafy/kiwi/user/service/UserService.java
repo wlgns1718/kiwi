@@ -24,4 +24,6 @@ public interface UserService {
 
 	List<Integer> getFollowee(int userno) throws Exception;
 
+	void regist(UserDto userDto) throws Exception;
+
 }

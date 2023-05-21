@@ -77,21 +77,30 @@
 		where nickname= #{nickname}
 	</select>
 
-	<select id="getFollower" parameterType="Integer" resultType="Integer">
+	<select id="getFollower" parameterType="Integer"
+		resultType="Integer">
 		select f.user_no `팔로워`
 		from user u join follow f
-		on u.user_no = f.user_no
+		on u.user_no
+		= f.user_no
 		where f.followee = #{userno}
 		order by f.create_date
 
 	</select>
-	<select id="getFollowee" parameterType="Integer" resultType="Integer">
+	<select id="getFollowee" parameterType="Integer"
+		resultType="Integer">
 		select f.followee `팔로잉`
 		from user u join follow f
-		on u.user_no = f.user_no
+		on
+		u.user_no = f.user_no
 		where u.user_no = #{userno}
 		order by f.create_date
 
 	</select>
+
+	<insert id="regist" parameterType="map">
+		insert into user (id, password, salt, email, nickname, age, gender)
+		values(#{id}, #{password}, #{salt}, #{email}, #{nickname}, #{age}, #{gender})
+	</insert>
 
 </mapper>

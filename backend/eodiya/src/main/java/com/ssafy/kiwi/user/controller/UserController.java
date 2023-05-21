@@ -210,5 +210,22 @@ public class UserController {
 
 	}
 	
+	
+	@PostMapping("/regist")
+	public ResponseEntity<Map<String, Object>> regist(@RequestBody UserDto userDto) {
+		Map<String, Object> resultMap = new HashMap<>();
+		HttpStatus status = HttpStatus.UNAUTHORIZED;
+		try {
+			userService.regist(userDto);
+			resultMap.put("message", SUCCESS);
+			status = HttpStatus.ACCEPTED;
+		} catch (Exception e) {
+			logger.error("회원등록 실패: {}", e);
+			resultMap.put("message", e.getMessage());
+			status = HttpStatus.INTERNAL_SERVER_ERROR;
+		}
+		return new ResponseEntity<Map<String, Object>>(resultMap, status);
+	}
+	
 
 }

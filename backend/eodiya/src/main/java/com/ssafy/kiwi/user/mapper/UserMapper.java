@@ -30,5 +30,7 @@ public interface UserMapper {
 
 	List<Integer> getFollowee(int userno) throws Exception;
 
+	void regist(UserDto userDto) throws Exception;
+
 
 }

@@ -80,4 +80,14 @@ public class UserServiceImpl implements UserService {
 		return userMapper.getFollowee(userno);
 	}
 
+	@Override
+	public void regist(UserDto userDto) throws Exception {
+		String salt = util.getSalt();
+		userDto.setSalt(salt);
+		String npw = util.Hashing(userDto.getPassword(), salt);
+		userDto.setPassword(npw);
+		userMapper.regist(userDto);
+		
+	}
+
 }
