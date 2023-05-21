@@ -118,7 +118,6 @@ export default {
         .then(({ data }) => {
           // console.log(data, "성공");
           this.posts = data;
-          this.saveData(); // 데이터 저장
         })
         .catch((error) => {
           console.log(error);
@@ -149,19 +148,9 @@ export default {
         });
       //   console.log("teset", this.followerList);
     },
-    loadData() {
-      const posts = localStorage.getItem("posts");
-      if (posts) {
-        this.posts = JSON.parse(posts);
-      }
-    },
-    saveData() {
-      localStorage.setItem("posts", JSON.stringify(this.posts));
-    },
   },
   created() {
     this.getUserInfo();
-    this.loadData(); // 데이터 로드
   },
 };
 </script>
