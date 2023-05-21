@@ -32,16 +32,6 @@
             <div style="height: 100px">{{ post }}</div>
           </div>
         </div>
-        <!-- <div style="height: 100px">test</div>
-        <div style="height: 100px">test</div>
-        <div style="height: 100px">test</div>
-        <div style="height: 100px">test</div>
-        <div style="height: 100px">test</div>
-        <div style="height: 100px">test</div>
-        <div style="height: 100px">test</div> -->
-        <!-- <ul>
-          <li v-for="post in posts" :key="post.id">{{ post.title }}</li>
-        </ul> -->
       </div>
       <div class="right-container" v-else-if="Follower">
         <h3>팔로워 목록</h3>
@@ -57,7 +47,7 @@
       </div>
       <div class="right-container" v-else-if="Followeeing">
         <h3>팔로잉 목록</h3>
-        <div v-if="followeeList.length == 0">팔로앙이 없습니다.</div>
+        <div v-if="followeeList.length == 0">팔로잉이 없습니다.</div>
         <div v-else>
           <div v-for="(followee, index) in followeeList" :key="index">
             <div style="height: 100px">{{ followee }}</div>

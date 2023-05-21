@@ -62,7 +62,7 @@
 		on
 		b.board_no=r.board_no
 		where b.scope = 0 or
-		(b.scope=1 and b.user_no =
+		(b.scope=1 and b.user_no in
 		(select followee from follow where user_no =
 		#{userno}))
 		Group by
@@ -90,7 +90,7 @@
 		on
 		b.board_no=r.board_no
 		where b.scope=1 and
-		b.user_no = (select followee
+		b.user_no in (select followee
 		from follow where user_no = #{userno})
 		Group by b.board_no
 		order by b.create_date desc;
