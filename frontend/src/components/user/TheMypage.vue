@@ -14,9 +14,9 @@
               <span>팔로잉</span>
             </div>
             <div class="FollowWrap1">
-              <button @click="showPost">1개</button>
-              <button @click="showFollower">2명</button>
-              <button @click="showFolloweeing">2명</button>
+              <a @click="showPost">1개</a>
+              <a @click="showFollower">2명</a>
+              <a @click="showFolloweeing">2명</a>
             </div>
           </div>
         </div>
@@ -129,7 +129,7 @@ export default {
   width: 450px;
   margin-top: 30px;
   border-radius: 20px 20px 20px 20px;
-  height: 240px;
+  height: 280px;
 }
 .FollowWrap {
   border: 1px solid;
@@ -147,7 +147,7 @@ export default {
   top: 40px;
   border: 1px solid;
   width: 258px;
-  margin: 90px 0px 0px 160px;
+  margin: 120px 0px 0px 160px;
   border-radius: 6px 6px 6px 6px;
   display: flex;
   justify-content: space-between;
@@ -194,5 +194,8 @@ export default {
 
 .board-lists {
   background-color: red;
+}
+a {
+  cursor: pointer;
 }
 </style>
