@@ -1,6 +1,7 @@
 package com.ssafy.kiwi.user.service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,6 +65,29 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public String nickCheck(String nickname) throws Exception {
 		return userMapper.nickCheck(nickname);
+	}
+
+	@Override
+	public List<Integer> getFollower(int userno) throws Exception {
+		// TODO Auto-generated method stub
+		return userMapper.getFollower(userno);
+		
+	}
+
+	@Override
+	public List<Integer> getFollowee(int userno) throws Exception {
+		// TODO Auto-generated method stub
+		return userMapper.getFollowee(userno);
+	}
+
+	@Override
+	public void regist(UserDto userDto) throws Exception {
+		String salt = util.getSalt();
+		userDto.setSalt(salt);
+		String npw = util.Hashing(userDto.getPassword(), salt);
+		userDto.setPassword(npw);
+		userMapper.regist(userDto);
+		
 	}
 
 }

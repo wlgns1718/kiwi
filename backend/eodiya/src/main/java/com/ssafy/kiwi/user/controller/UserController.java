@@ -1,6 +1,7 @@
 package com.ssafy.kiwi.user.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -172,5 +173,59 @@ public class UserController {
 		}
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
+	@GetMapping("/getfollower/{userno}")
+	public ResponseEntity<?> getFollower(@PathVariable("userno") int userno) {
+		logger.info("Follower List - 호출");
+		Map<String, Object> resultMap = new HashMap<>();
+		HttpStatus status = HttpStatus.ACCEPTED;
+		try {
+			List<Integer> follwerList = userService.getFollower(userno);
+			resultMap.put("followerList",follwerList);
+			resultMap.put("message", SUCCESS);
+			status = HttpStatus.ACCEPTED;
+		} catch (Exception e) {
+			logger.error("팔로워 정보 가져오기 실패 : {}", e);
+			resultMap.put("message", e.getMessage());
+			status = HttpStatus.INTERNAL_SERVER_ERROR;
+		}
+		return new ResponseEntity<Map<String, Object>>(resultMap, status);
+
+	}
+	@GetMapping("/getfollowee/{userno}")
+	public ResponseEntity<?> getFollowee(@PathVariable("userno") int userno) {
+		logger.info("Followee List - 호출");
+		Map<String, Object> resultMap = new HashMap<>();
+		HttpStatus status = HttpStatus.ACCEPTED;
+		try {
+			List<Integer> followeeList = userService.getFollowee(userno);
+			resultMap.put("followeeList",followeeList);
+			resultMap.put("message", SUCCESS);
+			status = HttpStatus.ACCEPTED;
+		} catch (Exception e) {
+			logger.error("팔로잉 정보 가져오기 실패 : {}", e);
+			resultMap.put("message", e.getMessage());
+			status = HttpStatus.INTERNAL_SERVER_ERROR;
+		}
+		return new ResponseEntity<Map<String, Object>>(resultMap, status);
+
+	}
+	
+	
+	@PostMapping("/regist")
+	public ResponseEntity<Map<String, Object>> regist(@RequestBody UserDto userDto) {
+		Map<String, Object> resultMap = new HashMap<>();
+		HttpStatus status = HttpStatus.UNAUTHORIZED;
+		try {
+			userService.regist(userDto);
+			resultMap.put("message", SUCCESS);
+			status = HttpStatus.ACCEPTED;
+		} catch (Exception e) {
+			logger.error("회원등록 실패: {}", e);
+			resultMap.put("message", e.getMessage());
+			status = HttpStatus.INTERNAL_SERVER_ERROR;
+		}
+		return new ResponseEntity<Map<String, Object>>(resultMap, status);
+	}
+	
 
 }

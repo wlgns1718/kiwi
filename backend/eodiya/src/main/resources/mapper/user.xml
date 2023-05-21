@@ -35,9 +35,9 @@
 		where id = #{id}
 	</select>
 
-	<select id="userInfo" parameterType="string"
-		resultMap="user">
-		select user_no, id, nickname, email
+	<select id="userInfo" parameterType="string" resultMap="user">
+		select
+		user_no, id, nickname, email
 		from user
 		where id = #{id}
 	</select>
@@ -64,15 +64,43 @@
 		where id =
 		#{userid}
 	</update>
-	
+
 	<select id="idCheck" parameterType="String" resultType="String">
-	select id
-	from user
-	where id=#{id}
+		select id
+		from user
+		where id=#{id}
 	</select>
-	<select id="nickCheck" parameterType="String" resultType="String">
-	select nickname
-	from user
-	where nickname= #{nickname}
+	<select id="nickCheck" parameterType="String"
+		resultType="String">
+		select nickname
+		from user
+		where nickname= #{nickname}
 	</select>
+
+	<select id="getFollower" parameterType="Integer"
+		resultType="Integer">
+		select f.user_no `팔로워`
+		from user u join follow f
+		on u.user_no
+		= f.user_no
+		where f.followee = #{userno}
+		order by f.create_date
+
+	</select>
+	<select id="getFollowee" parameterType="Integer"
+		resultType="Integer">
+		select f.followee `팔로잉`
+		from user u join follow f
+		on
+		u.user_no = f.user_no
+		where u.user_no = #{userno}
+		order by f.create_date
+
+	</select>
+
+	<insert id="regist" parameterType="map">
+		insert into user (id, password, salt, email, nickname, age, gender)
+		values(#{id}, #{password}, #{salt}, #{email}, #{nickname}, #{age}, #{gender})
+	</insert>
+
 </mapper>

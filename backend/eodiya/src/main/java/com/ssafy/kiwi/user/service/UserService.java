@@ -1,5 +1,7 @@
 package com.ssafy.kiwi.user.service;
 
+import java.util.List;
+
 import com.ssafy.kiwi.user.model.UserDto;
 
 public interface UserService {
@@ -17,5 +19,11 @@ public interface UserService {
 	String idCheck(String id) throws Exception;
 
 	String nickCheck(String nickname) throws Exception;
+
+	List<Integer> getFollower(int userno) throws Exception;
+
+	List<Integer> getFollowee(int userno) throws Exception;
+
+	void regist(UserDto userDto) throws Exception;
 
 }

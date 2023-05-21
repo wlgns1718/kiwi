@@ -1,5 +1,6 @@
 package com.ssafy.kiwi.user.mapper;
 
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -24,6 +25,12 @@ public interface UserMapper {
 	String idCheck(String id) throws Exception;
 
 	String nickCheck(String nickname) throws Exception;
+
+	List<Integer> getFollower(int userno) throws Exception;
+
+	List<Integer> getFollowee(int userno) throws Exception;
+
+	void regist(UserDto userDto) throws Exception;
 
 
 }
