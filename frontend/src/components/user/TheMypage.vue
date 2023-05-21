@@ -29,7 +29,7 @@
         <div v-if="posts.length == 0">작성한 게시글이 없습니다.</div>
         <div v-else>
           <div v-for="(post, index) in posts" :key="index">
-            <div style="height: 100px">{{ post }}</div>
+            <div style="height: 100px"><board-post-item :board="post"></board-post-item></div>
           </div>
         </div>
       </div>
@@ -64,10 +64,13 @@
 <script>
 import http from "@/api/http";
 import { mapState } from "vuex";
+import BoardPostItem from "@/components/board/BoardPostItem.vue";
 
 export default {
   name: "MyPageView",
-  components: {},
+  components: {
+    BoardPostItem,
+  },
   computed: {
     ...mapState("userStore", ["userInfo"]),
   },
@@ -160,7 +163,8 @@ export default {
   width: 500px;
   height: 500px;
   overflow: auto;
-  margin: 30px 0px 0px 40px;
+  margin: 30px 0px 0px 100px;
+  text-align: left;
 }
 
 .MyPageWrap {

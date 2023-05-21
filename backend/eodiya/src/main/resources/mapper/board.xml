@@ -63,7 +63,8 @@
 		b.board_no=r.board_no
 		where b.scope = 0 or
 		(b.scope=1 and b.user_no in
-		(select followee from follow where user_no =
+		(select followee from follow where user_no
+		=
 		#{userno}))
 		Group by
 		b.board_no
@@ -103,12 +104,16 @@
 		#{userno})
 	</insert>
 
-	<select id="getArticle" parameterType="boardViewDto" resultMap="board">
+	<select id="getArticle" parameterType="boardViewDto"
+		resultMap="board">
 		select b.board_no, b.title,
-		b.content, DATE_FORMAT(b.create_date, '%Y년 %m월 %d일 %H:%i') as
-		create_date, b.hit, b.scope, u.user_no ,u.nickname,
+		b.content,
+		DATE_FORMAT(b.create_date, '%Y년 %m월 %d일 %H:%i') as
+		create_date, b.hit,
+		b.scope, u.user_no ,u.nickname,
 		count(l.user_no)
-		`cnt_like`, count(r.reply_no) `cnt_reply`,
+		`cnt_like`,
+		count(r.reply_no) `cnt_reply`,
 		if(l.board_no is NOT NULL
 		,1,0) `islike`
 		from board b join user u
@@ -118,7 +123,8 @@
 		outer join likes l
 		on b.board_no = l.board_no
 		and l.user_no = #{userno}
-		left outer join reply r
+		left outer join
+		reply r
 		on
 		b.board_no=r.board_no
 		where b.board_no = #{boardno};
@@ -159,13 +165,15 @@
 
 	<select id="getBoardListwithUserInfo" parameterType="Integer"
 		resultMap="board">
-		select b.board_no,
-		b.title, b.content, DATE_FORMAT(b.create_date, '%Y년 %m월 %d일 %H:%i') as create_date, b.hit, b.scope, u.user_no,
-		u.nickname,count(l.user_no) `cnt_like`, count(r.reply_no) `cnt_reply`
+		select b.board_no, b.title, b.content, DATE_FORMAT(b.create_date, '%Y년 %m월
+		%d일 %H:%i') as create_date,
+		b.hit, b.scope, u.user_no, u.nickname, count(l.user_no) `cnt_like`,
+		count(r.reply_no) `cnt_reply`,
+		if(l.board_no is NOT NULL,1,0) `islike`
 		from board b join user u
 		on b.user_no = u.user_no
 		left outer join likes l
-		on b.board_no = l.board_no
+		on b.board_no = l.board_no and l.user_no = #{userno}
 		left outer join reply r
 		on b.board_no=r.board_no
 		where b.user_no = #{userno}
