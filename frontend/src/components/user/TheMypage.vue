@@ -1,7 +1,6 @@
 <template>
   <div class="view-content">
     <h3 class="app_title">마이 페이지</h3>
-    <hr />
     <div class="wrap">
       <div class="MyPageWrap">
         <h3 class="profileHeader">프로필 정보</h3>
@@ -25,7 +24,7 @@
         <router-link to="#" class="modify">프로필 편집</router-link>
       </div>
       <div class="right-container" v-if="Post">
-        <h3>게시글 목록</h3>
+        <h3 class="boardTitle">게시글 목록</h3>
         <div v-if="posts.length == 0">작성한 게시글이 없습니다.</div>
         <div v-else>
           <div v-for="(post, index) in posts" :key="index">
@@ -35,7 +34,10 @@
       </div>
       <div class="right-container" v-else-if="Follower">
         <h3>팔로워 목록</h3>
-        <div v-if="followerList.length == 0">팔로워가 없습니다.</div>
+        <div v-if="followerList.length == 0" class="nofollwer">
+          팔로워가 없습니다.
+          <div>여행 포스트를 추가해서 팔로워를 모아보세요!! 😊</div>
+        </div>
         <div v-else>
           <div v-for="(follower, index) in followerList" :key="index">
             <div style="height: 100px">{{ follower }}</div>
@@ -47,7 +49,7 @@
       </div>
       <div class="right-container" v-else-if="Followeeing">
         <h3>팔로잉 목록</h3>
-        <div v-if="followeeList.length == 0">팔로잉이 없습니다.</div>
+        <div v-if="followeeList.length == 0" class="nofollwer">팔로잉이 없습니다.</div>
         <div v-else>
           <div v-for="(followee, index) in followeeList" :key="index">
             <div style="height: 100px">{{ followee }}</div>
@@ -81,7 +83,7 @@ export default {
         name: "",
         email: "",
       },
-      Post: false,
+      Post: true,
       Follower: false,
       Followeeing: false,
       posts: [],
@@ -116,6 +118,7 @@ export default {
         .then(({ data }) => {
           // console.log(data, "성공");
           this.posts = data;
+          this.saveData(); // 데이터 저장
         })
         .catch((error) => {
           console.log(error);
@@ -146,9 +149,19 @@ export default {
         });
       //   console.log("teset", this.followerList);
     },
+    loadData() {
+      const posts = localStorage.getItem("posts");
+      if (posts) {
+        this.posts = JSON.parse(posts);
+      }
+    },
+    saveData() {
+      localStorage.setItem("posts", JSON.stringify(this.posts));
+    },
   },
   created() {
     this.getUserInfo();
+    this.loadData(); // 데이터 로드
   },
 };
 </script>
@@ -165,6 +178,8 @@ export default {
   overflow: auto;
   margin: 30px 0px 0px 100px;
   text-align: left;
+  padding: 0 20px;
+  border-radius: 8px 8px 8px 8px;
 }
 
 .MyPageWrap {
@@ -241,5 +256,12 @@ export default {
 }
 a {
   cursor: pointer;
+}
+.boardTitle {
+  text-align: center;
+}
+.nofollwer {
+  font-size: 15pt;
+  font-weight: bold;
 }
 </style>

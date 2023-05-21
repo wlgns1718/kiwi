@@ -132,6 +132,7 @@ export default {
   border: 1px solid #e5e7eb;
   padding: 20px;
   margin-bottom: 60px;
+  background-color: rgb(255, 255, 255);
 }
 
 .post-header {
