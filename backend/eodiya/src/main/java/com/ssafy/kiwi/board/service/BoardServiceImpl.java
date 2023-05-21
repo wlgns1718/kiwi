@@ -72,4 +72,10 @@ public class BoardServiceImpl implements BoardService {
 		// TODO Auto-generated method stub
 		return boardMapper.deleteLikes(likesDto);
 	}
+
+	@Override
+	public List<BoardDto> getBoardListwithUserInfo(int userno) throws Exception {
+		System.out.println(userno);
+		return boardMapper.getBoardListwithUserInfo(userno);
+	}
 }

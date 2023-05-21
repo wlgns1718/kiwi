@@ -21,12 +21,15 @@
 
 	<select id="getListWhenNoUserInfo" resultMap="board">
 		select b.board_no,
-		b.title, b.content, DATE_FORMAT(b.create_date, '%Y년 %m월 %d일 %H:%i') as create_date, b.hit, b.scope, u.user_no
-		,u.nickname, count(l.user_no) `cnt_like`, count(r.reply_no)
+		b.title, b.content, DATE_FORMAT(b.create_date, '%Y년 %m월 %d일 %H:%i') as
+		create_date, b.hit, b.scope, u.user_no
+		,u.nickname, count(l.user_no)
+		`cnt_like`, count(r.reply_no)
 		`cnt_reply`
 		from board b join
 		user u
-		on b.user_no = u.user_no
+		on
+		b.user_no = u.user_no
 		left outer join likes l
 		on b.board_no =
 		l.board_no
@@ -34,27 +37,34 @@
 		on b.board_no=r.board_no
 		where b.scope
 		= 0
-		Group by b.board_no
+		Group
+		by b.board_no
 		order by b.create_date desc;
 	</select>
 
 	<select id="getListWhenUserInfoExistAndNotFollowSelect"
 		parameterType="Integer" resultMap="board">
 		select b.board_no, b.title,
-		b.content, DATE_FORMAT(b.create_date, '%Y년 %m월 %d일 %H:%i') as create_date, b.hit, b.scope, u.user_no ,u.nickname,
-		count(l.user_no) `cnt_like`, count(r.reply_no) `cnt_reply`,
-		if(l.board_no is NOT NULL ,1,0) `islike`
+		b.content, DATE_FORMAT(b.create_date, '%Y년 %m월 %d일 %H:%i') as
+		create_date, b.hit, b.scope, u.user_no ,u.nickname,
+		count(l.user_no)
+		`cnt_like`, count(r.reply_no) `cnt_reply`,
+		if(l.board_no is NOT NULL
+		,1,0) `islike`
 		from board b join user u
 		on
 		b.user_no = u.user_no
-		left outer join likes l
+		left
+		outer join likes l
 		on b.board_no = l.board_no
 		and l.user_no = #{userno}
 		left outer join reply r
 		on
 		b.board_no=r.board_no
-		where b.scope = 0 or (b.scope=1 and b.user_no =
-		(select followee from follow where user_no = #{userno}))
+		where b.scope = 0 or
+		(b.scope=1 and b.user_no =
+		(select followee from follow where user_no =
+		#{userno}))
 		Group by
 		b.board_no
 		order by b.create_date desc;
@@ -63,19 +73,24 @@
 	<select id="getListWhenUserInfoExistAndFollowSelect"
 		parameterType="Integer" resultMap="board">
 		select b.board_no, b.title,
-		b.content, DATE_FORMAT(b.create_date, '%Y년 %m월 %d일 %H:%i') as create_date, b.hit, b.scope, u.user_no ,u.nickname,
-		count(l.user_no) `cnt_like`, count(r.reply_no) `cnt_reply`,
-		if(l.board_no is NOT NULL ,1,0) `islike`
+		b.content, DATE_FORMAT(b.create_date, '%Y년 %m월 %d일 %H:%i') as
+		create_date, b.hit, b.scope, u.user_no ,u.nickname,
+		count(l.user_no)
+		`cnt_like`, count(r.reply_no) `cnt_reply`,
+		if(l.board_no is NOT NULL
+		,1,0) `islike`
 		from board b join user u
 		on
 		b.user_no = u.user_no
-		left outer join likes l
+		left
+		outer join likes l
 		on b.board_no = l.board_no
 		and l.user_no = #{userno}
 		left outer join reply r
 		on
 		b.board_no=r.board_no
-		where b.scope=1 and b.user_no = (select followee
+		where b.scope=1 and
+		b.user_no = (select followee
 		from follow where user_no = #{userno})
 		Group by b.board_no
 		order by b.create_date desc;
@@ -90,10 +105,13 @@
 
 	<select id="getArticle" parameterType="int" resultMap="board">
 		select
-		b.board_no, b.title, b.content, DATE_FORMAT(b.create_date, '%Y년 %m월 %d일 %H:%i') as create_date, b.hit, b.scope,
+		b.board_no, b.title, b.content, DATE_FORMAT(b.create_date, '%Y년 %m월
+		%d일 %H:%i') as create_date, b.hit, b.scope,
 		u.user_no, u.nickname
-		from board b join user u on b.user_no = u.user_no
-		where board_no = #{boardno}
+		from
+		board b join user u on b.user_no = u.user_no
+		where board_no =
+		#{boardno}
 	</select>
 
 	<update id="updateHit" parameterType="int">
@@ -129,4 +147,19 @@
 		user_no = #{userno}
 	</delete>
 
+	<select id="getBoardListwithUserInfo" parameterType="Integer"
+		resultMap="board">
+		select b.board_no,
+		b.title, b.content, DATE_FORMAT(b.create_date, '%Y년 %m월 %d일 %H:%i') as create_date, b.hit, b.scope, u.user_no,
+		u.nickname,count(l.user_no) `cnt_like`, count(r.reply_no) `cnt_reply`
+		from board b join user u
+		on b.user_no = u.user_no
+		left outer join likes l
+		on b.board_no = l.board_no
+		left outer join reply r
+		on b.board_no=r.board_no
+		where b.user_no = #{userno}
+		Group by b.board_no
+		order by b.create_date desc;
+	</select>
 </mapper>

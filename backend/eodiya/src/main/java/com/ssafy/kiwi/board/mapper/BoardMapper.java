@@ -29,4 +29,6 @@ public interface BoardMapper {
 	boolean addLikes(LikesDto likesDto) throws Exception;
 
 	boolean deleteLikes(LikesDto likesDto) throws Exception;
+
+	List<BoardDto> getBoardListwithUserInfo(int userno) throws Exception;
 }

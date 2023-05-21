@@ -26,13 +26,19 @@
       </div>
       <div class="right-container" v-if="Post">
         <h3>게시글 목록</h3>
+        <div v-if="posts.length == 0">작성한 게시글이 없습니다.</div>
+        <div v-else>
+          <div v-for="(post, index) in posts" :key="index">
+            <div style="height: 100px">{{ post }}</div>
+          </div>
+        </div>
+        <!-- <div style="height: 100px">test</div>
         <div style="height: 100px">test</div>
         <div style="height: 100px">test</div>
         <div style="height: 100px">test</div>
         <div style="height: 100px">test</div>
         <div style="height: 100px">test</div>
-        <div style="height: 100px">test</div>
-        <div style="height: 100px">test</div>
+        <div style="height: 100px">test</div> -->
         <!-- <ul>
           <li v-for="post in posts" :key="post.id">{{ post.title }}</li>
         </ul> -->
@@ -68,23 +74,28 @@
 </template>
 
 <script>
+import http from "@/api/http";
+import { mapState } from "vuex";
+
 export default {
   name: "MyPageView",
   components: {},
+  computed: {
+    ...mapState("userStore", ["userInfo"]),
+  },
   data() {
     return {
       user: {
-        name: "윤우혁",
-        email: "square@naver.com",
+        no: 0,
+        name: "",
+        email: "",
       },
       Post: false,
       Follower: false,
       Followeeing: false,
-      posts: [
-        { id: 1, title: "첫 번째 게시글" },
-        { id: 2, title: "두 번째 게시글" },
-        { id: 3, title: "세 번째 게시글" },
-      ],
+      posts: [],
+      follower: [],
+      folloing: [],
     };
   },
   methods: {
@@ -106,6 +117,22 @@ export default {
       this.Followeeing = true;
       console.log(this.Post);
     },
+    getUserInfo() {
+      this.user.no = this.userInfo ? this.userInfo.userno : 0;
+      //   console.log(this.user.no);
+      http
+        .get(`/board/mypage/${this.user.no}`)
+        .then(({ data }) => {
+          // console.log(data, "성공");
+          this.posts = data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+  },
+  created() {
+    this.getUserInfo();
   },
 };
 </script>
