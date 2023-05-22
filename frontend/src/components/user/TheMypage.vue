@@ -296,7 +296,7 @@ export default {
 .right-container {
   background-color: rgb(233, 231, 231);
   width: 500px;
-  height: 500px;
+  height: 700px;
   overflow: auto;
   margin: 30px 0px 0px 100px;
   text-align: left;
