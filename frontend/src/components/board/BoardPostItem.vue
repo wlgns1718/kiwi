@@ -12,7 +12,7 @@
           class="post-detail"
         >
           <div @click="moveBoardModify(board.boardno)">수정</div>
-          <div>삭제</div>
+          <div @click="deleteBoard(board.boardno)">삭제</div>
         </div>
       </div>
       <div class="post-content" @click="moveBoardDetail(board.boardno)">
@@ -105,6 +105,21 @@ export default {
     moveBoardModify(boardno) {
       if (this.$route.path !== `/board/modify/${boardno}`)
         this.$router.push({ name: "boardmodify", params: { no: boardno } });
+    },
+    deleteBoard(boardno) {
+      if (window.confirm("정말 삭제하시겠습니까?")) {
+        http
+          .delete(`/board/${boardno}`)
+          .then(({ data }) => {
+            if (data === "success") {
+              alert("삭제완료");
+              this.$router.push({ name: "boardlist" });
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
     },
     toggleLikes(board) {
       onlyAuthUser();
