@@ -68,6 +68,9 @@
           </svg>
           <span class="comments-count">{{ board.cntReply }}</span>
         </div>
+        <div v-if="board.scope == 0">전체공개</div>
+        <div v-else-if="board.scope == 1">팔로우공개</div>
+        <div v-else-if="board.scope == 2">비공개</div>
       </div>
     </div>
   </div>

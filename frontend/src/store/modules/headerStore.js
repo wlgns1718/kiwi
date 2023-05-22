@@ -2,8 +2,8 @@ const headerStore = {
   namespaced: true,
   state: {
     navBtn: {
-      homeBtnOn: true,
-      homeBtnOff: false,
+      homeBtnOn: false,
+      homeBtnOff: true,
       boardBtnOn: false,
       boardBtnOff: true,
       tourBtnOn: false,

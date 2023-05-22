@@ -6,7 +6,7 @@ const boardStore = {
   mutations: {
     setPreviousScrollPosition(state, position) {
       state.previousScrollPosition = position;
-      console.log(state.position);
+      // console.log(state.position);
     },
   },
 };

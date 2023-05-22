@@ -1,5 +1,8 @@
 package com.ssafy.kiwi.board.model;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class LikesDto {
 
 	private int userno;
@@ -20,6 +23,8 @@ public class LikesDto {
 	public void setBoardno(int boardno) {
 		this.boardno = boardno;
 	}
+	
+	
 
 	@Override
 	public String toString() {
