@@ -97,4 +97,10 @@ public class UserServiceImpl implements UserService {
 		
 	}
 
+	@Override
+	public UserDto getOtherUser(int userno) throws Exception {
+		
+		return userMapper.getOtherUser(userno);
+	}
+
 }

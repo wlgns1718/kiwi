@@ -34,5 +34,7 @@ public interface UserMapper {
 
 	void modifyInfo(UserDto userDto) throws Exception;
 
+	UserDto getOtherUser(int userno) throws Exception;
+
 
 }

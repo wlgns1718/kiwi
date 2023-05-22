@@ -28,4 +28,6 @@ public interface UserService {
 
 	void modifyInfo(UserDto userDto) throws Exception;
 
+	UserDto getOtherUser(int userno) throws Exception;
+
 }

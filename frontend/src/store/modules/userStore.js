@@ -35,13 +35,12 @@ const userStore = {
     SET_USER_NICK_AGE: (state, userInfo) => {
       state.userInfo.nickname = userInfo.nickname;
       state.userInfo.age = userInfo.age;
-    }
+    },
   },
   actions: {
     modifyUserInfo: ({ commit }, userInfo) => {
       commit("SET_USER_NICK_AGE", userInfo);
-    }
-    ,
+    },
     async userConfirm({ commit }, user) {
       await login(
         user,

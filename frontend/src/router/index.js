@@ -41,6 +41,11 @@ const routes = [
         name: "UserMypage",
         component: () => import("@/components/user/TheMypage"),
       },
+      {
+        path: "userpage/:userno",
+        name: "Userpage",
+        component: () => import("@/components/user/TheUserPage"),
+      }
     ],
   },
   {

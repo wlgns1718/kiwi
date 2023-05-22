@@ -35,7 +35,7 @@
         </div>
       </div>
       <div class="right-container" v-else-if="Follower">
-        <h3>팔로워 목록</h3>
+        <h3 class="boardTitle">팔로워 목록</h3>
         <div v-if="followerList.length == 0" class="nofollwer">
           팔로워가 없습니다.
           <div>여행 포스트를 추가해서 팔로워를 모아보세요!! 😊</div>
@@ -50,14 +50,14 @@
         </ul> -->
       </div>
       <div class="right-container" v-else-if="Followeeing">
-        <h3>팔로잉 목록</h3>
+        <h3 class="boardTitle">팔로잉 목록</h3>
         <div v-if="followeeList.length == 0" class="nofollwer">
           팔로잉이 없습니다.
           <div class="nofollwer">다른 사람을 팔로워해 그 사람의 게시글을 확인해보세요!! 🙂</div>
         </div>
-        <div v-else>
-          <div v-for="(followee, index) in followeeList" :key="index">
-            <div style="height: 100px">{{ followee }}</div>
+        <div v-else style="width: 550px" class="followees">
+          <div v-for="(followee, index) in followeeList" :key="index" class="followee">
+            <user-follow :follow="followee" :index="index"></user-follow>
           </div>
         </div>
         <!-- <ul>
@@ -111,11 +111,12 @@
 import http from "@/api/http";
 import { mapState, mapActions } from "vuex";
 import BoardPostItem from "@/components/board/BoardPostItem.vue";
-
+import UserFollow from "@/components/user/UserFollow.vue";
 export default {
   name: "MyPageView",
   components: {
     BoardPostItem,
+    UserFollow,
   },
   computed: {
     ...mapState("userStore", ["userInfo"]),
@@ -278,13 +279,14 @@ export default {
 
 .right-container {
   background-color: rgb(233, 231, 231);
-  width: 500px;
+  width: 540px;
   height: 700px;
   overflow: auto;
   margin: 30px 0px 0px 100px;
   text-align: left;
-  padding: 0 20px;
+  padding: 0px 10px 0px 10px;
   border-radius: 8px 8px 8px 8px;
+  overflow-x: hidden;
 }
 
 .MyPageWrap {
@@ -464,5 +466,18 @@ a {
 }
 .idnickname {
   padding-left: 8px;
+}
+.followees {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.followee {
+  width: 50%;
+  /* width: 50%; */
+  /* box-sizing: border-box; */
+}
+.index {
+  margin-left: 100px;
 }
 </style>

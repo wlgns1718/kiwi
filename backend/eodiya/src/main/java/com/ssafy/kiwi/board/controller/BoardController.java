@@ -104,4 +104,9 @@ public class BoardController {
 		System.out.println(userno);
 		return new ResponseEntity<List<BoardDto>>(boardService.getBoardListwithUserInfo(userno), HttpStatus.OK);
 	}
+	@GetMapping("/liked/{userno}")
+	public ResponseEntity<List<BoardDto>> getBoardListwithLike(@PathVariable("userno") int userno) throws Exception {
+		logger.info("getBoardListwithLike - 호출 : ");
+		return new ResponseEntity<List<BoardDto>>(boardService.getBoardListwithLike(userno), HttpStatus.OK);
+	}
 }

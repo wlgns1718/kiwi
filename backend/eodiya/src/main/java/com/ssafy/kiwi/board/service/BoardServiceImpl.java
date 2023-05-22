@@ -78,4 +78,10 @@ public class BoardServiceImpl implements BoardService {
 		System.out.println(userno);
 		return boardMapper.getBoardListwithUserInfo(userno);
 	}
+
+	@Override
+	public List<BoardDto> getBoardListwithLike(int userno) throws Exception {
+		
+		return boardMapper.getBoardListwithLike(userno);
+	}
 }

@@ -48,7 +48,7 @@ export default {
       boardno: this.$route.params.no,
       userno: this.userInfo.userno,
     };
-    // console.log(boardInfo);
+    console.log(boardInfo);
     http
       .post(`/board/detail`, JSON.stringify(boardInfo))
       .then(({ data }) => {

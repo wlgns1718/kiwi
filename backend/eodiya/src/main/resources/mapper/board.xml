@@ -92,16 +92,22 @@
 
 	<select id="getArticle" parameterType="boardViewDto"
 		resultMap="board">
-		select b.board_no, b.title, b.content, b.create_date, b.hit, b.scope,
-		u.nickname, (select count(*) from likes where b.board_no = board_no)
-		`cnt_like`,(select count(*) from reply where b.board_no = board_no)
+		select b.board_no, b.title, b.content, b.create_date, b.hit,
+		b.scope,
+		u.nickname, (select count(*) from likes where b.board_no =
+		board_no)
+		`cnt_like`,(select count(*) from reply where b.board_no =
+		board_no)
 		`cnt_reply`,
 		if(l.board_no is NOT NULL,1,0) `islike`
-		from board b join user u
+		from board
+		b join user u
 		on b.user_no = u.user_no
 		left outer join likes l
-		on b.board_no = l.board_no and l.user_no = #{userno}
-		where b.board_no = #{boardno}
+		on
+		b.board_no = l.board_no and l.user_no = #{userno}
+		where b.board_no =
+		#{boardno}
 	</select>
 
 	<update id="updateHit" parameterType="int">
@@ -158,5 +164,17 @@
 		Group by
 		b.board_no
 		order by b.create_date desc;
+	</select>
+
+	<select id="getBoardListwithLike" parameterType="int" resultMap="board">
+		select b.board_no, b.title, b.content, b.create_date, b.hit, b.scope,
+		u.nickname,
+		(select count(*) from likes where b.board_no = board_no) `cnt_like`,
+		(select count(*) from reply where b.board_no = board_no) `cnt_reply`,
+		if(l.board_no is NOT NULL,1,0) `islike`
+		from board b join user u on b.user_no = u.user_no
+		left outer join likes l on b.board_no = l.board_no and l.user_no = #{userno}
+		where l.board_no is not NULL
+		group by b.board_no order by b.create_date desc;
 	</select>
 </mapper>
