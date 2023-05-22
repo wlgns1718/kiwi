@@ -8,7 +8,9 @@
           <p class="post-date">{{ board.createdate }}</p>
         </div>
         <div
-          v-if="board.nickname === this.userInfo.nickname"
+          v-if="
+            this.userInfo != null && board.nickname === this.userInfo.nickname
+          "
           class="post-detail"
         >
           <div @click="moveBoardModify(board.boardno)">수정</div>
