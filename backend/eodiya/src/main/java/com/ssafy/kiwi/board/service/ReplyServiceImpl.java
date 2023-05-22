@@ -32,4 +32,9 @@ public class ReplyServiceImpl implements ReplyService {
 		return replyMapper.deleteReply(replyno);
 	}
 
+	@Override
+	public boolean updateReply(ReplyDto replyDto) throws Exception {
+		return replyMapper.updateReply(replyDto);
+	}
+
 }

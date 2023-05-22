@@ -32,4 +32,11 @@
 		delete from reply where
 		reply_no=#{replyno}
 	</delete>
+
+	<update id="updateReply" parameterType="ReplyDto">
+		update reply
+		set content =
+		#{content}
+		where reply_no = #{replyno}
+	</update>
 </mapper>

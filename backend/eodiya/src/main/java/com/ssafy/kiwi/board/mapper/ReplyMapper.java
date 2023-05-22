@@ -15,4 +15,6 @@ public interface ReplyMapper {
 
 	boolean deleteReply(int replyno) throws Exception;
 
+	boolean updateReply(ReplyDto replyDto) throws Exception;
+
 }

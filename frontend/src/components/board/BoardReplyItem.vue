@@ -27,15 +27,20 @@
             <span class="nickname" style="padding-right: 10px">{{ reply.nickname }}</span>
             <span
               v-if="reply.nickname == userInfo.nickname"
-              class="date"
+              class="date cursor"
               style="padding-right: 10px"
               >수정</span
             >
-            <span v-if="reply.nickname == userInfo.nickname" class="date">삭제</span>
+            <span
+              v-if="reply.nickname == userInfo.nickname"
+              class="date cursor"
+              @click="deleteReply(reply)"
+              >삭제</span
+            >
           </div>
           <div class="date">
             <span>{{ reply.createdate }}</span>
-            <span>신고</span>
+            <span class="cursor">신고</span>
           </div>
         </div>
         <div class="content">
@@ -89,6 +94,13 @@ export default {
       });
       this.replyMsg = "";
     },
+    deleteReply(reply) {
+      if (window.confirm("정말 삭제하시겠습니까?")) {
+        http.delete(`/reply/${reply.replyno}`).then(({ data }) => {
+          if (data === "success") this.getReplys();
+        });
+      }
+    },
   },
 };
 </script>
@@ -113,8 +125,12 @@ export default {
 .comment-form input[type="text"] {
   flex: 1;
   padding: 8px;
-  border: 1px solid #ffffff;
+  border: 1px solid transparent;
   border-radius: 4px;
+}
+
+.comment-form input[type="text"]:focus {
+  outline: none;
 }
 
 .comment-form button {
@@ -169,5 +185,9 @@ export default {
 
 p {
   margin: 0;
+}
+
+.cursor {
+  cursor: pointer;
 }
 </style>

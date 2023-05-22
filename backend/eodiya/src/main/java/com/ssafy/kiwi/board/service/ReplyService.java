@@ -12,5 +12,7 @@ public interface ReplyService {
 
 	boolean deleteReply(int replyno) throws Exception;
 
+	boolean updateReply(ReplyDto replyDto) throws Exception;
+
 
 }
