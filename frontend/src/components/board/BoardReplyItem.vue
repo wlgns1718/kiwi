@@ -94,6 +94,7 @@ export default {
       http.get(`/reply/${this.replyInfo.boardno}`).then(({ data }) => {
         // console.log(data);
         this.replys = data;
+        this.$emit("update-reply-count", this.replys.length);
       });
     },
     sendReplyMsg() {

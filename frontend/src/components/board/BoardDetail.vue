@@ -26,7 +26,9 @@
       <board-post-item :board="board"></board-post-item>
       <!-- <router-link :to="`/board/modify/${board.boardno}`">수정</router-link>
       <a @click="deleteBoard">삭제</a> -->
-      <board-reply-item></board-reply-item>
+      <board-reply-item
+        @update-reply-count="updateReplyCount"
+      ></board-reply-item>
     </div>
   </div>
 </template>
@@ -78,6 +80,9 @@ export default {
     },
     goBack() {
       this.$router.go(-1);
+    },
+    updateReplyCount(count) {
+      this.board.cntReply = count;
     },
   },
 };
