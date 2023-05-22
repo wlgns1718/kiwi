@@ -24,7 +24,9 @@
       <div class="comment-each" v-for="(reply, index) in replys" :key="index">
         <div class="header">
           <div>
-            <span class="nickname" style="padding-right: 10px">{{ reply.nickname }}</span>
+            <span class="nickname" style="padding-right: 10px">{{
+              reply.nickname
+            }}</span>
             <span
               v-if="reply.nickname == userInfo.nickname"
               class="date cursor"

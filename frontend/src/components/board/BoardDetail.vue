@@ -2,7 +2,12 @@
   <div class="container">
     <div class="fixed-section">
       <div class="back-arrow" @click="goBack">
-        <svg height="60" viewBox="0 0 21 21" width="60" xmlns="http://www.w3.org/2000/svg">
+        <svg
+          height="60"
+          viewBox="0 0 21 21"
+          width="60"
+          xmlns="http://www.w3.org/2000/svg"
+        >
           <g
             fill="none"
             fill-rule="evenodd"
@@ -92,10 +97,23 @@ export default {
 
 .board-detail-wrap {
   width: 680px;
+  height: calc(100vh - 117px);
   margin: 0 240px;
   padding: 0 100px;
   padding-top: 40px;
   overflow: auto;
+}
+
+.board-detail-wrap::-webkit-scrollbar {
+  width: 0.5rem;
+}
+
+.board-detail-wrap::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+.board-detail-wrap::-webkit-scrollbar-thumb {
+  background-color: transparent;
 }
 
 .back-arrow {
