@@ -227,5 +227,24 @@ public class UserController {
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
 	
+	@PostMapping("/modifyinfo")
+	public ResponseEntity<Map<String, Object>> modifyInfo(@RequestBody UserDto userDto) {
+		Map<String, Object> resultMap = new HashMap<>();
+		HttpStatus status = HttpStatus.UNAUTHORIZED;
+		try {
+			userService.modifyInfo(userDto);
+//			System.out.println(userDto);
+			resultMap.put("message", SUCCESS);
+			status = HttpStatus.ACCEPTED;
+			resultMap.put("userInfo",userDto);
+			
+		} catch (Exception e) {
+			logger.error("회원등록 실패: {}", e);
+			resultMap.put("message", e.getMessage());
+			status = HttpStatus.INTERNAL_SERVER_ERROR;
+		}
+		return new ResponseEntity<Map<String, Object>>(resultMap, status);
+	}
+	
 
 }

@@ -26,4 +26,6 @@ public interface UserService {
 
 	void regist(UserDto userDto) throws Exception;
 
+	void modifyInfo(UserDto userDto) throws Exception;
+
 }

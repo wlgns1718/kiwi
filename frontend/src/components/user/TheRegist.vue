@@ -46,9 +46,19 @@
           />
           <div class="message">{{ messageNick }}</div>
           <div>나이</div>
-          <input v-model="user.age" type="number" class="registInput" id="age" />
+          <input
+            v-model="user.age"
+            type="number"
+            class="registInput"
+            id="age"
+          />
           <div>이메일</div>
-          <input v-model="user.email" type="email" class="registInput" id="email" />
+          <input
+            v-model="user.email"
+            type="email"
+            class="registInput"
+            id="email"
+          />
           <div>성별</div>
           <input
             type="radio"
@@ -139,18 +149,20 @@ export default {
       this.messagePwck = "";
     },
     nickck() {
-      http.post("/user/register", JSON.stringify(this.user)).then(({ data }) => {
-        if (data.isVaild == "false") {
-          this.messageNick = "중복된 닉네임입니다.";
-        } else {
-          this.messageNick = "";
-          this.check = true;
-        }
-      });
+      http
+        .post("/user/register", JSON.stringify(this.user))
+        .then(({ data }) => {
+          if (data.isVaild == "false") {
+            this.messageNick = "중복된 닉네임입니다.";
+          } else {
+            this.messageNick = "";
+            this.check = true;
+          }
+        });
     },
     comfirm() {
-      // eslint-disable-next-line
-      var reg_email = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
+      var reg_email = // eslint-disable-next-line
+        /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
       console.log(this.check);
       if (this.user.id == null || this.user.id.length < 4) {
         alert("아이디 제대로 써!");

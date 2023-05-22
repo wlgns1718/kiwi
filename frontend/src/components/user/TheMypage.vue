@@ -19,16 +19,18 @@
             </div>
           </div>
         </div>
-        <div class="userinfoname">{{ user.name }}</div>
+        <div class="userinfoname" v-once>{{ user.nickname }}</div>
         <div class="userinfoemail">{{ user.email }}</div>
-        <router-link to="#" class="modify">프로필 편집</router-link>
+        <a class="modify" @click="openmodal">프로필 편집</a>
       </div>
       <div class="right-container" v-if="Post">
         <h3 class="boardTitle">게시글 목록</h3>
         <div v-if="posts.length == 0">작성한 게시글이 없습니다.</div>
         <div v-else>
           <div v-for="(post, index) in posts" :key="index">
-            <div style="height: 100px"><board-post-item :board="post"></board-post-item></div>
+            <div style="height: 100px">
+              <board-post-item :board="post"></board-post-item>
+            </div>
           </div>
         </div>
       </div>
@@ -49,7 +51,12 @@
       </div>
       <div class="right-container" v-else-if="Followeeing">
         <h3>팔로잉 목록</h3>
-        <div v-if="followeeList.length == 0" class="nofollwer">팔로잉이 없습니다.</div>
+        <div v-if="followeeList.length == 0" class="nofollwer">
+          팔로잉이 없습니다.
+          <div class="nofollwer">
+            다른 사람을 팔로워해 그 사람의 게시글을 확인해보세요!! 🙂
+          </div>
+        </div>
         <div v-else>
           <div v-for="(followee, index) in followeeList" :key="index">
             <div style="height: 100px">{{ followee }}</div>
@@ -60,12 +67,64 @@
         </ul> -->
       </div>
     </div>
+    <div id="modalbackground" @click="closemodal">
+      <div>
+        <div id="modal">
+          <div class="modal-content" @click="preventClose">
+            <h2>프로필 편집</h2>
+            <!-- <div class="modaltitle">닉네임</div> -->
+            <div>
+              아이디<input
+                class="modalinput"
+                type="text"
+                v-model="user.id"
+                disabled
+              />
+            </div>
+            <div>
+              닉네임<input
+                id="nick"
+                class="modalinput"
+                type="text"
+                v-model="user.nickname"
+                @blur="nickck"
+              />
+            </div>
+            <div class="message">{{ messageNick }}</div>
+            <div>
+              이메일
+              <input
+                class="modalinput"
+                type="text"
+                v-model="user.email"
+                disabled
+              />
+            </div>
+            <div>
+              <label>나 이</label>
+              <input class="modalinput" type="text" v-model="user.age" />
+            </div>
+            <div>
+              <label>성 별</label>
+              <input
+                class="modalinput"
+                type="text"
+                v-model="temp_gender"
+                disabled
+              />
+            </div>
+            <button class="registBtn" @click="modify">수정</button>
+            <button id="close-modal" @click="closemodal">닫기</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import http from "@/api/http";
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
 import BoardPostItem from "@/components/board/BoardPostItem.vue";
 
 export default {
@@ -79,19 +138,29 @@ export default {
   data() {
     return {
       user: {
-        no: 0,
-        name: "",
+        age: 0,
+        nickname: "",
         email: "",
+        id: "",
+        gender: 0,
+        password: "",
+        passwordck: "",
       },
+      triger: true,
+      temp_gender: "",
       Post: true,
       Follower: false,
       Followeeing: false,
       posts: [],
       followerList: [],
       followeeList: [],
+      // 모달창 추가
+      isModalOpen: false,
+      messageNick: "",
     };
   },
   methods: {
+    ...mapActions("userStore", ["modifyUserInfo"]),
     showPost() {
       this.Post = true;
       this.Follower = false;
@@ -111,10 +180,10 @@ export default {
       console.log(this.Post);
     },
     getUserInfo() {
-      this.user.no = this.userInfo ? this.userInfo.userno : 0;
+      const no = this.userInfo ? this.userInfo.userno : 0;
       //   console.log(this.user.no);
       http
-        .get(`/board/mypage/${this.user.no}`)
+        .get(`/board/mypage/${no}`)
         .then(({ data }) => {
           // console.log(data, "성공");
           this.posts = data;
@@ -124,7 +193,7 @@ export default {
         });
 
       http
-        .get(`/user/getfollowee/${this.user.no}`)
+        .get(`/user/getfollowee/${no}`)
         .then(({ data }) => {
           this.followeeList = data.followeeList;
           //   console.log(this.followee, "안녕");
@@ -135,7 +204,7 @@ export default {
         });
 
       http
-        .get(`/user/getfollower/${this.user.no}`)
+        .get(`/user/getfollower/${no}`)
         .then(({ data }) => {
           //   console.log(this.user.no);
           //   console.log(data, "asdsjj");
@@ -148,8 +217,72 @@ export default {
         });
       //   console.log("teset", this.followerList);
     },
+    openmodal() {
+      this.user.nickname = this.userInfo.nickname;
+      this.user.age = this.userInfo.age;
+      console.log(this.userInfo.nickname);
+      const modal = document.getElementById("modal");
+      modal.style.display = "block";
+      document.body.style.overflow = "hidden";
+      console.log(modal.style.display);
+      this.isModalOpen = true;
+      this.messageNick = "";
+      this.triger = true;
+    },
+    closemodal() {
+      const modal = document.getElementById("modal");
+      modal.style.display = "none";
+      document.body.style.overflow = "auto";
+      this.isModalOpen = false;
+    },
+    preventClose(event) {
+      event.stopPropagation();
+    },
+    nickck() {
+      if (this.userInfo.nickname === this.user.nickname) {
+        this.messageNick = "";
+        return;
+      }
+      // let nick = document.getElementsByClassName("modalinput").value;
+      // console.log(name, this.user.nickname);
+      http
+        .post("/user/register", JSON.stringify(this.user))
+        .then(({ data }) => {
+          if (data.isVaild == "false") {
+            this.messageNick = "중복된 닉네임입니다.";
+            this.triger = false;
+          } else {
+            this.messageNick = "";
+            this.triger = true;
+          }
+        });
+    },
+    modify() {
+      this.nickck();
+      // console.log(this.triger);
+      if (!this.triger) {
+        alert("정보를 다시 확인하세요!!");
+        return;
+      }
+      //수정해주기
+      console.log(this.user);
+      http
+        .post(`/user/modifyinfo`, JSON.stringify(this.user))
+        .then(({ data }) => {
+          this.modifyUserInfo(data.userInfo);
+          this.$router.go(0);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
   },
   created() {
+    this.user.age = this.userInfo.age;
+    this.user.nickname = this.userInfo.nickname;
+    this.user.email = this.userInfo.email;
+    this.temp_gender = this.userInfo.gender === 0 ? "남성" : "여성";
+    this.user.id = this.userInfo.id;
     this.getUserInfo();
   },
 };
@@ -252,5 +385,103 @@ a {
 .nofollwer {
   font-size: 15pt;
   font-weight: bold;
+}
+
+#modal {
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: none;
+}
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px 0 30px 0;
+  border: 1px solid #888;
+  width: 20%;
+  border-radius: 10px 10px 10px 10px;
+}
+.close {
+  color: rgb(81, 185, 11);
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+.close:hover,
+.close:focus {
+  color: rgb(37, 197, 5);
+  text-decoration: none;
+  cursor: pointer;
+}
+#close-modal {
+  background-color: var(--colorMain);
+  border: none;
+  color: white;
+  padding: 8px 8px;
+  border-radius: 8px 8px 8px 8px;
+  cursor: pointer;
+  font-weight: bold;
+  position: relative;
+}
+#close-modal:hover {
+  background-color: rgb(0, 35, 192);
+}
+
+.modalinput {
+  border-radius: 6px 6px 6px 6px;
+  font-size: 16px;
+  font-weight: normal;
+  border: 1px solid;
+  border-color: #e5e6e9;
+  width: 60%;
+  box-sizing: border-box;
+  line-height: 23px;
+  text-align: center;
+  margin: 0px 0 10px 20px;
+  height: 40px;
+}
+.modalinput:focus {
+  border: 1px solid;
+  border-color: rgb(105, 228, 128);
+  outline: none;
+}
+.modaltitle {
+  padding-right: 265px;
+}
+.gender {
+  text-align: center;
+}
+.gendertitle {
+  margin-right: 255px;
+}
+.registBtn {
+  background-color: var(--colorMain);
+  border: none;
+  color: white;
+  padding: 8px 8px;
+  border-radius: 8px 8px 8px 8px;
+  cursor: pointer;
+  font-weight: bold;
+  margin-left: 20px;
+  margin-right: 5px;
+}
+.registBtn:hover {
+  background-color: rgb(0, 35, 192);
+}
+.message {
+  color: red;
+  font-size: 10pt;
+  padding-bottom: 8px;
+  padding-right: 18px;
+}
+
+label {
+  margin-right: 10px;
+  padding-left: 2px;
 }
 </style>
