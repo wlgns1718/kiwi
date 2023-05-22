@@ -88,7 +88,8 @@ export default {
   },
   methods: {
     moveBoardDetail(boardno) {
-      this.$router.push({ name: "boarddetail", params: { no: boardno } });
+      if (this.$route.path !== `/board/detail/${boardno}`)
+        this.$router.push({ name: "boarddetail", params: { no: boardno } });
     },
     toggleLikes(board) {
       onlyAuthUser();
