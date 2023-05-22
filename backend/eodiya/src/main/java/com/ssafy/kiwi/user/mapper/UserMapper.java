@@ -32,5 +32,7 @@ public interface UserMapper {
 
 	void regist(UserDto userDto) throws Exception;
 
+	void modifyInfo(UserDto userDto) throws Exception;
+
 
 }

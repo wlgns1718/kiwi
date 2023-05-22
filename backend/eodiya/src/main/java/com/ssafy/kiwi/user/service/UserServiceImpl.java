@@ -90,4 +90,11 @@ public class UserServiceImpl implements UserService {
 		
 	}
 
+	@Override
+	public void modifyInfo(UserDto userDto) throws Exception {
+		// TODO Auto-generated method stub
+		userMapper.modifyInfo(userDto);
+		
+	}
+
 }

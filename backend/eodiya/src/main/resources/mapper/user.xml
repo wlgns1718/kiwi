@@ -37,7 +37,7 @@
 
 	<select id="userInfo" parameterType="string" resultMap="user">
 		select
-		user_no, id, nickname, email
+		user_no, id, nickname, email, age
 		from user
 		where id = #{id}
 	</select>
@@ -99,8 +99,17 @@
 	</select>
 
 	<insert id="regist" parameterType="map">
-		insert into user (id, password, salt, email, nickname, age, gender)
-		values(#{id}, #{password}, #{salt}, #{email}, #{nickname}, #{age}, #{gender})
+		insert into user (id,
+		password, salt, email, nickname, age, gender)
+		values(#{id},
+		#{password}, #{salt}, #{email}, #{nickname}, #{age}, #{gender})
 	</insert>
+
+	<update id="modifyInfo" parameterType="map">
+		update user
+		SET nickname = #{nickname}, age= #{age}
+		where id = #{id};
+
+	</update>
 
 </mapper>
