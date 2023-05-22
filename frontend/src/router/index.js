@@ -50,7 +50,7 @@ const routes = [
     children: [
       {
         path: "list",
-        name: "bardlist",
+        name: "boardlist",
         component: () => import("@/components/board/BoardList"),
       },
       {

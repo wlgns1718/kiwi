@@ -54,7 +54,7 @@
 </template>
 
 <script>
-// import http from "@/api/http";
+import http from "@/api/http";
 import { mapState } from "vuex";
 
 export default {
@@ -76,19 +76,7 @@ export default {
     };
   },
   created() {
-    // const boardInfo = {
-    //   boardno: this.$route.params.no,
-    //   userno: this.userInfo.userno,
-    // };
-    // // console.log(boardInfo);
-    // http
-    //   .post(`/board/detail`, JSON.stringify(boardInfo))
-    //   .then(({ data }) => {
-    //     this.board = data;
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
+    this.board.userno = this.userInfo.userno;
   },
   methods: {
     goBack() {
@@ -98,7 +86,18 @@ export default {
       this.board.scope = scope;
     },
     publish() {
-      console.log(this.board);
+      // console.log(this.board);
+      http
+        .post(`/board/write`, JSON.stringify(this.board))
+        .then(({ data }) => {
+          if (data == "success") {
+            alert("등록완료 !");
+            this.$router.push({ name: "boardlist" });
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
   },
 };
@@ -140,6 +139,7 @@ export default {
   padding: 8px;
   border: 1px solid transparent;
   border-radius: 4px;
+  font-size: 16px;
 }
 
 .board-form input[type="text"]:focus,
@@ -158,7 +158,7 @@ export default {
 .scope-buttons {
   display: flex;
   justify-content: space-between;
-  font-size: 14px;
+  font-size: 16px;
 }
 
 .scope-button {
