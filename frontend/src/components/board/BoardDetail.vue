@@ -2,12 +2,7 @@
   <div class="container">
     <div class="fixed-section">
       <div class="back-arrow" @click="goBack">
-        <svg
-          height="60"
-          viewBox="0 0 21 21"
-          width="60"
-          xmlns="http://www.w3.org/2000/svg"
-        >
+        <svg height="60" viewBox="0 0 21 21" width="60" xmlns="http://www.w3.org/2000/svg">
           <g
             fill="none"
             fill-rule="evenodd"
@@ -24,8 +19,9 @@
     </div>
     <div class="board-detail-wrap">
       <board-post-item :board="board"></board-post-item>
-      <router-link :to="`/board/modify/${board.boardno}`">수정</router-link>
-      <a @click="deleteBoard">삭제</a>
+      <!-- <router-link :to="`/board/modify/${board.boardno}`">수정</router-link>
+      <a @click="deleteBoard">삭제</a> -->
+      <board-reply-item></board-reply-item>
     </div>
   </div>
 </template>
@@ -33,11 +29,12 @@
 <script>
 import http from "@/api/http";
 import BoardPostItem from "./BoardPostItem.vue";
+import BoardReplyItem from "./BoardReplyItem.vue";
 import { mapState } from "vuex";
 
 export default {
   name: "BoardDetail",
-  components: { BoardPostItem },
+  components: { BoardPostItem, BoardReplyItem },
   computed: {
     ...mapState("userStore", ["userInfo"]),
   },
@@ -55,7 +52,6 @@ export default {
     http
       .post(`/board/detail`, JSON.stringify(boardInfo))
       .then(({ data }) => {
-        // console.log(data);
         this.board = data;
       })
       .catch((error) => {
@@ -85,7 +81,7 @@ export default {
 <style scoped>
 .container {
   display: flex;
-  overflow: auto;
+  overflow: hidden;
 }
 
 .fixed-section {
@@ -99,6 +95,7 @@ export default {
   margin: 0 240px;
   padding: 0 100px;
   padding-top: 40px;
+  overflow: auto;
 }
 
 .back-arrow {

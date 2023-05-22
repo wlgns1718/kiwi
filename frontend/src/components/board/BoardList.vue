@@ -15,10 +15,7 @@
               />
               <span>전체 보기</span>
             </label>
-            <label
-              class="radio-button"
-              :class="{ active: viewMode === 'follow' }"
-            >
+            <label class="radio-button" :class="{ active: viewMode === 'follow' }">
               <input
                 type="radio"
                 name="viewMode"
@@ -100,12 +97,9 @@ export default {
   beforeRouteLeave(to, from, next) {
     // 현재 스크롤 위치를 저장
     const previousScrollPosition = window.scrollY;
-    console.log(previousScrollPosition);
+    // console.log(previousScrollPosition);
     // 다음 라우터로 이동하기 전에 스크롤 위치를 저장하기 위해 이전 스크롤 위치를 저장
-    this.$store.commit(
-      "boardStore/setPreviousScrollPosition",
-      previousScrollPosition
-    );
+    this.$store.commit("boardStore/setPreviousScrollPosition", previousScrollPosition);
 
     // 다음 라우터로 이동
     next();

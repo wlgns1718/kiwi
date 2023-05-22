@@ -6,7 +6,7 @@
           <img src="@/assets/KIWI3.png" alt="" />
         </router-link>
       </nav>
-      <div class="header-center">
+      <div class="header-center" :class="{ 'header-center-fix': userInfo }">
         <ul>
           <li v-if="navBtn.homeBtnOff">
             <router-link to="/">
@@ -122,11 +122,7 @@
                 stroke-width="0.0005"
               >
                 <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                <g
-                  id="SVGRepo_tracerCarrier"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                ></g>
+                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
                 <g id="SVGRepo_iconCarrier">
                   <path
                     d="M86.49.088a2.386 2.386 0 0 0-.882.463L11.34 62.374a2.386 2.386 0 0 0 1.62 4.218l37.957-1.478l17.7 33.612a2.386 2.386 0 0 0 4.462-.707l16.406-95.23a2.386 2.386 0 0 0-2.994-2.7zm-2.808 8.277L69.567 90.29L54.439 61.558a2.386 2.386 0 0 0-2.203-1.272L19.79 61.551z"
@@ -152,11 +148,7 @@
                 fill="#0060FF"
               >
                 <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                <g
-                  id="SVGRepo_tracerCarrier"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                ></g>
+                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
                 <g id="SVGRepo_iconCarrier">
                   <path
                     d="M87.13 0a2.386 2.386 0 0 0-.64.088a2.386 2.386 0 0 0-.883.463L11.34 62.373a2.386 2.386 0 0 0 1.619 4.219l37.959-1.479l17.697 33.614a2.386 2.386 0 0 0 4.465-.707L89.486 2.79A2.386 2.386 0 0 0 87.131 0z"
@@ -190,8 +182,8 @@ export default {
     ...mapState("headerStore", ["navBtn"]),
     ...mapGetters(["checkUserInfo"]),
   },
-  created() {
-    this.navToggle(this.$route.path);
+  data() {
+    return {};
   },
   methods: {
     ...mapActions("userStore", ["userLogout"]),
@@ -259,8 +251,13 @@ header {
 }
 
 .header-center {
+  /* position: absolute; */
   display: inline-block;
   /* padding-top: 10px; */
+}
+
+.header-center-fix {
+  margin-left: 106.44px;
 }
 
 .header-right {
