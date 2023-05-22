@@ -15,7 +15,10 @@
               />
               <span>전체 보기</span>
             </label>
-            <label class="radio-button" :class="{ active: viewMode === 'follow' }">
+            <label
+              class="radio-button"
+              :class="{ active: viewMode === 'follow' }"
+            >
               <input
                 type="radio"
                 name="viewMode"
@@ -25,6 +28,7 @@
               />
               <span>팔로우만 보기</span>
             </label>
+            <div class="write-article" @click="writeArticle">글작성</div>
           </div>
         </div>
         <div class="scrollable-section">
@@ -84,6 +88,11 @@ export default {
       this.isFollowSelect = this.isFollowSelect == 0 ? 1 : 0;
       this.getBoard();
     },
+
+    writeArticle() {
+      if (this.$route.path !== "/board/write")
+        this.$router.push({ name: "boardwrite" });
+    },
   },
   mounted() {
     // 이전 스크롤 위치를 가져옴
@@ -99,7 +108,10 @@ export default {
     const previousScrollPosition = window.scrollY;
     // console.log(previousScrollPosition);
     // 다음 라우터로 이동하기 전에 스크롤 위치를 저장하기 위해 이전 스크롤 위치를 저장
-    this.$store.commit("boardStore/setPreviousScrollPosition", previousScrollPosition);
+    this.$store.commit(
+      "boardStore/setPreviousScrollPosition",
+      previousScrollPosition
+    );
 
     // 다음 라우터로 이동
     next();
@@ -164,6 +176,8 @@ export default {
   border: 1px solid #ccc;
   margin-right: 10px;
   /* transition: border-color 0.3s ease; */
+  /* width: 100px;
+  justify-content: center; */
 }
 
 .radio-button.active {
@@ -188,5 +202,22 @@ export default {
 
 .radio-button input[type="radio"]:focus + span:before {
   box-shadow: 0 0 3px rgb(0, 96, 255);
+}
+
+.write-article {
+  width: 190px;
+  border-radius: 9999px;
+  padding: 10px 16px;
+  background-color: #fff;
+  color: #555;
+  cursor: pointer;
+  border: 1px solid #ccc;
+  margin-top: 20px;
+  text-align: center;
+}
+
+.write-article:hover {
+  border: 1px solid rgb(0, 96, 255);
+  color: rgb(0, 96, 255);
 }
 </style>

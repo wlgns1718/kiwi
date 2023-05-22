@@ -2,7 +2,12 @@
   <div class="container">
     <div class="fixed-section">
       <div class="back-arrow" @click="goBack">
-        <svg height="60" viewBox="0 0 21 21" width="60" xmlns="http://www.w3.org/2000/svg">
+        <svg
+          height="60"
+          viewBox="0 0 21 21"
+          width="60"
+          xmlns="http://www.w3.org/2000/svg"
+        >
           <g
             fill="none"
             fill-rule="evenodd"
@@ -21,7 +26,9 @@
       <board-post-item :board="board"></board-post-item>
       <!-- <router-link :to="`/board/modify/${board.boardno}`">수정</router-link>
       <a @click="deleteBoard">삭제</a> -->
-      <board-reply-item></board-reply-item>
+      <board-reply-item
+        @update-reply-count="updateReplyCount"
+      ></board-reply-item>
     </div>
   </div>
 </template>
@@ -74,6 +81,9 @@ export default {
     goBack() {
       this.$router.go(-1);
     },
+    updateReplyCount(count) {
+      this.board.cntReply = count;
+    },
   },
 };
 </script>
@@ -92,10 +102,23 @@ export default {
 
 .board-detail-wrap {
   width: 680px;
+  height: calc(100vh - 117px);
   margin: 0 240px;
   padding: 0 100px;
   padding-top: 40px;
   overflow: auto;
+}
+
+.board-detail-wrap::-webkit-scrollbar {
+  width: 0.5rem;
+}
+
+.board-detail-wrap::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+.board-detail-wrap::-webkit-scrollbar-thumb {
+  background-color: transparent;
 }
 
 .back-arrow {
