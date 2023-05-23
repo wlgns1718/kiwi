@@ -12,9 +12,7 @@
           <div v-for="(board, index) in boards" :key="index">
             <div class="post">
               <div class="post-header">
-                <div class="post-info">
-                  <p class="post-date">{{ board.createdate }}</p>
-                </div>
+                <div class="post-info"></div>
               </div>
               <div class="post-content" @click="moveBoardDetail(board.boardno)">
                 <h3>{{ board.title }}</h3>
@@ -61,7 +59,10 @@
                     </span>
                   </div>
                 </div>
-                <div v-if="userInfo && board.nickname === userInfo.nickname" class="post-detail">
+                <div
+                  v-if="userInfo && board.nickname === userInfo.nickname"
+                  class="post-detail"
+                >
                   <div @click="moveBoardModify(board.boardno)">수정</div>
                   <div @click="deleteBoard(board.boardno)">삭제</div>
                 </div>
@@ -105,7 +106,8 @@ export default {
   },
   methods: {
     writeArticle() {
-      if (this.$route.path !== "/board/write") this.$router.push({ name: "boardwrite" });
+      if (this.$route.path !== "/board/write")
+        this.$router.push({ name: "boardwrite" });
     },
   },
 };

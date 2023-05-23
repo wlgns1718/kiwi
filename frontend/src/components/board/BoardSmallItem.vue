@@ -1,8 +1,16 @@
 <template>
   <div>
-    <div class="container" v-for="(board, index) in boards" :key="index" @click="moveArticle">
+    <div
+      class="container"
+      v-for="(board, index) in boards"
+      :key="index"
+      @click="moveBoardDetail(board.boardno)"
+    >
       <div class="wrapper">
-        <div>{{ board.title.substring(0, 15) }} {{ board.title.length > 15 ? "..." : "" }}</div>
+        <div>
+          {{ board.title.substring(0, 15) }}
+          {{ board.title.length > 15 ? "..." : "" }}
+        </div>
         <div class="info" v-if="board.scope != 3">
           <div>
             <svg
@@ -52,7 +60,7 @@
 export default {
   name: "BoardSmallItem",
   components: {},
-  props: ["boards"],
+  props: ["boards", "isNotice"],
   data() {
     return {
       message: "",
@@ -60,8 +68,12 @@ export default {
   },
   created() {},
   methods: {
-    moveArticle() {
-      if (this.$route.path !== "/board/notice") this.$router.push({ name: "noticelist" });
+    moveBoardDetail(boardno) {
+      if (this.isNotice) {
+        this.$router.push({ name: "noticelist" });
+      } else {
+        this.$router.push({ name: "boarddetail", params: { no: boardno } });
+      }
     },
   },
 };
