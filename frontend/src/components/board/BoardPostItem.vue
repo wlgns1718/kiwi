@@ -2,7 +2,9 @@
   <div>
     <div class="post">
       <div class="post-header">
-        <div class="profile-image"></div>
+        <div>
+          <img src="@/assets/yoon.jpg" alt="프로필" class="profile-image" />
+        </div>
         <div class="post-info">
           <div class="post-nickname">{{ board.nickname }}</div>
           <p class="post-date">{{ board.createdate }}</p>
@@ -84,6 +86,12 @@
           <div v-else-if="board.scope == 1">팔로우공개</div>
           <div v-else-if="board.scope == 2">비공개</div>
         </div>
+      </div>
+      <div class="imgbox">
+        <img src="@/assets/trip1.jpg" alt="포스트사진" class="images" />
+        <img src="@/assets/trip2.jpg" alt="포스트사진" class="images" />
+        <img src="@/assets/trip3.jpg" alt="포스트사진" class="images" />
+        <img src="@/assets/trip4.jpg" alt="포스트사진" class="images" />
       </div>
     </div>
   </div>
@@ -177,8 +185,8 @@ export default {
 }
 
 .profile-image {
-  width: 40px;
-  height: 40px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
   background-color: #ccc;
   margin-right: 15px;
@@ -261,5 +269,19 @@ svg {
   margin-left: 5px;
   margin-right: 10px;
   font-size: 14px;
+}
+.imgbox {
+  margin-top: 15px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.images {
+  align-content: center;
+  width: 48%;
+  border: 1px solid;
+  border-color: white;
+  border-radius: 8px 8px 8px 8px;
+  height: 190px;
 }
 </style>

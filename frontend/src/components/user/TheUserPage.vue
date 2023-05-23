@@ -7,18 +7,20 @@
         <div class="profile">
           <img src="@/assets/yoon.jpg" alt="프로필사진" class="profile" />
         </div>
-        <div>{{ user.id }}</div>
+        <div class="postinfo">
+          <div>
+            <span>게시글</span>
+            <span>팔로워</span>
+            <span>팔로잉</span>
+          </div>
+          <div>
+            <a @click="showPost">{{ posts.length }}개</a>
+            <a @click="showFollower">{{ followerList.length }}명</a>
+            <a @click="showFolloweeing">{{ followeeList.length }}명</a>
+          </div>
+        </div>
+        <div>{{ user.nickname }}</div>
         <div>{{ user.email }}</div>
-        <div>
-          <span>게시글</span>
-          <span>팔로워</span>
-          <span>팔로잉</span>
-        </div>
-        <div class="FollowWrap1">
-          <a @click="showPost">{{ posts.length }}개</a>
-          <a @click="showFollower">{{ followerList.length }}명</a>
-          <a @click="showFolloweeing">{{ followeeList.length }}명</a>
-        </div>
         <div class="FollowWrap">팔로우</div>
       </div>
       <div class="right-container" v-if="Post">
@@ -36,7 +38,9 @@
         <h3 class="boardTitle">팔로워 목록</h3>
         <div v-if="followerList.length == 0" class="nofollwer">
           팔로워가 없습니다.
-          <div>{{ user.nickname }}님의 게시글을 보고싶다면 팔로우 해보세요!!</div>
+          <div>
+            {{ user.nickname }}님의 게시글을 보고싶다면 팔로우 해보세요!!
+          </div>
         </div>
         <div v-else>
           <div v-for="(follower, index) in followerList" :key="index">
@@ -49,9 +53,15 @@
       </div>
       <div class="right-container" v-else-if="Followeeing">
         <h3 class="boardTitle">팔로잉 목록</h3>
-        <div v-if="followeeList.length == 0" class="nofollwer">팔로잉이 없습니다.</div>
+        <div v-if="followeeList.length == 0" class="nofollwer">
+          팔로잉이 없습니다.
+        </div>
         <div v-else style="width: 550px" class="followees">
-          <div v-for="(followee, index) in followeeList" :key="index" class="followee">
+          <div
+            v-for="(followee, index) in followeeList"
+            :key="index"
+            class="followee"
+          >
             <user-follow :follow="followee" :index="index"></user-follow>
           </div>
         </div>
@@ -204,5 +214,10 @@ export default {
   padding: 0px 10px 0px 10px;
   border-radius: 8px 8px 8px 8px;
   overflow-x: hidden;
+}
+.postinfo {
+  display: flex;
+  text-align: center;
+  justify-content: space-between;
 }
 </style>

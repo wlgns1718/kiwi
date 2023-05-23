@@ -1,13 +1,29 @@
 package com.ssafy.kiwi.util;
 
+import java.io.File;
+import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.SecureRandom;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.ssafy.kiwi.file.model.FileDto;
+
+import ch.qos.logback.classic.Logger;
 
 @Component
 public class Util {
 
+	private final  static  String rootPath = System.getProperty("user.dir");
+	private final  static String fileDir = rootPath + "\\";
+		
 	// 비밀번호 해싱 
 	public String Hashing(String password,String salt) throws Exception {
 		MessageDigest md = MessageDigest.getInstance("SHA-256");	// SHA-256 해시함수를 사용 
@@ -38,5 +54,57 @@ public class Util {
 		rnd.nextBytes(temp);
 		return Byte_to_String(temp);
 	}
+	
+	
+//	public static String getFullPath(String filename) {
+//		System.out.println("여깁니다!!!!!!!"+rootPath);
+//		String folder = "";
+//		LocalDate now = LocalDate.now();
+////		System.out.println(fileDir+"images\\"+now+File.separator+filename);
+//		
+//		return fileDir+"images"+File.separator+now+File.separator+filename;
+//	}
+	
+	public static FileDto storeFile(MultipartFile multipartFile) throws IOException{
+		if(multipartFile.isEmpty()) {
+            return null;
+        }
+		String originalFilename = multipartFile.getOriginalFilename();
+		System.out.println(originalFilename);
+		// 작성자가 업로드한 파일명 -> 서버 내부에서 관리하는 파일명
+        // 파일명을 중복되지 않게끔 UUID로 정하고 ".확장자"는 그대로
+		String storeFilename = UUID.randomUUID() + "." + extractExt(originalFilename);
+		 // 파일을 저장하는 부분 -> 파일경로 + storeFilename 에 저장
+		System.out.println("여기로 오나");
+		LocalDate now = LocalDate.now();
+		DateTimeFormatter simpledateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		
+		String today = now.format(simpledateFormat);
+		System.out.println(today+"여긴가");
+		File savefolder = new File(fileDir+"images"+File.separator+today);
+		if (!savefolder.exists()) {
+			savefolder.mkdir();
+		}
+			
+		
+        multipartFile.transferTo(new File(savefolder,storeFilename));
 
+        return new FileDto(originalFilename, storeFilename);
+	}
+	
+	 // 파일이 여러개 들어왔을 때 처리해주는 부분
+    public static List<FileDto> storeFiles(List<MultipartFile> multipartFiles) throws IOException {
+        List<FileDto> storeFileResult = new ArrayList<>();
+        for (MultipartFile multipartFile : multipartFiles) {
+            if(!multipartFile.isEmpty()) {
+                storeFileResult.add(storeFile(multipartFile));
+            }
+        }
+        return storeFileResult;
+    }
+	// 확장자 추출
+    private static String extractExt(String originalFilename) {
+        int pos = originalFilename.lastIndexOf(".");
+        return originalFilename.substring(pos + 1);
+    }
 }

@@ -1,6 +1,10 @@
 package com.ssafy.kiwi.board.model;
 
+import java.util.List;
+
 import org.springframework.stereotype.Component;
+
+import com.ssafy.kiwi.file.model.FileDto;
 
 @Component
 public class BoardDto {
@@ -17,7 +21,27 @@ public class BoardDto {
 	private int cntReply;
 	private int islike;
 	
+	private FileDto attachFile;          // 첨부 파일
+	private List<FileDto> imageFiles;    // 첨부 이미지
 	
+	
+	
+	public FileDto getAttachFile() {
+		return attachFile;
+	}
+
+	public void setAttachFile(FileDto attachFile) {
+		this.attachFile = attachFile;
+	}
+
+	public List<FileDto> getImageFiles() {
+		return imageFiles;
+	}
+
+	public void setImageFiles(List<FileDto> imageFiles) {
+		this.imageFiles = imageFiles;
+	}
+
 	public int getCntLike() {
 		return cntLike;
 	}

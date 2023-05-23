@@ -53,10 +53,16 @@
         <h3 class="boardTitle">팔로잉 목록</h3>
         <div v-if="followeeList.length == 0" class="nofollwer">
           팔로잉이 없습니다.
-          <div class="nofollwer">다른 사람을 팔로워해 그 사람의 게시글을 확인해보세요!! 🙂</div>
+          <div class="nofollwer">
+            다른 사람을 팔로워해 그 사람의 게시글을 확인해보세요!! 🙂
+          </div>
         </div>
         <div v-else style="width: 550px" class="followees">
-          <div v-for="(followee, index) in followeeList" :key="index" class="followee">
+          <div
+            v-for="(followee, index) in followeeList"
+            :key="index"
+            class="followee"
+          >
             <user-follow :follow="followee" :index="index"></user-follow>
           </div>
         </div>
@@ -73,7 +79,12 @@
             <!-- <div class="modaltitle">닉네임</div> -->
             <div>
               <label>아이디</label>
-              <input class="modalinput" type="text" v-model="user.id" disabled />
+              <input
+                class="modalinput"
+                type="text"
+                v-model="user.id"
+                disabled
+              />
             </div>
             <div>
               <label>닉네임</label>
@@ -88,7 +99,12 @@
             <div class="message">{{ messageNick }}</div>
             <div>
               <label>이메일</label>
-              <input class="modalinput" type="text" v-model="user.email" disabled />
+              <input
+                class="modalinput"
+                type="text"
+                v-model="user.email"
+                disabled
+              />
             </div>
             <div class="idnickname">
               <label>나 이</label>
@@ -96,7 +112,12 @@
             </div>
             <div class="idnickname">
               <label>성 별</label>
-              <input class="modalinput" type="text" v-model="temp_gender" disabled />
+              <input
+                class="modalinput"
+                type="text"
+                v-model="temp_gender"
+                disabled
+              />
             </div>
             <button class="registBtn" @click="modify">수정</button>
             <button id="close-modal" @click="closemodal">닫기</button>
@@ -231,15 +252,17 @@ export default {
       }
       // let nick = document.getElementsByClassName("modalinput").value;
       // console.log(name, this.user.nickname);
-      http.post("/user/register", JSON.stringify(this.user)).then(({ data }) => {
-        if (data.isVaild == "false") {
-          this.messageNick = "중복된 닉네임입니다.";
-          this.triger = false;
-        } else {
-          this.messageNick = "";
-          this.triger = true;
-        }
-      });
+      http
+        .post("/user/register", JSON.stringify(this.user))
+        .then(({ data }) => {
+          if (data.isVaild == "false") {
+            this.messageNick = "중복된 닉네임입니다.";
+            this.triger = false;
+          } else {
+            this.messageNick = "";
+            this.triger = true;
+          }
+        });
     },
     modify() {
       this.nickck();

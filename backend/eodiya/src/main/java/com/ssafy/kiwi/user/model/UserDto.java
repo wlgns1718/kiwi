@@ -1,5 +1,7 @@
 package com.ssafy.kiwi.user.model;
 
+import com.ssafy.kiwi.file.model.FileDto;
+
 public class UserDto {
 	private int userno;
 	private String id;
@@ -12,6 +14,19 @@ public class UserDto {
 	private String logintime;
 	private int gender;
 	private int isRestrict;
+	
+	//프로필 사진 model
+	private FileDto attachImage;// 첨부 파일
+	
+
+	
+	public FileDto getAttachImage() {
+		return attachImage;
+	}
+
+	public void setAttachImage(FileDto attachImage) {
+		this.attachImage = attachImage;
+	}
 
 	public int getUserno() {
 		return userno;
