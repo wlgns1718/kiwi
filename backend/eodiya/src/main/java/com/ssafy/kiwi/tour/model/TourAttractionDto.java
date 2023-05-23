@@ -13,6 +13,7 @@ public class TourAttractionDto {
 	String latitude;
 	String longitude;
 	String overview;
+	int contentTypeId;
 
 	public String getTitle() {
 		return title;
@@ -69,7 +70,7 @@ public class TourAttractionDto {
 	public void setLongitude(String longitude) {
 		this.longitude = longitude;
 	}
-	
+
 	public String getOverview() {
 		return overview;
 	}
@@ -78,11 +79,19 @@ public class TourAttractionDto {
 		this.overview = overview;
 	}
 
+	public int getContentTypeId() {
+		return contentTypeId;
+	}
+
+	public void setContentTypeId(int contentTypeId) {
+		this.contentTypeId = contentTypeId;
+	}
+
 	@Override
 	public String toString() {
 		return "TourAttractionDto [title=" + title + ", addr1=" + addr1 + ", addr2=" + addr2 + ", firstImage="
 				+ firstImage + ", firstImage2=" + firstImage2 + ", latitude=" + latitude + ", longitude=" + longitude
 				+ ", overview=" + overview + "]";
 	}
-	
+
 }

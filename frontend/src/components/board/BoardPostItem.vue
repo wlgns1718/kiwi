@@ -9,14 +9,10 @@
           <div class="post-nickname">{{ board.nickname }}</div>
           <p class="post-date">{{ board.createdate }}</p>
         </div>
-        <div
-          v-if="
-            this.userInfo != null && board.nickname === this.userInfo.nickname
-          "
-          class="post-detail"
-        >
-          <div @click="moveBoardModify(board.boardno)">수정</div>
-          <div @click="deleteBoard(board.boardno)">삭제</div>
+        <div class="post-scope">
+          <div v-if="board.scope == 0">전체공개</div>
+          <div v-else-if="board.scope == 1">팔로우공개</div>
+          <div v-else-if="board.scope == 2">비공개</div>
         </div>
       </div>
       <div class="post-content" @click="moveBoardDetail(board.boardno)">
@@ -81,10 +77,12 @@
             <span class="comments-count">{{ board.cntReply }}</span>
           </div>
         </div>
-        <div class="post-scope">
-          <div v-if="board.scope == 0">전체공개</div>
-          <div v-else-if="board.scope == 1">팔로우공개</div>
-          <div v-else-if="board.scope == 2">비공개</div>
+        <div
+          v-if="this.userInfo != null && board.nickname === this.userInfo.nickname"
+          class="post-detail"
+        >
+          <div @click="moveBoardModify(board.boardno)">수정</div>
+          <div @click="deleteBoard(board.boardno)">삭제</div>
         </div>
       </div>
       <div class="imgbox">

@@ -24,7 +24,11 @@ public interface BoardService {
 
 	boolean deleteLikes(LikesDto likesDto) throws Exception;
 
-	List<BoardDto> getBoardListwithUserInfo(int userno)throws Exception;
+	List<BoardDto> getBoardListwithUserInfo(int userno) throws Exception;
 
 	List<BoardDto> getBoardListwithLike(int userno) throws Exception;
+
+	List<BoardDto> getBestList() throws Exception;
+
+	List<BoardDto> getNoticeList() throws Exception;
 }

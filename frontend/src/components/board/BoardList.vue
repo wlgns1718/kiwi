@@ -15,10 +15,7 @@
               />
               <span>전체 보기</span>
             </label>
-            <label
-              class="radio-button"
-              :class="{ active: viewMode === 'follow' }"
-            >
+            <label class="radio-button" :class="{ active: viewMode === 'follow' }">
               <input
                 type="radio"
                 name="viewMode"
@@ -38,7 +35,13 @@
           <div v-if="boards.length == 0" class="post">비었습니다..!</div>
         </div>
         <div class="fixed-section right-section">
-          <h3>베스트 게시물</h3>
+          <div class="notice-title">
+            <h3>공지사항</h3>
+            <div @click="moveNotice">더보기</div>
+          </div>
+          <board-small-item :boards="noticeBoards" @click="moveNotice"></board-small-item>
+          <h3>추천 게시물</h3>
+          <board-small-item :boards="bestBoards"></board-small-item>
         </div>
       </div>
     </div>
@@ -49,10 +52,11 @@
 import http from "@/api/http";
 import { mapState } from "vuex";
 import BoardPostItem from "./BoardPostItem.vue";
+import BoardSmallItem from "./BoardSmallItem.vue";
 
 export default {
   name: "BoardList",
-  components: { BoardPostItem },
+  components: { BoardPostItem, BoardSmallItem },
   computed: {
     ...mapState("userStore", ["userInfo"]),
   },
@@ -61,10 +65,32 @@ export default {
       viewMode: "all",
       isFollowSelect: 0,
       boards: [],
+      bestBoards: [],
+      noticeBoards: [],
     };
   },
   created() {
+    // 게시글 불러오기
     this.getBoard();
+    // 추천 게시물 불러오기
+    http
+      .get(`/board/best`)
+      .then(({ data }) => {
+        this.bestBoards = data;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    // 공지사항 불러오기
+    http
+      .get(`/board/notice`)
+      .then(({ data }) => {
+        data.splice(1);
+        this.noticeBoards = data;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   },
   methods: {
     getBoard() {
@@ -90,8 +116,10 @@ export default {
     },
 
     writeArticle() {
-      if (this.$route.path !== "/board/write")
-        this.$router.push({ name: "boardwrite" });
+      if (this.$route.path !== "/board/write") this.$router.push({ name: "boardwrite" });
+    },
+    moveNotice() {
+      if (this.$route.path !== "/notice") this.$router.push({ name: "noticelist" });
     },
   },
   mounted() {
@@ -108,10 +136,7 @@ export default {
     const previousScrollPosition = window.scrollY;
     // console.log(previousScrollPosition);
     // 다음 라우터로 이동하기 전에 스크롤 위치를 저장하기 위해 이전 스크롤 위치를 저장
-    this.$store.commit(
-      "boardStore/setPreviousScrollPosition",
-      previousScrollPosition
-    );
+    this.$store.commit("boardStore/setPreviousScrollPosition", previousScrollPosition);
 
     // 다음 라우터로 이동
     next();
@@ -156,6 +181,10 @@ export default {
 .right-section {
   padding-top: 20px;
   margin-left: calc(240px + 680px);
+}
+
+.right-section h3 {
+  margin-left: 5px;
 }
 
 .post {
@@ -219,5 +248,17 @@ export default {
 .write-article:hover {
   border: 1px solid rgb(0, 96, 255);
   color: rgb(0, 96, 255);
+}
+
+.notice-title {
+  display: flex;
+  justify-content: space-between;
+}
+
+.notice-title > div {
+  display: flex;
+  font-size: 14px;
+  align-items: center;
+  cursor: pointer;
 }
 </style>

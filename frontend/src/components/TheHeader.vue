@@ -188,7 +188,7 @@ export default {
   computed: {
     ...mapState("userStore", ["isLogin", "userInfo"]),
     ...mapState("headerStore", ["navBtn"]),
-    ...mapGetters(["checkUserInfo"]),
+    ...mapGetters("userStore", ["checkUserInfo"]),
   },
   data() {
     return {};
