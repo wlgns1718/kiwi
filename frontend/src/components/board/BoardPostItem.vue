@@ -1,6 +1,12 @@
 <template>
   <div>
-    <div class="post">
+    <div
+      class="post"
+      :class="{
+        'my-post-border':
+          this.userInfo != null && board.nickname === this.userInfo.nickname,
+      }"
+    >
       <div class="post-header">
         <div>
           <img src="@/assets/yoon.jpg" alt="프로필" class="profile-image" />
@@ -78,7 +84,9 @@
           </div>
         </div>
         <div
-          v-if="this.userInfo != null && board.nickname === this.userInfo.nickname"
+          v-if="
+            this.userInfo != null && board.nickname === this.userInfo.nickname
+          "
           class="post-detail"
         >
           <div @click="moveBoardModify(board.boardno)">수정</div>
@@ -175,6 +183,10 @@ export default {
   padding: 20px;
   margin-bottom: 60px;
   background-color: rgb(255, 255, 255);
+}
+
+.my-post-border {
+  border: 1px solid black;
 }
 
 .post-header {

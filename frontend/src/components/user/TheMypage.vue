@@ -28,7 +28,7 @@
         <div v-if="posts.length == 0">작성한 게시글이 없습니다.</div>
         <div v-else>
           <div v-for="(post, index) in posts" :key="index">
-            <div style="height: 100px">
+            <div>
               <board-post-item :board="post"></board-post-item>
             </div>
           </div>

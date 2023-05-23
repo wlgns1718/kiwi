@@ -62,7 +62,7 @@ export default {
         this.swiper.autoplay.start();
         this.startProgress = true;
       } catch (err) {
-        //console.error(err)
+        console.error(err);
       }
     },
   },
