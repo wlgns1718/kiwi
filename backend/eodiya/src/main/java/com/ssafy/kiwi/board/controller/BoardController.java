@@ -57,7 +57,8 @@ public class BoardController {
 	public ResponseEntity<BoardDto> getArticle(@RequestBody BoardViewDto boardviewDto) throws Exception {
 		logger.info("getArticle - 호출 : " + boardviewDto);
 		System.out.println(boardviewDto);
-//		boardService.updateHit(boardviewDto);
+		boardService.updateHit(boardviewDto.getBoardno());
+		System.out.println(boardviewDto.getBoardno());
 		return new ResponseEntity<BoardDto>(boardService.getArticle(boardviewDto), HttpStatus.OK);
 	}
 
@@ -98,15 +99,30 @@ public class BoardController {
 		}
 		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
 	}
+
 	@GetMapping("/mypage/{userno}")
-	public ResponseEntity<List<BoardDto>> getBoardListwithUserInfo(@PathVariable("userno") int userno) throws Exception {
+	public ResponseEntity<List<BoardDto>> getBoardListwithUserInfo(@PathVariable("userno") int userno)
+			throws Exception {
 		logger.info("getBoardListwithUserInfo - 호출 : " + userno);
 		System.out.println(userno);
 		return new ResponseEntity<List<BoardDto>>(boardService.getBoardListwithUserInfo(userno), HttpStatus.OK);
 	}
+
 	@GetMapping("/liked/{userno}")
 	public ResponseEntity<List<BoardDto>> getBoardListwithLike(@PathVariable("userno") int userno) throws Exception {
 		logger.info("getBoardListwithLike - 호출 : ");
 		return new ResponseEntity<List<BoardDto>>(boardService.getBoardListwithLike(userno), HttpStatus.OK);
+	}
+	
+	@GetMapping("/best")
+	public ResponseEntity<List<BoardDto>> bestArticle() throws Exception {
+		logger.info("bestArticle - 호출");
+		return new ResponseEntity<List<BoardDto>>(boardService.getBestList(), HttpStatus.OK);
+	}
+	
+	@GetMapping("/notice")
+	public ResponseEntity<List<BoardDto>> noticeArticle() throws Exception {
+		logger.info("noticeArticle - 호출");
+		return new ResponseEntity<List<BoardDto>>(boardService.getNoticeList(), HttpStatus.OK);
 	}
 }

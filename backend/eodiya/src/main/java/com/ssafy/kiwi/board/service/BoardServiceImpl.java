@@ -38,7 +38,7 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public void updateHit(int boardno) throws Exception {
-		boardMapper.updateHit();
+		boardMapper.updateHit(boardno);
 	}
 
 	@Override
@@ -81,7 +81,17 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public List<BoardDto> getBoardListwithLike(int userno) throws Exception {
-		
+
 		return boardMapper.getBoardListwithLike(userno);
+	}
+
+	@Override
+	public List<BoardDto> getBestList() throws Exception {
+		return boardMapper.getBestList();
+	}
+
+	@Override
+	public List<BoardDto> getNoticeList() throws Exception {
+		return boardMapper.getNoticeList();
 	}
 }

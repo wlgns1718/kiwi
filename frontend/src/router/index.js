@@ -45,7 +45,7 @@ const routes = [
         path: "userpage/:userno",
         name: "Userpage",
         component: () => import("@/components/user/TheUserPage"),
-      }
+      },
     ],
   },
   {
@@ -75,6 +75,12 @@ const routes = [
         name: "boardwrite",
         beforeEnter: onlyAuthUser,
         component: () => import("@/components/board/BoardWrite"),
+      },
+      {
+        path: "notice",
+        name: "noticelist",
+        beforeEnter: onlyAuthUser,
+        component: () => import("@/components/board/BoardNotice"),
       },
     ],
   },

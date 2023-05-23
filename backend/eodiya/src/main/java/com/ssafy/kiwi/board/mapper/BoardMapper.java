@@ -17,7 +17,7 @@ public interface BoardMapper {
 
 	List<BoardDto> getListWhenUserInfoExistAndFollowSelect(int userno) throws Exception;
 
-	void updateHit() throws Exception;
+	void updateHit(int boardno) throws Exception;
 
 	BoardDto getArticle(BoardViewDto boardViewDto) throws Exception;
 
@@ -34,4 +34,8 @@ public interface BoardMapper {
 	List<BoardDto> getBoardListwithUserInfo(int userno) throws Exception;
 
 	List<BoardDto> getBoardListwithLike(int userno) throws Exception;
+
+	List<BoardDto> getBestList() throws Exception;
+
+	List<BoardDto> getNoticeList() throws Exception;
 }
