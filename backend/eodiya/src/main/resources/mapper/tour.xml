@@ -22,6 +22,7 @@
 		<result column="latitude" property="latitude" />
 		<result column="longitude" property="longitude" />
 		<result column="overview" property="overview" />
+		<result column="content_type_id" property="contentTypeId" />
 	</resultMap>
 	
 	<select id="getSidoList" parameterType="map" resultMap="tourSido">

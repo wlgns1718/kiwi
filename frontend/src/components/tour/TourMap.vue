@@ -38,7 +38,6 @@ export default {
   },
   watch: {
     tours() {
-      this.markers = [];
       this.selectedInfoWindow = null;
       this.displayMarker();
     },
@@ -77,13 +76,51 @@ export default {
       marker.setMap(this.map);
     },
     displayMarker() {
+      this.deleteMarker();
       // console.log(this.tours);
-      const imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; // 마커 이미지
+      const sunglass = "assets/sunglass.png";
+      const mandala = "assets/mandala.png";
+      const firework = "assets/firework.png";
+      const travel = "assets/travel.png";
+      const skate = "assets/skate.png";
+      const house = "assets/house.png";
+      const shopping = "assets/shopping.png";
+      const cutlery = "assets/cutlery.png";
+
       for (var i = 0; i < this.tours.length; i++) {
         // 좌표 넣어둔 배열만큼
         // 마커 이미지의 이미지 크기 입니다
-        const imageSize = new window.kakao.maps.Size(24, 35);
+        const imageSize = new window.kakao.maps.Size(24, 24);
         // 마커 이미지를 생성합니다
+
+        var imageSrc = "";
+        switch (this.tours[i].contentTypeId) {
+          case 12:
+            imageSrc = sunglass;
+            break;
+          case 14:
+            imageSrc = mandala;
+            break;
+          case 15:
+            imageSrc = firework;
+            break;
+          case 25:
+            imageSrc = travel;
+            break;
+          case 28:
+            imageSrc = skate;
+            break;
+          case 32:
+            imageSrc = house;
+            break;
+          case 38:
+            imageSrc = shopping;
+            break;
+          case 39:
+            imageSrc = cutlery;
+            break;
+        }
+
         const markerImage = new window.kakao.maps.MarkerImage(imageSrc, imageSize);
         // 마커를 생성합니다
         const markerPosition = new window.kakao.maps.LatLng(
@@ -124,6 +161,14 @@ export default {
       );
       this.map.setCenter(markerFirstPosition);
       this.map.setLevel(6);
+    },
+    deleteMarker() {
+      console.log("마커 싹 지우자!!!", this.markers.length);
+      if (this.markers.length > 0) {
+        this.markers.forEach((item) => {
+          item.setMap(null);
+        });
+      }
     },
     moveCenter(lat, lng) {
       this.map.setCenter(new window.kakao.maps.LatLng(lat, lng));

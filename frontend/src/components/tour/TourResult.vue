@@ -1,5 +1,6 @@
 <template>
   <div class="result-wrap">
+    <div class="item no-item" v-if="tours.length == 0">관광지를 검색해보세요 !</div>
     <div class="item" v-for="(tour, index) in tours" :key="index">
       <div width="150px">
         <img v-if="tour.firstImage !== ''" :src="tour.firstImage" />
@@ -70,6 +71,11 @@ export default {
   padding: 20px;
   margin: 16px 0;
   display: flex;
+}
+
+.no-item {
+  justify-content: center;
+  text-align: center;
 }
 
 img {
