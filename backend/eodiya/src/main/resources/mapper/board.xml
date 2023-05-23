@@ -112,7 +112,10 @@
 		insert into board(title,
 		content, hit, scope, user_no)
 		values(#{title}, #{content}, 0, #{scope},
-		#{userno})
+		#{userno});
+		<selectKey keyProperty="boardno" resultType="Integer" order="AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
 	</insert>
 
 	<select id="getArticle" parameterType="boardViewDto"

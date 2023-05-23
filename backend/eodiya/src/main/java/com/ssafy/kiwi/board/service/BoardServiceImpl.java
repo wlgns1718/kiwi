@@ -58,7 +58,7 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public boolean writeArticle(BoardDto boardDto) throws Exception {
+	public int writeArticle(BoardDto boardDto) throws Exception {
 		return boardMapper.writeArticle(boardDto);
 	}
 

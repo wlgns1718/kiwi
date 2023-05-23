@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.ssafy.kiwi.file.service.FileService;
 import com.ssafy.kiwi.jwt.service.JwtServiceImpl;
 import com.ssafy.kiwi.user.model.UserDto;
 import com.ssafy.kiwi.user.service.UserService;
@@ -43,6 +44,9 @@ public class UserController {
 	@Autowired
 	private JwtServiceImpl jwtService;
 
+	@Autowired
+	private FileService fileService;
+	
 	@PostMapping("/login")
 	public ResponseEntity<Map<String, Object>> login(@RequestBody UserDto userDto) {
 		Map<String, Object> resultMap = new HashMap<>();
@@ -274,10 +278,10 @@ public class UserController {
 		logger.info("getImages - 호출");
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = HttpStatus.ACCEPTED;
-		System.out.println(userDto);
-		System.out.println(files);
+//		System.out.println(userDto);
+//		System.out.println(files);
 		try {
-			System.out.println(Util.storeFiles(files));
+			
 			resultMap.put("userInfo",userDto);
 			resultMap.put("message", SUCCESS);
 			status = HttpStatus.ACCEPTED;

@@ -18,7 +18,7 @@ public interface BoardService {
 
 	boolean deleteArticle(int boardno) throws Exception;
 
-	boolean writeArticle(BoardDto boardDto) throws Exception;
+	int writeArticle(BoardDto boardDto) throws Exception;
 
 	boolean addLikes(LikesDto likesDto) throws Exception;
 
