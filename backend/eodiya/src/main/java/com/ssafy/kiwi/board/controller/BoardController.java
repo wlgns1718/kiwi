@@ -1,10 +1,13 @@
 package com.ssafy.kiwi.board.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -14,12 +17,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ssafy.kiwi.board.model.BoardDto;
 import com.ssafy.kiwi.board.model.BoardViewDto;
 import com.ssafy.kiwi.board.model.LikesDto;
 import com.ssafy.kiwi.board.service.BoardService;
+import com.ssafy.kiwi.file.service.FileService;
 
 @RestController
 @RequestMapping("/board")
@@ -31,10 +37,11 @@ public class BoardController {
 	private static final String FAIL = "fail";
 
 	private BoardService boardService;
-
-	public BoardController(BoardService boardService) {
+	private FileService fileService;
+	public BoardController(BoardService boardService,FileService fileService ) {
 		super();
 		this.boardService = boardService;
+		this.fileService = fileService;
 	}
 
 	@PostMapping
@@ -44,13 +51,26 @@ public class BoardController {
 		return new ResponseEntity<List<BoardDto>>(boardService.getList(boardviewDto), HttpStatus.OK);
 	}
 
-	@PostMapping("/write")
-	public ResponseEntity<String> writeArticle(@RequestBody BoardDto boardDto) throws Exception {
+	@PostMapping(value="/write",consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
+	public ResponseEntity<?> writeArticle(@RequestPart BoardDto boardDto,@RequestPart List<MultipartFile> files) throws Exception {
+		
+		System.out.println(boardDto);
 		logger.info("writeArticle - 호출");
-		if (boardService.writeArticle(boardDto)) {
-			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+		Map<String, Object> resultMap = new HashMap<>();
+		HttpStatus status = HttpStatus.ACCEPTED;
+		try {
+			boardService.writeArticle(boardDto);
+			int lastno = boardDto.getBoardno();
+//			System.out.println(lastno);
+			fileService.insertFile(files,lastno);
+			resultMap.put("message", SUCCESS);
+		}catch (Exception e) {
+			logger.error("게시글 등록 실패 : {}", e);
+			resultMap.put("message", e.getMessage());
+			status = HttpStatus.INTERNAL_SERVER_ERROR;
 		}
-		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
+		
+		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
 
 	@PostMapping("/detail")
