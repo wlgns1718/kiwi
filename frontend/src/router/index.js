@@ -79,7 +79,6 @@ const routes = [
       {
         path: "notice",
         name: "noticelist",
-        beforeEnter: onlyAuthUser,
         component: () => import("@/components/board/BoardNotice"),
       },
     ],
