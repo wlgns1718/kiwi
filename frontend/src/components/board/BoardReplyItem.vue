@@ -24,9 +24,7 @@
       <div class="comment-each" v-for="(reply, index) in replys" :key="index">
         <div class="header">
           <div>
-            <span class="nickname" style="padding-right: 10px">{{
-              reply.nickname
-            }}</span>
+            <span class="nickname" style="padding-right: 10px">{{ reply.nickname }}</span>
             <span
               v-if="reply.nickname == userInfo.nickname"
               class="date cursor"
@@ -42,7 +40,7 @@
             >
           </div>
           <div class="date">
-            <span>{{ reply.createdate }}</span>
+            <span>{{ formattedDate(reply.createdate) }}</span>
             <span class="cursor">신고</span>
           </div>
         </div>
@@ -119,15 +117,40 @@ export default {
         // 현재 편집 중인 댓글을 저장
         const modifiedReply = this.replys[index];
         // console.log(modifiedReply);
-        http
-          .put(`/reply/update`, JSON.stringify(modifiedReply))
-          .then(({ data }) => {
-            if (data === "success") {
-              this.editIndex = -1; // 편집 모드 종료
-            }
-          });
+        http.put(`/reply/update`, JSON.stringify(modifiedReply)).then(({ data }) => {
+          if (data === "success") {
+            this.editIndex = -1; // 편집 모드 종료
+          }
+        });
       } else {
         this.editIndex = index; // 편집 모드로 진입
+      }
+    },
+    formattedDate(createDate) {
+      const now = new Date();
+      const diffInMilliseconds = now - new Date(createDate);
+      const diffInSeconds = Math.floor(diffInMilliseconds / 1000);
+      const diffInMinutes = Math.floor(diffInSeconds / 60);
+      const diffInHours = Math.floor(diffInMinutes / 60);
+      const diffInDays = Math.floor(diffInHours / 24);
+      const diffInMonths = Math.floor(diffInDays / 30);
+
+      if (diffInMinutes == 0) {
+        return `방금 전`;
+      } else if (diffInMinutes < 60) {
+        return `${diffInMinutes}분 전`;
+      } else if (diffInHours < 24) {
+        return `${diffInHours}시간 전`;
+      } else if (diffInDays < 30) {
+        return `${diffInDays}일 전`;
+      } else if (diffInMonths < 12) {
+        return `${diffInMonths}달 전`;
+      } else {
+        const date = new Date(this.createDate);
+        const year = date.getFullYear();
+        const month = date.getMonth() + 1;
+        const day = date.getDate();
+        return `${year}년 ${month}월 ${day}일`;
       }
     },
   },

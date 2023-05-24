@@ -15,10 +15,11 @@
 
 	<select id="getReply" parameterType="Integer" resultMap="reply">
 		select
-		r.reply_no, r.content, r.board_no, DATE_FORMAT(r.create_date, '%Y년 %m월
-		%d일 %H:%i') as create_date, r.user_no, u.nickname from reply r
+		r.reply_no, r.content, r.board_no, r.create_date, r.user_no,
+		u.nickname from reply r
 		join
-		user u on r.user_no = u.user_no where r.board_no = #{boardno} order by
+		user u on r.user_no = u.user_no where
+		r.board_no = #{boardno} order by
 		r.create_date;
 	</select>
 
