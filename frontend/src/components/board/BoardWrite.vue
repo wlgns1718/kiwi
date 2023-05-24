@@ -114,10 +114,10 @@ export default {
       }
       const frm = new FormData();
       var images = this.files;
-      console.log("아래 확인");
+      // console.log("아래 확인");
       for (let i = 0; i < images.length; i++) {
         frm.append("files", this.files[i].file);
-        console.log(this.files[i]);
+        // console.log(this.files[i]);
       }
       frm.append("title", this.board.title);
       frm.append("content", this.board.content);
@@ -127,8 +127,8 @@ export default {
       // for (let val of frm.values()) {
       //   console.log(val);
       // }
-      console.log(frm.get("files"));
-      console.log(frm.get("files"));
+      // console.log(frm.get("files"));
+      // console.log(frm.get("files"));
       http
         .post(`/board/write`, frm, {
           headers: {

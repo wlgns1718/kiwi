@@ -22,15 +22,18 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public List<BoardDto> getList(BoardViewDto boardviewDto) throws Exception {
 		if (boardviewDto.getUserno() == 0) {
+			//전체보기
 			List<BoardDto> list = boardMapper.getListWhenNoUserInfo();
-			System.out.println(1);
+//			System.out.println(1);	
 			return list;
 
 		} else if (boardviewDto.getIsFollowSelect() == 0) {
-			System.out.println(2);
+			//전체 글과 해당 유저가 팔로우 한 글까지 보기
+//			System.out.println(2);
 			return boardMapper.getListWhenUserInfoExistAndNotFollowSelect(boardviewDto.getUserno());
 		} else {
-			System.out.println(3);
+			//해당 유저가 팔로우한 글만 보기
+//			System.out.println(3);
 			return boardMapper.getListWhenUserInfoExistAndFollowSelect(boardviewDto.getUserno());
 		}
 

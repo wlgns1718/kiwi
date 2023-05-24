@@ -96,8 +96,13 @@ public class Util {
 		}
 		
         multipartFile.transferTo(new File(savefolder,storeFilename));
-
-        return new FileDto(originalFilename, storeFilename, lastno,savefolder.getPath());
+        String folderpath = savefolder.getPath();
+        FileDto fileDto = new FileDto();
+        fileDto.setNo(lastno);
+        fileDto.setSaveFolder(savefolder.getPath());
+        fileDto.setStoreFilename(storeFilename);
+        fileDto.setUploadFilename(originalFilename);
+        return fileDto;
 	}
 
 	// 파일이 여러개 들어왔을 때 처리해주는 부분

@@ -20,6 +20,8 @@ public class BoardDto {
 	private int cntLike;
 	private int cntReply;
 	private int islike;
+	private int cntimages;
+	
 	
 	private FileDto attachFile;          // 첨부 파일
 	private List<FileDto> imageFiles;    // 첨부 이미지
@@ -130,11 +132,22 @@ public class BoardDto {
 		this.nickname = nickname;
 	}
 
+	public int getCntimages() {
+		return cntimages;
+	}
+
+	public void setCntimages(int cntimages) {
+		this.cntimages = cntimages;
+	}
+
 	@Override
 	public String toString() {
 		return "BoardDto [boardno=" + boardno + ", title=" + title + ", content=" + content + ", createdate="
 				+ createdate + ", hit=" + hit + ", scope=" + scope + ", userno=" + userno + ", nickname=" + nickname
-				+ "]";
+				+ ", cntLike=" + cntLike + ", cntReply=" + cntReply + ", islike=" + islike + ", cntimages=" + cntimages
+				+ ", attachFile=" + attachFile + ", imageFiles=" + imageFiles + "]";
 	}
+		
 
+	
 }

@@ -49,6 +49,7 @@ public class BoardController {
 	public ResponseEntity<List<BoardDto>> listArticle(@RequestBody BoardViewDto boardviewDto) throws Exception {
 		logger.info("listArticle - 호출");
 		System.out.println(boardviewDto);
+		
 		return new ResponseEntity<List<BoardDto>>(boardService.getList(boardviewDto), HttpStatus.OK);
 	}
 

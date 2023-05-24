@@ -3,7 +3,8 @@
     <div
       class="post"
       :class="{
-        'my-post-border': this.userInfo != null && board.nickname === this.userInfo.nickname,
+        'my-post-border':
+          this.userInfo != null && board.nickname === this.userInfo.nickname,
       }"
     >
       <div class="post-header">
@@ -83,7 +84,9 @@
           </div>
         </div>
         <div
-          v-if="this.userInfo != null && board.nickname === this.userInfo.nickname"
+          v-if="
+            this.userInfo != null && board.nickname === this.userInfo.nickname
+          "
           class="post-detail"
         >
           <div @click="moveBoardModify(board.boardno)">수정</div>
@@ -110,7 +113,14 @@ export default {
   computed: {
     ...mapState("userStore", ["userInfo"]),
   },
-
+data(){
+  return{
+    images:[
+      "folder": "",
+      "filename":"",
+    ]
+  }
+}
   methods: {
     moveBoardDetail(boardno) {
       if (this.$route.path !== `/board/detail/${boardno}`)
@@ -197,6 +207,25 @@ export default {
         return `${year}년 ${month}월 ${day}일`;
       }
     },
+  },
+  created() {
+    //해당 보드 번호의 사진들 불러오기
+    let no = this.board.cntimages;
+    console.log(no);
+    if (no < 1) {
+      return;
+    }
+
+    let boardno = this.board.boardno;
+    console.log(boardno);
+    http
+      .get(`/file/boardimages/${boardno}`)
+      .then(({ data }) => {
+        console.log(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   },
 };
 </script>

@@ -17,16 +17,18 @@
 		<result column="cnt_like" property="cntLike" />
 		<result column="cnt_reply" property="cntReply" />
 		<result column="islike" property="islike" />
+		<result column="cnt_image" property="cntimages" />
 	</resultMap>
 
 	<select id="getListWhenNoUserInfo" resultMap="board">
 		select b.board_no,
-		b.title, b.content, b.create_date, b.hit, b.scope,
-		u.nickname, (select
-		count(*) from likes where b.board_no = board_no)
-		`cnt_like`,(select
-		count(*) from reply where b.board_no = board_no)
-		`cnt_reply`
+		b.title, b.content, b.create_date, b.hit, b.scope, u.nickname,
+		(select
+		count(*) from likes where b.board_no = board_no) `cnt_like`,
+		(select
+		count(*) from reply where b.board_no = board_no) `cnt_reply`,
+		(select
+		count(*) from file where b.board_no = board_no) `cnt_image`
 		from board
 		b join user u
 		on b.user_no = u.user_no
@@ -42,72 +44,44 @@
 	<select id="getListWhenUserInfoExistAndNotFollowSelect"
 		parameterType="Integer" resultMap="board">
 		select b.board_no, b.title,
-		b.content, b.create_date, b.hit, b.scope,
-		u.nickname, (select count(*)
-		from likes
-		where b.board_no = board_no)
-		`cnt_like`,(select count(*)
-		from
-		reply
-		where b.board_no = board_no)
-		`cnt_reply`,
+		b.content, b.create_date, b.hit, b.scope, u.nickname,
+		(select count(*)
+		from likes where b.board_no = board_no) `cnt_like`,
+		(select count(*)
+		from reply where b.board_no = board_no) `cnt_reply`,
 		if(l.board_no is
-		NOT
-		NULL,1,0)
-		`islike`
+		NOT NULL,1,0) `islike`,
+		(select count(*) from file where b.board_no =
+		board_no) `cnt_image`
 		from board b join user u
 		on b.user_no = u.user_no
-		left
-		outer
-		join likes l
-		on b.board_no = l.board_no and l.user_no = 3
-		where
-		b.scope
-		= 0 or (b.scope=1 or b.user_no in (select followee from
-		follow
-		where
-		user_no = #{userno}))
+		left outer join likes l
+		on b.board_no = l.board_no and l.user_no =
+		#{userno}
+		where b.scope = 0 or (b.scope=1 or b.user_no in (select
+		followee from
+		follow where user_no = #{userno})) or b.user_no =
+		#{userno}
 		group by b.board_no
-		order by
-		b.create_date
-		desc;
+		order by b.create_date desc;
 	</select>
 
 	<select id="getListWhenUserInfoExistAndFollowSelect"
 		parameterType="Integer" resultMap="board">
 		select b.board_no, b.title,
-		b.content, b.create_date, b.hit,
-		b.scope,u.nickname, (select count(*)
-		from likes
-		where b.board_no =
-		board_no) `cnt_like`,(select count(*) from
-		reply
-		where b.board_no =
-		board_no) `cnt_reply`,
-		if(l.board_no is
-		NOT
-		NULL,1,0)
-		`islike`
+		b.content, b.create_date, b.hit, b.scope,u.nickname,
+		(select count(*) from likes where b.board_no = board_no) `cnt_like`,
+		(select count(*) from reply where b.board_no = board_no) `cnt_reply`,
+		if(l.board_no is NOT NULL,1,0) `islike`,
+		(select count(*) from file where b.board_no = board_no) `cnt_image`
 		from board b join user u
 		on b.user_no = u.user_no
-		left
-		outer
-		join likes l
-		on b.board_no =
-		l.board_no and l.user_no =
-		#{userno}
-		where
-		(b.scope=1 or b.user_no in
-		(select
-		followee from follow
-		where
-		user_no =
-		#{userno}))
-		group by
-		b.board_no
-		order by
-		b.create_date
-		desc;
+		left outer join likes l
+		on b.board_no = l.board_no and l.user_no = #{userno}
+		where (b.scope=1 or b.user_no in (select followee from follow where user_no
+		= #{userno})) or b.user_no = #{userno}
+		group by b.board_no
+		order by b.create_date desc;
 	</select>
 
 	<insert id="writeArticle" parameterType="boardDto">
