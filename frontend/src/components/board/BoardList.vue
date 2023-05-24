@@ -15,10 +15,7 @@
               />
               <span>전체 보기</span>
             </label>
-            <label
-              class="radio-button"
-              :class="{ active: viewMode === 'follow' }"
-            >
+            <label class="radio-button" :class="{ active: viewMode === 'follow' }">
               <input
                 type="radio"
                 name="viewMode"
@@ -42,15 +39,9 @@
             <h3>공지사항</h3>
             <div @click="moveNotice">더보기</div>
           </div>
-          <board-small-item
-            :boards="noticeBoards"
-            :isNotice="true"
-          ></board-small-item>
+          <board-small-item :boards="noticeBoards" :isNotice="true"></board-small-item>
           <h3>추천 게시물</h3>
-          <board-small-item
-            :boards="bestBoards"
-            :isNotice="false"
-          ></board-small-item>
+          <board-small-item :boards="bestBoards" :isNotice="false"></board-small-item>
         </div>
       </div>
     </div>
@@ -125,12 +116,10 @@ export default {
     },
 
     writeArticle() {
-      if (this.$route.path !== "/board/write")
-        this.$router.push({ name: "boardwrite" });
+      if (this.$route.path !== "/board/write") this.$router.push({ name: "boardwrite" });
     },
     moveNotice() {
-      if (this.$route.path !== "/notice")
-        this.$router.push({ name: "noticelist" });
+      if (this.$route.path !== "/notice") this.$router.push({ name: "noticelist" });
     },
   },
   mounted() {
@@ -147,10 +136,7 @@ export default {
     const previousScrollPosition = window.scrollY;
     // console.log(previousScrollPosition);
     // 다음 라우터로 이동하기 전에 스크롤 위치를 저장하기 위해 이전 스크롤 위치를 저장
-    this.$store.commit(
-      "boardStore/setPreviousScrollPosition",
-      previousScrollPosition
-    );
+    this.$store.commit("boardStore/setPreviousScrollPosition", previousScrollPosition);
 
     // 다음 라우터로 이동
     next();

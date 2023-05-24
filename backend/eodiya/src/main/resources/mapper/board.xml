@@ -251,7 +251,10 @@
 		`cnt_like`,(select
 		count(*) from
 		reply where b.board_no = board_no)
-		`cnt_reply`
+		`cnt_reply`,
+		if(l.board_no is
+		NOT NULL,1,0)
+		`islike`
 		from board
 		b join user u
 		on b.user_no = u.user_no

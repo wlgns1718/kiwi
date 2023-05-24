@@ -4,7 +4,7 @@
       <div class="container">
         <div class="fixed-section">
           <h3 class="app_title">공지사항</h3>
-          <div v-if="this.userInfo.userno == 3">
+          <div v-if="this.userInfo != null && this.userInfo.userno == 3">
             <div class="write-article" @click="writeArticle">글작성</div>
           </div>
         </div>
@@ -14,12 +14,12 @@
               <div class="post-header">
                 <div class="post-info"></div>
               </div>
-              <div class="post-content" @click="moveBoardDetail(board.boardno)">
+              <div class="post-content">
                 <h3>{{ board.title }}</h3>
                 <p>{{ board.content }}</p>
               </div>
               <div class="post-footer">
-                <div style="display: flex">
+                <div>
                   <div class="likes">
                     <svg
                       v-if="board.islike === 0"
@@ -59,10 +59,7 @@
                     </span>
                   </div>
                 </div>
-                <div
-                  v-if="userInfo && board.nickname === userInfo.nickname"
-                  class="post-detail"
-                >
+                <div v-if="userInfo && board.nickname === userInfo.nickname" class="post-detail">
                   <div @click="moveBoardModify(board.boardno)">수정</div>
                   <div @click="deleteBoard(board.boardno)">삭제</div>
                 </div>
@@ -79,6 +76,7 @@
 
 <script>
 import http from "@/api/http";
+import { onlyAuthUser } from "@/api/logincheck";
 import { mapState } from "vuex";
 
 export default {
@@ -107,7 +105,60 @@ export default {
   methods: {
     writeArticle() {
       if (this.$route.path !== "/board/write")
-        this.$router.push({ name: "boardwrite" });
+        this.$router.push({ name: "boardwrite", params: { isNotice: true } });
+    },
+    moveBoardModify(boardno) {
+      if (this.$route.path !== `/board/modify/${boardno}`)
+        this.$router.push({ name: "boardmodify", params: { no: boardno } });
+    },
+    deleteBoard(boardno) {
+      if (window.confirm("정말 삭제하시겠습니까?")) {
+        http
+          .delete(`/board/${boardno}`)
+          .then(({ data }) => {
+            if (data === "success") {
+              alert("삭제완료");
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+    },
+    toggleLikes(board) {
+      onlyAuthUser();
+      if (this.userInfo === null) return;
+
+      let likesInfo = {
+        boardno: board.boardno,
+        userno: this.userInfo.userno,
+      };
+
+      if (board.islike === 0) {
+        http
+          .post(`/board/addlikes`, JSON.stringify(likesInfo))
+          .then(({ data }) => {
+            if (data === "success") {
+              board.islike = 1;
+              board.cntLike += 1;
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      } else {
+        http
+          .post(`/board/deletelikes/`, JSON.stringify(likesInfo))
+          .then(({ data }) => {
+            if (data === "success") {
+              board.islike = 0;
+              board.cntLike -= 1;
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
     },
   },
 };
@@ -174,5 +225,36 @@ export default {
 .write-article:hover {
   border: 1px solid rgb(0, 96, 255);
   color: rgb(0, 96, 255);
+}
+
+.post-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 25px;
+  font-size: 14px;
+}
+
+.likes {
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+  width: 50px;
+  justify-content: space-around;
+}
+
+.likes > svg {
+  cursor: pointer;
+}
+
+.post-detail {
+  display: flex;
+}
+
+.post-detail > div {
+  color: #888888;
+  font-size: 14px;
+  margin-left: 10px;
+  cursor: pointer;
 }
 </style>
