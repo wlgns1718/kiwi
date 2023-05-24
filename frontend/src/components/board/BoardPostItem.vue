@@ -127,7 +127,7 @@ export default {
           .then(({ data }) => {
             if (data === "success") {
               alert("삭제완료");
-              this.$router.push({ name: "boardlist" });
+              this.$router.go(0);
             }
           })
           .catch((error) => {
