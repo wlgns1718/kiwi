@@ -92,7 +92,7 @@ public class Util {
 		File savefolder = new File(fileDir+"images"+File.separator+today);
 		logger.info("saveFolder - 생성 {}", savefolder);
 		if (!savefolder.exists()) {
-			savefolder.mkdir();
+			savefolder.mkdirs();
 		}
 		
         multipartFile.transferTo(new File(savefolder,storeFilename));

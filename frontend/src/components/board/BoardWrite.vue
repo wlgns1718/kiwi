@@ -22,22 +22,7 @@
           @blur="isTextareaFocused = false"
         ></textarea>
       </div>
-      <div class="filebox">
-        <input
-          type="file"
-          id="files"
-          ref="images"
-          accept="image/*"
-          @change="showfile"
-          multiple
-        />
-        <b-form-file
-          v-model="images"
-          :state="Boolean(images)"
-          placeholder="Choose a file or drop it here..."
-          drop-placeholder="Drop file here..."
-        ></b-form-file>
-      </div>
+      <input-view :board="board" @setFile="setFile"></input-view>
       <div v-show="!isNotice" class="board-form scope-buttons">
         <div
           class="scope-button"
@@ -72,10 +57,12 @@
 <script>
 import http from "@/api/http";
 import { mapState } from "vuex";
-
+import InputView from "@/components/TheInput.vue";
 export default {
   name: "BoardDetail",
-  components: {},
+  components: {
+    InputView,
+  },
   computed: {
     ...mapState("userStore", ["userInfo"]),
   },
@@ -85,8 +72,9 @@ export default {
         title: "",
         content: "",
         scope: 0,
-        user_no: 0,
+        userno: 0,
       },
+      files: "",
       isTitleFocused: false,
       isTextareaFocused: false,
       images: "",
@@ -108,14 +96,47 @@ export default {
       this.board.scope = scope;
     },
     publish() {
+      var total_size = 0;
+      for (let i = 0; i < this.files.length; i++) {
+        if (this.files[i].size > 10 * 1024 * 1024) {
+          alert("하나의 사진은 10MB를 넘을 수 없습니다!!");
+          return;
+        }
+        total_size += this.files[i].size;
+      }
+      if (total_size > 30 * 1024 * 1024) {
+        alert("전체 사진 크기는 30MB를 넘을 수 없습니다!!");
+        return;
+      }
       // console.log(this.board);
       if (this.isNotice) {
         this.board.scope = 3;
       }
+      const frm = new FormData();
+      var images = this.files;
+      console.log("아래 확인");
+      for (let i = 0; i < images.length; i++) {
+        frm.append("files", this.files[i].file);
+        console.log(this.files[i]);
+      }
+      frm.append("title", this.board.title);
+      frm.append("content", this.board.content);
+      frm.append("scope", this.board.scope);
+      frm.append("userno", this.board.userno);
+      // frm.append("boardDto", JSON.stringify(this.board));
+      // for (let val of frm.values()) {
+      //   console.log(val);
+      // }
+      console.log(frm.get("files"));
+      console.log(frm.get("files"));
       http
-        .post(`/board/write`, JSON.stringify(this.board))
+        .post(`/board/write`, frm, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
         .then(({ data }) => {
-          if (data == "success") {
+          if (data.message == "success") {
             alert("등록완료 !");
             if (this.isNotice) {
               this.$router.push({ name: "noticelist" });
@@ -128,8 +149,9 @@ export default {
           console.log(error);
         });
     },
-    showfile() {
-      this.images = this.$refs.images.files[0];
+    setFile(files) {
+      this.files = files;
+      // console.log(this.files, "이게 실행되야 한다");
     },
   },
 };

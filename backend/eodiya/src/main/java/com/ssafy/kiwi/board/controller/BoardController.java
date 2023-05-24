@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -52,7 +53,7 @@ public class BoardController {
 	}
 
 	@PostMapping(value="/write",consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
-	public ResponseEntity<?> writeArticle(@RequestPart BoardDto boardDto,@RequestPart List<MultipartFile> files) throws Exception {
+	public ResponseEntity<?> writeArticle(BoardDto boardDto,@RequestParam(value="files", required = false) List<MultipartFile> files) throws Exception {
 		
 		System.out.println(boardDto);
 		logger.info("writeArticle - 호출");
@@ -61,8 +62,9 @@ public class BoardController {
 		try {
 			boardService.writeArticle(boardDto);
 			int lastno = boardDto.getBoardno();
-//			System.out.println(lastno);
+			System.out.println(files);
 			if(files !=null) {
+				logger.info("파일 등록 호출");
 				fileService.insertFile(files,lastno);
 			}
 			resultMap.put("message", SUCCESS);
