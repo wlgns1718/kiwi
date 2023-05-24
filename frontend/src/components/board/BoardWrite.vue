@@ -22,7 +22,7 @@
       <div class="filebox">
         <input type="file" id="files" ref="images" accept="image/*" @change="showfile" multiple />
       </div>
-      <div class="board-form scope-buttons">
+      <div v-show="!isNotice" class="board-form scope-buttons">
         <div class="scope-button" :class="{ selected: board.scope === 0 }" @click="setScope(0)">
           전체공개
         </div>
@@ -62,10 +62,15 @@ export default {
       isTitleFocused: false,
       isTextareaFocused: false,
       images: "",
+      isNotice: false,
     };
   },
   created() {
     this.board.userno = this.userInfo.userno;
+
+    if (this.$route.params.isNotice) {
+      this.isNotice = true;
+    }
   },
   methods: {
     goBack() {
@@ -76,12 +81,19 @@ export default {
     },
     publish() {
       // console.log(this.board);
+      if (this.isNotice) {
+        this.board.scope = 3;
+      }
       http
         .post(`/board/write`, JSON.stringify(this.board))
         .then(({ data }) => {
           if (data == "success") {
             alert("등록완료 !");
-            this.$router.push({ name: "boardlist" });
+            if (this.isNotice) {
+              this.$router.push({ name: "noticelist" });
+            } else {
+              this.$router.push({ name: "boardlist" });
+            }
           }
         })
         .catch((error) => {
