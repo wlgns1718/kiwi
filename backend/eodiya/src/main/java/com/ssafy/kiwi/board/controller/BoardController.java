@@ -62,7 +62,9 @@ public class BoardController {
 			boardService.writeArticle(boardDto);
 			int lastno = boardDto.getBoardno();
 //			System.out.println(lastno);
-			fileService.insertFile(files,lastno);
+			if(files !=null) {
+				fileService.insertFile(files,lastno);
+			}
 			resultMap.put("message", SUCCESS);
 		}catch (Exception e) {
 			logger.error("게시글 등록 실패 : {}", e);

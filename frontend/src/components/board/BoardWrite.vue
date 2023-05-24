@@ -11,7 +11,10 @@
           @blur="isTitleFocused = false"
         />
       </div>
-      <div class="board-form textarea-form" :class="{ 'border-highlither': isTextareaFocused }">
+      <div
+        class="board-form textarea-form"
+        :class="{ 'border-highlither': isTextareaFocused }"
+      >
         <textarea
           v-model="board.content"
           placeholder="본문을 입력하세요."
@@ -20,16 +23,41 @@
         ></textarea>
       </div>
       <div class="filebox">
-        <input type="file" id="files" ref="images" accept="image/*" @change="showfile" multiple />
+        <input
+          type="file"
+          id="files"
+          ref="images"
+          accept="image/*"
+          @change="showfile"
+          multiple
+        />
+        <b-form-file
+          v-model="images"
+          :state="Boolean(images)"
+          placeholder="Choose a file or drop it here..."
+          drop-placeholder="Drop file here..."
+        ></b-form-file>
       </div>
       <div class="board-form scope-buttons">
-        <div class="scope-button" :class="{ selected: board.scope === 0 }" @click="setScope(0)">
+        <div
+          class="scope-button"
+          :class="{ selected: board.scope === 0 }"
+          @click="setScope(0)"
+        >
           전체공개
         </div>
-        <div class="scope-button" :class="{ selected: board.scope === 1 }" @click="setScope(1)">
+        <div
+          class="scope-button"
+          :class="{ selected: board.scope === 1 }"
+          @click="setScope(1)"
+        >
           팔로우공개
         </div>
-        <div class="scope-button" :class="{ selected: board.scope === 2 }" @click="setScope(2)">
+        <div
+          class="scope-button"
+          :class="{ selected: board.scope === 2 }"
+          @click="setScope(2)"
+        >
           비공개
         </div>
       </div>

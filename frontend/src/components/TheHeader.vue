@@ -172,6 +172,7 @@
       <div class="header-right">
         <router-link v-if="!userInfo" to="/user/login">로그인</router-link>
         <div v-else>
+          npm
           <a href="/user/mypage" id="mypage">마이페이지</a>
           <a @click.prevent="onClickLogout">로그아웃</a>
         </div>
