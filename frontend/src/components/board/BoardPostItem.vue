@@ -3,8 +3,7 @@
     <div
       class="post"
       :class="{
-        'my-post-border':
-          this.userInfo != null && board.nickname === this.userInfo.nickname,
+        'my-post-border': this.userInfo != null && board.nickname === this.userInfo.nickname,
       }"
     >
       <div class="post-header">
@@ -13,7 +12,7 @@
         </div>
         <div class="post-info">
           <div class="post-nickname">{{ board.nickname }}</div>
-          <p class="post-date">{{ board.createdate }}</p>
+          <p class="post-date">{{ formattedDate(board.createdate) }}</p>
         </div>
         <div class="post-scope">
           <div v-if="board.scope == 0">전체공개</div>
@@ -84,9 +83,7 @@
           </div>
         </div>
         <div
-          v-if="
-            this.userInfo != null && board.nickname === this.userInfo.nickname
-          "
+          v-if="this.userInfo != null && board.nickname === this.userInfo.nickname"
           class="post-detail"
         >
           <div @click="moveBoardModify(board.boardno)">수정</div>
@@ -113,6 +110,7 @@ export default {
   computed: {
     ...mapState("userStore", ["userInfo"]),
   },
+
   methods: {
     moveBoardDetail(boardno) {
       if (this.$route.path !== `/board/detail/${boardno}`)
@@ -129,7 +127,7 @@ export default {
           .then(({ data }) => {
             if (data === "success") {
               alert("삭제완료");
-              this.$router.push({ name: "boardlist" });
+              this.$router.go(0);
             }
           })
           .catch((error) => {
@@ -170,6 +168,33 @@ export default {
           .catch((error) => {
             console.log(error);
           });
+      }
+    },
+    formattedDate(createDate) {
+      const now = new Date();
+      const diffInMilliseconds = now - new Date(createDate);
+      const diffInSeconds = Math.floor(diffInMilliseconds / 1000);
+      const diffInMinutes = Math.floor(diffInSeconds / 60);
+      const diffInHours = Math.floor(diffInMinutes / 60);
+      const diffInDays = Math.floor(diffInHours / 24);
+      const diffInMonths = Math.floor(diffInDays / 30);
+
+      if (diffInMinutes == 0) {
+        return `방금 전`;
+      } else if (diffInMinutes < 60) {
+        return `${diffInMinutes}분 전`;
+      } else if (diffInHours < 24) {
+        return `${diffInHours}시간 전`;
+      } else if (diffInDays < 30) {
+        return `${diffInDays}일 전`;
+      } else if (diffInMonths < 12) {
+        return `${diffInMonths}달 전`;
+      } else {
+        const date = new Date(this.createDate);
+        const year = date.getFullYear();
+        const month = date.getMonth() + 1;
+        const day = date.getDate();
+        return `${year}년 ${month}월 ${day}일`;
       }
     },
   },

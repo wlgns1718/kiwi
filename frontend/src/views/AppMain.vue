@@ -1,6 +1,6 @@
 <template>
   <div class="main-content">
-    <div class="weather" v-show="this.weather !== null">
+    <div class="weather" v-if="this.weather !== null">
       {{ weather.name }}
       <img :src="weatherImgSrc" style="width: 40px" />
       {{ parseInt(weather.main.temp - 273.15) }} ℃

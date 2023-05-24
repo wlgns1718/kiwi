@@ -172,10 +172,11 @@
       <div class="header-right">
         <router-link v-if="!userInfo" to="/user/login">로그인</router-link>
         <div v-else>
-          <span class="username">{{ this.userInfo.nickname }}님</span>
-
           <a href="/user/mypage" id="mypage">마이페이지</a>
           <a @click.prevent="onClickLogout">로그아웃</a>
+          <div style="font-size: 14px">
+            {{ userInfo.nickname }} 님 안녕하세요.
+          </div>
         </div>
       </div>
     </div>

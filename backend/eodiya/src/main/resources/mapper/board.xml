@@ -42,27 +42,30 @@
 	<select id="getListWhenUserInfoExistAndNotFollowSelect"
 		parameterType="Integer" resultMap="board">
 		select b.board_no, b.title,
-		b.content, DATE_FORMAT(b.create_date, '%Y년 %m월
-		%d일 %H:%i') as
-		create_date, b.hit, b.scope,
+		b.content, b.create_date, b.hit, b.scope,
 		u.nickname, (select count(*)
 		from likes
 		where b.board_no = board_no)
 		`cnt_like`,(select count(*)
-		from reply
+		from
+		reply
 		where b.board_no = board_no)
 		`cnt_reply`,
 		if(l.board_no is
-		NOT NULL,1,0)
+		NOT
+		NULL,1,0)
 		`islike`
 		from board b join user u
 		on b.user_no = u.user_no
-		left outer
+		left
+		outer
 		join likes l
 		on b.board_no = l.board_no and l.user_no = 3
-		where b.scope
+		where
+		b.scope
 		= 0 or (b.scope=1 or b.user_no in (select followee from
-		follow where
+		follow
+		where
 		user_no = #{userno}))
 		group by b.board_no
 		order by
@@ -73,9 +76,7 @@
 	<select id="getListWhenUserInfoExistAndFollowSelect"
 		parameterType="Integer" resultMap="board">
 		select b.board_no, b.title,
-		b.content, DATE_FORMAT(b.create_date, '%Y년 %m월
-		%d일 %H:%i') as
-		create_date, b.hit,
+		b.content, b.create_date, b.hit,
 		b.scope,u.nickname, (select count(*)
 		from likes
 		where b.board_no =
@@ -89,7 +90,8 @@
 		`islike`
 		from board b join user u
 		on b.user_no = u.user_no
-		left outer
+		left
+		outer
 		join likes l
 		on b.board_no =
 		l.board_no and l.user_no =
@@ -111,9 +113,11 @@
 	<insert id="writeArticle" parameterType="boardDto">
 		insert into board(title,
 		content, hit, scope, user_no)
-		values(#{title}, #{content}, 0, #{scope},
+		values(#{title},
+		#{content}, 0, #{scope},
 		#{userno});
-		<selectKey keyProperty="boardno" resultType="Integer" order="AFTER">
+		<selectKey keyProperty="boardno" resultType="Integer"
+			order="AFTER">
 			SELECT LAST_INSERT_ID()
 		</selectKey>
 	</insert>
@@ -121,8 +125,7 @@
 	<select id="getArticle" parameterType="boardViewDto"
 		resultMap="board">
 		select b.board_no, b.title, b.content,
-		DATE_FORMAT(b.create_date, '%Y년 %m월
-		%d일 %H:%i') as create_date, b.hit,
+		b.create_date, b.hit,
 		b.scope,
 		u.nickname, (select count(*) from likes where b.board_no =
 		board_no)
@@ -177,8 +180,7 @@
 	<select id="getBoardListwithUserInfo" parameterType="Integer"
 		resultMap="board">
 		select b.board_no, b.title, b.content,
-		DATE_FORMAT(b.create_date, '%Y년 %m월
-		%d일 %H:%i') as create_date,
+		b.create_date,
 		b.hit,
 		b.scope, u.user_no, u.nickname, count(l.user_no) `cnt_like`,
 		count(r.reply_no) `cnt_reply`,
@@ -253,17 +255,20 @@
 		reply where b.board_no = board_no)
 		`cnt_reply`,
 		if(l.board_no is
-		NOT NULL,1,0)
+		NOT
+		NULL,1,0)
 		`islike`
 		from board
 		b join user u
 		on b.user_no = u.user_no
-		left outer join likes l
+		left
+		outer join likes l
 		on
 		b.board_no =
 		l.board_no
 		where b.scope = 3
-		group by b.board_no
+		group by
+		b.board_no
 		order by
 		b.create_date
 		desc;
