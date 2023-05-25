@@ -105,6 +105,15 @@
 		#{password}, #{salt}, #{email}, #{nickname}, #{age}, #{gender})
 	</insert>
 
+	<update id="modifyInfo" parameterType="map">
+		update user
+		SET nickname =
+		#{nickname}, age= #{age}
+		where id = #{id};
+
+	</update>
+
+
 	<select id="getOtherUser" parameterType="int" resultMap="user">
 		select
 		id, nickname, email, user_no

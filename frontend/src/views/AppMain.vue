@@ -6,6 +6,13 @@
       {{ parseInt(weather.main.temp - 273.15) }} ℃
     </div>
     <main-image-swiper></main-image-swiper>
+    <div id="intro">
+      <div id="intro-top">안녕하세요 &#128400;</div>
+      <div id="intro-img">
+        <img src="/assets/earch.PNG" alt="" />
+      </div>
+      <p id="intro-text">저희와 함께 여행을 떠나볼까요?</p>
+    </div>
   </div>
 </template>
 
@@ -72,5 +79,38 @@ export default {
 .weather {
   display: flex;
   align-items: center;
+}
+
+#intro {
+  transition: 0.2s;
+  margin: 36px 0px;
+  padding: 30px 66px 30px 66px;
+  border-radius: 30px;
+  border-radius: 14px;
+  box-shadow: 2px 5px 40px 0 rgba(0, 0, 0, 0.08);
+  text-align: center;
+}
+
+#intro:hover {
+  box-shadow: 3px 6px 44px 0 rgba(0, 0, 0, 0.18);
+  transform: scale(1.01);
+}
+
+#intro-top {
+  font-size: 60px;
+  font-weight: 600;
+}
+
+#intro-text {
+  font-size: 40px;
+  margin: 0;
+}
+
+#intro-img {
+  transition: 0.5s;
+}
+
+#intro-img:hover {
+  transform: scale(1.1);
 }
 </style>

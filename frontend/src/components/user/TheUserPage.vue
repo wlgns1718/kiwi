@@ -23,7 +23,11 @@
         </div>
         <div>{{ user.nickname }}</div>
         <div>{{ user.email }}</div>
-        <div class="FollowWrap" @click="addFollow" :class="{ followed: isFollowed }">
+        <div
+          class="FollowWrap"
+          @click="addFollow"
+          :class="{ followed: isFollowed }"
+        >
           <div v-if="!isFollowed">팔로우</div>
           <div v-else>언팔로우</div>
         </div>
@@ -43,7 +47,9 @@
         <h3 class="boardTitle">팔로워 목록</h3>
         <div v-if="followerList.length == 0" class="nofollwer">
           팔로워가 없습니다.
-          <div>{{ user.nickname }}님의 게시글을 보고싶다면 팔로우 해보세요!!</div>
+          <div>
+            {{ user.nickname }}님의 게시글을 보고싶다면 팔로우 해보세요!!
+          </div>
         </div>
         <div v-else>
           <div v-for="(follower, index) in followerList" :key="index">
@@ -56,9 +62,15 @@
       </div>
       <div class="right-container" v-else-if="Followeeing">
         <h3 class="boardTitle">팔로잉 목록</h3>
-        <div v-if="followeeList.length == 0" class="nofollwer">팔로잉이 없습니다.</div>
+        <div v-if="followeeList.length == 0" class="nofollwer">
+          팔로잉이 없습니다.
+        </div>
         <div v-else style="width: 550px" class="followees">
-          <div v-for="(followee, index) in followeeList" :key="index" class="followee">
+          <div
+            v-for="(followee, index) in followeeList"
+            :key="index"
+            class="followee"
+          >
             <user-follow :follow="followee" :index="index"></user-follow>
           </div>
         </div>
@@ -215,7 +227,6 @@ export default {
 
 <style scoped>
 .MyPageWrap {
-  position: relative;
   border: 2px solid;
   width: 450px;
   margin-top: 30px;
@@ -224,8 +235,8 @@ export default {
 }
 .FollowWrap {
   border: 1px solid;
-  width: 95%;
-  margin-left: 10px;
+  width: 100%;
+  float: left;
   border-radius: 6px 6px 6px 6px;
   cursor: pointer;
 }
@@ -254,6 +265,7 @@ export default {
   border-radius: 8px 8px 8px 8px;
   overflow-x: hidden;
 }
+
 .postinfo {
   display: flex;
   text-align: center;

@@ -1,20 +1,38 @@
 <template>
   <div class="profileWrap" v-if="index % 2 == 0">
-    <div><img src="@/assets/yoon.jpg" alt="프로필 사진" class="profilePic" /></div>
+    <div>
+      <img
+        src="@/assets/yoon.jpg"
+        width="60px"
+        alt="프로필 사진"
+        class="profilePic"
+      />
+    </div>
     <div class="main">
-      <router-link :to="{ name: 'Userpage', params: { userno: `${this.user.no}` } }" class="name">{{
-        user.nickname
-      }}</router-link>
+      <router-link
+        :to="{ name: 'Userpage', params: { userno: `${this.user.no}` } }"
+        class="name"
+        >{{ user.nickname }}</router-link
+      >
       <div class="contentid">{{ user.id }}</div>
       <div class="contentemail">{{ user.email }}</div>
     </div>
   </div>
   <div class="profileWrap1" v-else>
-    <div><img src="@/assets/yoon.jpg" alt="프로필 사진" class="profilePic" /></div>
+    <div>
+      <img
+        src="@/assets/yoon.jpg"
+        width="60px"
+        alt="프로필 사진"
+        class="profilePic"
+      />
+    </div>
     <div class="main">
-      <router-link :to="{ name: 'Userpage', params: { userno: `${this.user.no}` } }" class="name">{{
-        user.nickname
-      }}</router-link>
+      <router-link
+        :to="{ name: 'Userpage', params: { userno: `${this.user.no}` } }"
+        class="name"
+        >{{ user.nickname }}</router-link
+      >
       <div class="contentid">{{ user.id }}</div>
       <div class="contentemail">{{ user.email }}</div>
     </div>

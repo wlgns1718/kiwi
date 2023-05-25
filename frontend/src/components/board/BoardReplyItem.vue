@@ -24,7 +24,9 @@
       <div class="comment-each" v-for="(reply, index) in replys" :key="index">
         <div class="header">
           <div>
-            <span class="nickname" style="padding-right: 10px">{{ reply.nickname }}</span>
+            <span class="nickname" style="padding-right: 10px">{{
+              reply.nickname
+            }}</span>
             <span
               v-if="reply.nickname == userInfo.nickname"
               class="date cursor"
@@ -117,11 +119,13 @@ export default {
         // 현재 편집 중인 댓글을 저장
         const modifiedReply = this.replys[index];
         // console.log(modifiedReply);
-        http.put(`/reply/update`, JSON.stringify(modifiedReply)).then(({ data }) => {
-          if (data === "success") {
-            this.editIndex = -1; // 편집 모드 종료
-          }
-        });
+        http
+          .put(`/reply/update`, JSON.stringify(modifiedReply))
+          .then(({ data }) => {
+            if (data === "success") {
+              this.editIndex = -1; // 편집 모드 종료
+            }
+          });
       } else {
         this.editIndex = index; // 편집 모드로 진입
       }
@@ -179,6 +183,7 @@ export default {
   padding: 8px;
   border: 1px solid transparent;
   border-radius: 4px;
+  width: 450px;
 }
 
 .comment-form input[type="text"]:focus {

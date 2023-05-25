@@ -218,7 +218,7 @@ export default {
 </script>
 
 <style scope>
-img {
+.header-left img {
   width: 80px;
 }
 
