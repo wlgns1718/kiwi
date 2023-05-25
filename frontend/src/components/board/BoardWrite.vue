@@ -11,7 +11,10 @@
           @blur="isTitleFocused = false"
         />
       </div>
-      <div class="board-form textarea-form" :class="{ 'border-highlither': isTextareaFocused }">
+      <div
+        class="board-form textarea-form"
+        :class="{ 'border-highlither': isTextareaFocused }"
+      >
         <textarea
           v-model="board.content"
           placeholder="본문을 입력하세요."
@@ -21,13 +24,25 @@
       </div>
       <input-view :board="board" @setFile="setFile"></input-view>
       <div v-show="!isNotice" class="board-form scope-buttons">
-        <div class="scope-button" :class="{ selected: board.scope === 0 }" @click="setScope(0)">
+        <div
+          class="scope-button"
+          :class="{ selected: board.scope === 0 }"
+          @click="setScope(0)"
+        >
           전체공개
         </div>
-        <div class="scope-button" :class="{ selected: board.scope === 1 }" @click="setScope(1)">
+        <div
+          class="scope-button"
+          :class="{ selected: board.scope === 1 }"
+          @click="setScope(1)"
+        >
           팔로우공개
         </div>
-        <div class="scope-button" :class="{ selected: board.scope === 2 }" @click="setScope(2)">
+        <div
+          class="scope-button"
+          :class="{ selected: board.scope === 2 }"
+          @click="setScope(2)"
+        >
           비공개
         </div>
       </div>

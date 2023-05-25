@@ -3,7 +3,8 @@
     <div
       class="post"
       :class="{
-        'my-post-border': this.userInfo != null && board.nickname === this.userInfo.nickname,
+        'my-post-border':
+          this.userInfo != null && board.nickname === this.userInfo.nickname,
       }"
     >
       <div class="post-header">
@@ -83,7 +84,9 @@
           </div>
         </div>
         <div
-          v-if="this.userInfo != null && board.nickname === this.userInfo.nickname"
+          v-if="
+            this.userInfo != null && board.nickname === this.userInfo.nickname
+          "
           class="post-detail"
         >
           <div @click="moveBoardModify(board.boardno)">수정</div>
@@ -91,10 +94,13 @@
         </div>
       </div>
       <div class="imgbox">
-        <img src="" alt="포스트사진" class="images" />
-        <img src="@/assets/trip2.jpg" alt="포스트사진" class="images" />
-        <img src="@/assets/trip3.jpg" alt="포스트사진" class="images" />
-        <img src="@/assets/trip4.jpg" alt="포스트사진" class="images" />
+        <div v-for="(image, index) in images" :key="index" class="temp">
+          <img
+            src="http://localhost:9999/image/showimage?saveFolder=2023-05-25&storeFilename=46ec12bf-2069-4f02-b27c-e84c620e81cb.png"
+            alt="포스트사진"
+            class="images1"
+          />
+        </div>
       </div>
     </div>
   </div>
@@ -212,10 +218,14 @@ export default {
 
       console.log(boardno, "게시글 번호");
       http
-        .get(`/file/boardimages/${boardno}`)
+        .get(`/image/boardimages/${boardno}`)
         .then(({ data }) => {
+          // for(let i = 0; i <data.images.length; i++){
+          //   this.images.append data.images[i].saveFolder +
+          // }
           this.images = data.images;
-          console.log(this.images[0].saveFolder);
+
+          // console.log(this.images[0].saveFolder);
         })
         .catch((error) => {
           console.log(error);
@@ -347,6 +357,21 @@ svg {
   border: 1px solid;
   border-color: white;
   border-radius: 8px 8px 8px 8px;
+  height: 190px;
+}
+.temp {
+  width: 48%;
+  border: 1px solid;
+  border-color: white;
+  border-radius: 8px 8px 8px 8px;
+  height: 190px;
+}
+.images1 {
+  align-content: center;
+  border: 1px solid;
+  border-color: white;
+  border-radius: 8px 8px 8px 8px;
+  width: 100%;
   height: 190px;
 }
 </style>

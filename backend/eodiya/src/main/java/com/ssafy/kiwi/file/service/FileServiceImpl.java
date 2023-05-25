@@ -29,15 +29,11 @@ public class FileServiceImpl implements FileService {
 			fileMapper.insertFile(file);
 		}
 		
-		
-
 	}
 
 	@Override
 	public List<FileDto> getBoardImages(int boardno) throws Exception {
-		System.out.println("여기서 오류가 나나");
 		List<FileDto> list = fileMapper.getBoardImages(boardno);
-		
 		return list;
 	}
 

@@ -25,7 +25,7 @@ import com.ssafy.kiwi.file.model.FileDto;
 public class Util {
 
 	private final String rootPath = System.getProperty("user.dir");
-	private final String fileDir = rootPath + File.separator;
+	private final String fileDir = rootPath + File.separator+"resources"+File.separator;
 	private final Logger logger = LoggerFactory.getLogger(Util.class);
 
 	// 비밀번호 해싱
@@ -98,7 +98,7 @@ public class Util {
         multipartFile.transferTo(new File(savefolder,storeFilename));
         FileDto fileDto = new FileDto();
         fileDto.setBoardno(lastno);
-        fileDto.setSaveFolder(savefolder.getPath());
+        fileDto.setSaveFolder(today);
         fileDto.setStoreFilename(storeFilename);
         fileDto.setUploadFilename(originalFilename);
         return fileDto;

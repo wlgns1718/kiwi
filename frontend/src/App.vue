@@ -1,7 +1,10 @@
 <template>
-  <div id="app">
-    <the-header></the-header>
-    <router-view />
+  <div class="main">
+    <div id="app">
+      <the-header></the-header>
+      <router-view />
+      <the-footer></the-footer>
+    </div>
   </div>
 </template>
 
@@ -9,10 +12,12 @@
 import TheHeader from "@/components/TheHeader";
 // import AppMain from "@/views/AppMain";
 // import AppBoard from "@/views/AppBoard";
-
+import TheFooter from "./components/TheFooter.vue";
 export default {
   components: {
     TheHeader,
+    TheFooter,
+
     // AppMain,
     // AppBoard,
   },
@@ -22,8 +27,13 @@ export default {
 <style>
 @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard.css");
 
+.main {
+  position: relative;
+  height: 100%;
+}
 #app {
   padding-top: 60px;
+  min-height: 100vh;
 }
 *,
 #app,
@@ -101,4 +111,19 @@ a {
   --colorFg26: #333;
   --colorFg27: #666;
 }
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
 </style>
