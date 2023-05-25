@@ -82,7 +82,7 @@
 		left outer join likes l
 		on b.board_no = l.board_no and l.user_no =
 		#{userno}
-		where (b.scope=1 or b.user_no in (select followee from follow
+		where (b.scope=1 and b.user_no in (select followee from follow
 		where user_no
 		= #{userno})) or b.user_no = #{userno}
 		group by b.board_no
