@@ -70,15 +70,21 @@
 		parameterType="Integer" resultMap="board">
 		select b.board_no, b.title,
 		b.content, b.create_date, b.hit, b.scope,u.nickname,
-		(select count(*) from likes where b.board_no = board_no) `cnt_like`,
-		(select count(*) from reply where b.board_no = board_no) `cnt_reply`,
-		if(l.board_no is NOT NULL,1,0) `islike`,
-		(select count(*) from file where b.board_no = board_no) `cnt_image`
+		(select count(*)
+		from likes where b.board_no = board_no) `cnt_like`,
+		(select count(*)
+		from reply where b.board_no = board_no) `cnt_reply`,
+		if(l.board_no is
+		NOT NULL,1,0) `islike`,
+		(select count(*) from file where b.board_no =
+		board_no) `cnt_image`
 		from board b join user u
 		on b.user_no = u.user_no
 		left outer join likes l
-		on b.board_no = l.board_no and l.user_no = #{userno}
-		where (b.scope=1 or b.user_no in (select followee from follow where user_no
+		on b.board_no = l.board_no and l.user_no =
+		#{userno}
+		where (b.scope=1 or b.user_no in (select followee from follow
+		where user_no
 		= #{userno})) or b.user_no = #{userno}
 		group by b.board_no
 		order by b.create_date desc;
@@ -158,7 +164,8 @@
 		b.hit,
 		b.scope, u.user_no, u.nickname, count(l.user_no) `cnt_like`,
 		count(r.reply_no) `cnt_reply`,
-		if(l.board_no is NOT NULL,1,0) `islike`
+		if(l.board_no is NOT NULL,1,0) `islike`,
+		(select count(*) from file where b.board_no = board_no) `cnt_image`
 		from board b join user u
 		on b.user_no = u.user_no
 		left outer join likes
@@ -248,4 +255,10 @@
 		desc;
 	</select>
 
+	<select id="getcntImage" parameterType="Integer"
+		resultType="Integer">
+		select count(*)
+		from file
+		where board_no=#{boardno}
+	</select>
 </mapper>

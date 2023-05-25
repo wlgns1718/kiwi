@@ -27,6 +27,7 @@ import com.ssafy.kiwi.board.model.BoardViewDto;
 import com.ssafy.kiwi.board.model.LikesDto;
 import com.ssafy.kiwi.board.service.BoardService;
 import com.ssafy.kiwi.file.service.FileService;
+import com.ssafy.kiwi.user.model.UserDto;
 
 @RestController
 @RequestMapping("/board")
@@ -149,5 +150,23 @@ public class BoardController {
 	public ResponseEntity<List<BoardDto>> noticeArticle() throws Exception {
 		logger.info("noticeArticle - 호출");
 		return new ResponseEntity<List<BoardDto>>(boardService.getNoticeList(), HttpStatus.OK);
+	}
+	@GetMapping("/cntimage/{boardno}")
+	public ResponseEntity<?> getcntImage(@PathVariable("boardno") int boardno) {
+		logger.info("getcntImage - 호출");
+		Map<String, Object> resultMap = new HashMap<>();
+		HttpStatus status = HttpStatus.ACCEPTED;
+		try {
+			int cntimage = boardService.getcntImage(boardno);
+			resultMap.put("cntImage",cntimage);
+			resultMap.put("message", SUCCESS);
+			status = HttpStatus.ACCEPTED;
+		} catch (Exception e) {
+			logger.error("게시글 사진 개수 가져오기 실패!! : {}", e);
+			resultMap.put("message", e.getMessage());
+			status = HttpStatus.INTERNAL_SERVER_ERROR;
+		}
+		return new ResponseEntity<Map<String, Object>>(resultMap, status);
+
 	}
 }

@@ -38,4 +38,6 @@ public interface BoardMapper {
 	List<BoardDto> getBestList() throws Exception;
 
 	List<BoardDto> getNoticeList() throws Exception;
+
+	int getcntImage(int boardno) throws Exception;
 }

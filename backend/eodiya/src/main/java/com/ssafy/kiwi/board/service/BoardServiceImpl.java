@@ -97,4 +97,10 @@ public class BoardServiceImpl implements BoardService {
 	public List<BoardDto> getNoticeList() throws Exception {
 		return boardMapper.getNoticeList();
 	}
+
+	@Override
+	public int getcntImage(int boardno) throws Exception {
+		
+		return boardMapper.getcntImage(boardno);
+	}
 }
