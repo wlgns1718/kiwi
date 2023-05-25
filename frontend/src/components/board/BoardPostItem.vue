@@ -13,6 +13,14 @@
         <div class="post-info">
           <div class="post-nickname">
             <router-link
+              v-if="this.userInfo != null && board.nickname === this.userInfo.nickname"
+              :to="{ name: 'UserMypage' }"
+              class="name"
+            >
+              {{ board.nickname }}
+            </router-link>
+            <router-link
+              v-else
               :to="{ name: 'Userpage', params: { userno: `${board.userno}` } }"
               class="name"
               >{{ board.nickname }}</router-link

@@ -21,7 +21,7 @@
 
 	<select id="getListWhenNoUserInfo" resultMap="board">
 		select b.board_no,
-		b.title, b.content, b.create_date, b.hit, b.scope, u.nickname,
+		b.title, b.content, b.create_date, b.hit, b.scope, b.user_no, u.nickname,
 		(select
 		count(*) from likes where b.board_no = board_no) `cnt_like`,
 		(select
@@ -43,7 +43,7 @@
 	<select id="getListWhenUserInfoExistAndNotFollowSelect"
 		parameterType="Integer" resultMap="board">
 		select b.board_no, b.title,
-		b.content, b.create_date, b.hit, b.scope, u.nickname,
+		b.content, b.create_date, b.hit, b.scope, b.user_no, u.nickname,
 		(select count(*)
 		from likes where b.board_no = board_no) `cnt_like`,
 		(select count(*)
@@ -68,7 +68,7 @@
 	<select id="getListWhenUserInfoExistAndFollowSelect"
 		parameterType="Integer" resultMap="board">
 		select b.board_no, b.title,
-		b.content, b.create_date, b.hit, b.scope,u.nickname,
+		b.content, b.create_date, b.hit, b.scope, b.user_no, u.nickname,
 		(select count(*)
 		from likes where b.board_no = board_no) `cnt_like`,
 		(select count(*)
@@ -103,7 +103,7 @@
 
 	<select id="getArticle" parameterType="boardViewDto"
 		resultMap="board">
-		select b.board_no, b.title, b.content,
+		select b.board_no, b.title, b.user_no, b.content,
 		b.create_date, b.hit,
 		b.scope,
 		u.nickname, (select count(*) from likes where b.board_no =
@@ -158,7 +158,7 @@
 
 	<select id="getBoardListwithUserInfo" parameterType="Integer"
 		resultMap="board">
-		select b.board_no, b.title, b.content,
+		select b.board_no, b.title, b.content, b.user_no,
 		b.create_date,
 		b.hit,
 		b.scope, u.user_no, u.nickname, count(l.user_no) `cnt_like`,
@@ -181,7 +181,7 @@
 
 	<select id="getBoardListwithLike" parameterType="int"
 		resultMap="board">
-		select b.board_no, b.title, b.content, b.create_date, b.hit,
+		select b.board_no, b.title, b.content, b.user_no, b.create_date, b.hit,
 		b.scope,
 		u.nickname,
 		(select count(*) from likes where b.board_no =
@@ -202,7 +202,7 @@
 		select b.board_no, b.title,
 		b.content, DATE_FORMAT(b.create_date, '%Y년
 		%m월 %d일 %H:%i') as
-		create_date, b.hit, b.scope,u.nickname,
+		create_date, b.hit, b.scope,u.nickname, b.user_no,
 		(select
 		count(*) from likes where b.board_no = board_no and
 		DATEDIFF(curdate(),create_date) <![CDATA[ < ]]>
@@ -226,7 +226,7 @@
 	<select id="getNoticeList" resultMap="board">
 		select b.board_no,
 		b.title,
-		b.content, b.create_date, b.hit, b.scope,
+		b.content, b.create_date, b.hit, b.scope, b.user_no,
 		u.nickname, (select
 		count(*)
 		from likes where b.board_no = board_no)
