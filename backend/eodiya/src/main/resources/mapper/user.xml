@@ -99,14 +99,27 @@
 	</select>
 
 	<insert id="regist" parameterType="map">
-		insert into user (id, password, salt, email, nickname, age, gender)
-		values(#{id}, #{password}, #{salt}, #{email}, #{nickname}, #{age}, #{gender})
+		insert into user (id,
+		password, salt, email, nickname, age, gender)
+		values(#{id},
+		#{password}, #{salt}, #{email}, #{nickname}, #{age}, #{gender})
 	</insert>
-	
+
 	<select id="getOtherUser" parameterType="int" resultMap="user">
-	select id, nickname, email, user_no
-	from user
-	where user_no = #{userno}
+		select
+		id, nickname, email, user_no
+		from user
+		where user_no = #{userno}
 	</select>
+
+	<insert id="addFollow" parameterType="int">
+		insert into follow(user_no,
+		followee) values(#{userno}, #{followee})
+	</insert>
+
+	<delete id="deleteFollow" parameterType="int">
+		delete from follow where
+		user_no = #{userno} and followee = #{followee}
+	</delete>
 
 </mapper>

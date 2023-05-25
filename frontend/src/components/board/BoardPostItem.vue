@@ -3,8 +3,7 @@
     <div
       class="post"
       :class="{
-        'my-post-border':
-          this.userInfo != null && board.nickname === this.userInfo.nickname,
+        'my-post-border': this.userInfo != null && board.nickname === this.userInfo.nickname,
       }"
     >
       <div class="post-header">
@@ -12,7 +11,13 @@
           <img src="@/assets/yoon.jpg" alt="프로필" class="profile-image" />
         </div>
         <div class="post-info">
-          <div class="post-nickname">{{ board.nickname }}</div>
+          <div class="post-nickname">
+            <router-link
+              :to="{ name: 'Userpage', params: { userno: `${board.userno}` } }"
+              class="name"
+              >{{ board.nickname }}</router-link
+            >
+          </div>
           <p class="post-date">{{ formattedDate(board.createdate) }}</p>
         </div>
         <div class="post-scope">
@@ -84,9 +89,7 @@
           </div>
         </div>
         <div
-          v-if="
-            this.userInfo != null && board.nickname === this.userInfo.nickname
-          "
+          v-if="this.userInfo != null && board.nickname === this.userInfo.nickname"
           class="post-detail"
         >
           <div @click="moveBoardModify(board.boardno)">수정</div>

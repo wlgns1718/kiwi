@@ -32,6 +32,6 @@ export default {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-  border-bottom: 1px solid var(--colorBg1);
+  border-top: 1px solid var(--colorBg1);
 }
 </style>

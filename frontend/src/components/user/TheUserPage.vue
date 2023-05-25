@@ -23,8 +23,9 @@
         </div>
         <div>{{ user.nickname }}</div>
         <div>{{ user.email }}</div>
-        <div class="FollowWrap">
-          <div>팔로우</div>
+        <div class="FollowWrap" @click="addFollow" :class="{ followed: isFollowed }">
+          <div v-if="!isFollowed">팔로우</div>
+          <div v-else>언팔로우</div>
         </div>
       </div>
       <div class="right-container" v-if="Post">
@@ -42,9 +43,7 @@
         <h3 class="boardTitle">팔로워 목록</h3>
         <div v-if="followerList.length == 0" class="nofollwer">
           팔로워가 없습니다.
-          <div>
-            {{ user.nickname }}님의 게시글을 보고싶다면 팔로우 해보세요!!
-          </div>
+          <div>{{ user.nickname }}님의 게시글을 보고싶다면 팔로우 해보세요!!</div>
         </div>
         <div v-else>
           <div v-for="(follower, index) in followerList" :key="index">
@@ -57,15 +56,9 @@
       </div>
       <div class="right-container" v-else-if="Followeeing">
         <h3 class="boardTitle">팔로잉 목록</h3>
-        <div v-if="followeeList.length == 0" class="nofollwer">
-          팔로잉이 없습니다.
-        </div>
+        <div v-if="followeeList.length == 0" class="nofollwer">팔로잉이 없습니다.</div>
         <div v-else style="width: 550px" class="followees">
-          <div
-            v-for="(followee, index) in followeeList"
-            :key="index"
-            class="followee"
-          >
+          <div v-for="(followee, index) in followeeList" :key="index" class="followee">
             <user-follow :follow="followee" :index="index"></user-follow>
           </div>
         </div>
@@ -79,12 +72,18 @@
 
 <script>
 import http from "@/api/http";
+import { mapState } from "vuex";
 import BoardPostItem from "@/components/board/BoardPostItem.vue";
 import UserFollow from "@/components/user/UserFollow.vue";
 export default {
   name: "MyPageView",
   components: { BoardPostItem, UserFollow },
-  computed: {},
+  computed: { ...mapState("userStore", ["userInfo"]) },
+  watch: {
+    isFollowed(newValue) {
+      console.log(newValue);
+    },
+  },
   data() {
     return {
       user: {
@@ -99,6 +98,7 @@ export default {
       Post: true,
       Follower: false,
       Followeeing: false,
+      isFollowed: false,
     };
   },
   methods: {
@@ -148,7 +148,14 @@ export default {
         .then(({ data }) => {
           this.followeeList = data.followeeList;
           //   console.log(this.followee, "안녕");
-          //   console.log(data);
+          // console.log(typeof this.followeeList);
+          for (const value of Object.values(this.followerList)) {
+            console.log(value);
+            if (value === this.userInfo.userno) {
+              this.isFollowed = true;
+              break;
+            }
+          }
         })
         .catch((error) => {
           console.log(error);
@@ -167,6 +174,33 @@ export default {
           console.log(error);
         });
       // console.log("teset", this.followerList);
+    },
+
+    addFollow() {
+      const userno = this.userInfo.userno;
+      const followee = this.user.no;
+
+      if (!this.isFollowed) {
+        http
+          .get(`/user/follow/${userno}/${followee}`)
+          .then(({ data }) => {
+            if (data == "success") {
+              this.isFollowed = true;
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      } else {
+        http
+          .delete(`/user/follow/${userno}/${followee}`)
+          .then(({ data }) => {
+            if (data == "success") this.isFollowed = false;
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
     },
   },
   created() {
@@ -191,6 +225,7 @@ export default {
 .FollowWrap {
   border: 1px solid;
   width: 95%;
+  margin-left: 10px;
   border-radius: 6px 6px 6px 6px;
   cursor: pointer;
 }
@@ -234,5 +269,9 @@ export default {
 .User-Post-Info {
   display: flex;
   justify-content: space-evenly;
+}
+
+.followed {
+  background-color: skyblue;
 }
 </style>

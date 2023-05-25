@@ -103,4 +103,14 @@ public class UserServiceImpl implements UserService {
 		return userMapper.getOtherUser(userno);
 	}
 
+	@Override
+	public int addFollow(int userno, int followee) throws Exception {
+		return userMapper.addFollow(userno, followee);
+	}
+
+	@Override
+	public int deleteFollow(int userno, int followee) throws Exception {
+		return userMapper.deleteFollow(userno, followee);
+	}
+
 }

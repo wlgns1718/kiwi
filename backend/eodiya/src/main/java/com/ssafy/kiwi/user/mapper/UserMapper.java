@@ -36,5 +36,9 @@ public interface UserMapper {
 
 	UserDto getOtherUser(int userno) throws Exception;
 
+	int addFollow(int userno, int followee) throws Exception;
+
+	int deleteFollow(int userno, int followee) throws Exception;
+
 
 }
