@@ -48,7 +48,7 @@ public class UserController {
 
 	@Autowired
 	private FileService fileService;
-	
+
 	@PostMapping("/login")
 	public ResponseEntity<Map<String, Object>> login(@RequestBody UserDto userDto) {
 		Map<String, Object> resultMap = new HashMap<>();
@@ -183,6 +183,7 @@ public class UserController {
 		}
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
+
 	@GetMapping("/getfollower/{userno}")
 	public ResponseEntity<?> getFollower(@PathVariable("userno") int userno) {
 		logger.info("Follower List - 호출");
@@ -190,7 +191,7 @@ public class UserController {
 		HttpStatus status = HttpStatus.ACCEPTED;
 		try {
 			List<Integer> follwerList = userService.getFollower(userno);
-			resultMap.put("followerList",follwerList);
+			resultMap.put("followerList", follwerList);
 			resultMap.put("message", SUCCESS);
 			status = HttpStatus.ACCEPTED;
 		} catch (Exception e) {
@@ -201,6 +202,7 @@ public class UserController {
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 
 	}
+
 	@GetMapping("/getfollowee/{userno}")
 	public ResponseEntity<?> getFollowee(@PathVariable("userno") int userno) {
 		logger.info("Followee List - 호출");
@@ -208,7 +210,7 @@ public class UserController {
 		HttpStatus status = HttpStatus.ACCEPTED;
 		try {
 			List<Integer> followeeList = userService.getFollowee(userno);
-			resultMap.put("followeeList",followeeList);
+			resultMap.put("followeeList", followeeList);
 			resultMap.put("message", SUCCESS);
 			status = HttpStatus.ACCEPTED;
 		} catch (Exception e) {
@@ -219,8 +221,7 @@ public class UserController {
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 
 	}
-	
-	
+
 	@PostMapping("/regist")
 	public ResponseEntity<Map<String, Object>> regist(@RequestBody UserDto userDto) {
 		Map<String, Object> resultMap = new HashMap<>();
@@ -236,7 +237,7 @@ public class UserController {
 		}
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
-	
+
 	@PostMapping("/modifyinfo")
 	public ResponseEntity<Map<String, Object>> modifyInfo(@RequestBody UserDto userDto) {
 		Map<String, Object> resultMap = new HashMap<>();
@@ -246,8 +247,8 @@ public class UserController {
 //			System.out.println(userDto);
 			resultMap.put("message", SUCCESS);
 			status = HttpStatus.ACCEPTED;
-			resultMap.put("userInfo",userDto);
-			
+			resultMap.put("userInfo", userDto);
+
 		} catch (Exception e) {
 			logger.error("회원등록 실패: {}", e);
 			resultMap.put("message", e.getMessage());
@@ -255,7 +256,7 @@ public class UserController {
 		}
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
-	
+
 	@GetMapping("/otherinfo/{userno}")
 	public ResponseEntity<?> getOtherUser(@PathVariable("userno") int userno) {
 		logger.info("getOtherUser - 호출");
@@ -263,7 +264,7 @@ public class UserController {
 		HttpStatus status = HttpStatus.ACCEPTED;
 		try {
 			UserDto userDto = userService.getOtherUser(userno);
-			resultMap.put("userInfo",userDto);
+			resultMap.put("userInfo", userDto);
 			resultMap.put("message", SUCCESS);
 			status = HttpStatus.ACCEPTED;
 		} catch (Exception e) {
@@ -274,17 +275,17 @@ public class UserController {
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 
 	}
-	
-	@PostMapping(value = "/image", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
-	public ResponseEntity<?> getImages(UserDto userDto, List<MultipartFile> files){
+
+	@PostMapping(value = "/image", consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE })
+	public ResponseEntity<?> getImages(UserDto userDto, List<MultipartFile> files) {
 		logger.info("getImages - 호출");
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = HttpStatus.ACCEPTED;
 //		System.out.println(userDto);
 //		System.out.println(files);
 		try {
-			
-			resultMap.put("userInfo",userDto);
+
+			resultMap.put("userInfo", userDto);
 			resultMap.put("message", SUCCESS);
 			status = HttpStatus.ACCEPTED;
 		} catch (Exception e) {
@@ -292,9 +293,9 @@ public class UserController {
 			resultMap.put("message", e.getMessage());
 			status = HttpStatus.INTERNAL_SERVER_ERROR;
 		}
-		return new ResponseEntity<Map<String, Object>>(resultMap, status); 
+		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
-	
+
 	@GetMapping("/follow/{userno}/{followee}")
 	public ResponseEntity<?> addFollow(@PathVariable("userno") int userno, @PathVariable("followee") int followee) {
 		logger.info("addFollow - 호출");
@@ -316,7 +317,7 @@ public class UserController {
 		}
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
-	
+
 	@DeleteMapping("/follow/{userno}/{followee}")
 	public ResponseEntity<?> deleteFollow(@PathVariable("userno") int userno, @PathVariable("followee") int followee) {
 		logger.info("deleteFollow - 호출");
@@ -338,8 +339,5 @@ public class UserController {
 		}
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
-	
-	
-	
 
 }

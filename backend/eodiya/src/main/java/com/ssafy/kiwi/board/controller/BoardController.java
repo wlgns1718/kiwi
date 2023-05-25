@@ -40,7 +40,8 @@ public class BoardController {
 
 	private BoardService boardService;
 	private FileService fileService;
-	public BoardController(BoardService boardService,FileService fileService ) {
+
+	public BoardController(BoardService boardService, FileService fileService) {
 		super();
 		this.boardService = boardService;
 		this.fileService = fileService;
@@ -50,13 +51,14 @@ public class BoardController {
 	public ResponseEntity<List<BoardDto>> listArticle(@RequestBody BoardViewDto boardviewDto) throws Exception {
 		logger.info("listArticle - 호출");
 		System.out.println(boardviewDto);
-		
+
 		return new ResponseEntity<List<BoardDto>>(boardService.getList(boardviewDto), HttpStatus.OK);
 	}
 
-	@PostMapping(value="/write",consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
-	public ResponseEntity<?> writeArticle(BoardDto boardDto,@RequestParam(value="files", required = false) List<MultipartFile> files) throws Exception {
-		
+	@PostMapping(value = "/write", consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE })
+	public ResponseEntity<?> writeArticle(BoardDto boardDto,
+			@RequestParam(value = "files", required = false) List<MultipartFile> files) throws Exception {
+
 		System.out.println(boardDto);
 		logger.info("writeArticle - 호출");
 		Map<String, Object> resultMap = new HashMap<>();
@@ -65,17 +67,17 @@ public class BoardController {
 			boardService.writeArticle(boardDto);
 			int lastno = boardDto.getBoardno();
 			System.out.println(files);
-			if(files !=null) {
+			if (files != null) {
 				logger.info("파일 등록 호출");
-				fileService.insertFile(files,lastno);
+				fileService.insertFile(files, lastno);
 			}
 			resultMap.put("message", SUCCESS);
-		}catch (Exception e) {
+		} catch (Exception e) {
 			logger.error("게시글 등록 실패 : {}", e);
 			resultMap.put("message", e.getMessage());
 			status = HttpStatus.INTERNAL_SERVER_ERROR;
 		}
-		
+
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
 
@@ -139,18 +141,19 @@ public class BoardController {
 		logger.info("getBoardListwithLike - 호출 : ");
 		return new ResponseEntity<List<BoardDto>>(boardService.getBoardListwithLike(userno), HttpStatus.OK);
 	}
-	
+
 	@GetMapping("/best")
 	public ResponseEntity<List<BoardDto>> bestArticle() throws Exception {
 		logger.info("bestArticle - 호출");
 		return new ResponseEntity<List<BoardDto>>(boardService.getBestList(), HttpStatus.OK);
 	}
-	
+
 	@GetMapping("/notice")
 	public ResponseEntity<List<BoardDto>> noticeArticle() throws Exception {
 		logger.info("noticeArticle - 호출");
 		return new ResponseEntity<List<BoardDto>>(boardService.getNoticeList(), HttpStatus.OK);
 	}
+
 	@GetMapping("/cntimage/{boardno}")
 	public ResponseEntity<?> getcntImage(@PathVariable("boardno") int boardno) {
 		logger.info("getcntImage - 호출");
@@ -158,7 +161,7 @@ public class BoardController {
 		HttpStatus status = HttpStatus.ACCEPTED;
 		try {
 			int cntimage = boardService.getcntImage(boardno);
-			resultMap.put("cntImage",cntimage);
+			resultMap.put("cntImage", cntimage);
 			resultMap.put("message", SUCCESS);
 			status = HttpStatus.ACCEPTED;
 		} catch (Exception e) {
