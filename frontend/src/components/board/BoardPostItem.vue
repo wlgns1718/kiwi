@@ -95,11 +95,7 @@
       </div>
       <div class="imgbox">
         <div v-for="(image, index) in images" :key="index" class="temp">
-          <img
-            src="http://localhost:9999/image/showimage?saveFolder=2023-05-25&storeFilename=46ec12bf-2069-4f02-b27c-e84c620e81cb.png"
-            alt="포스트사진"
-            class="images1"
-          />
+          <img :src="image" alt="포스트사진" class="images1" />
         </div>
       </div>
     </div>
@@ -220,10 +216,15 @@ export default {
       http
         .get(`/image/boardimages/${boardno}`)
         .then(({ data }) => {
-          // for(let i = 0; i <data.images.length; i++){
-          //   this.images.append data.images[i].saveFolder +
-          // }
-          this.images = data.images;
+          for (let i = 0; i < data.images.length; i++) {
+            this.images.push(
+              "http://localhost:9999/image/showimage?saveFolder=" +
+                data.images[i].saveFolder +
+                "&storeFilename=" +
+                data.images[i].storeFilename
+            );
+          }
+          console.log(this.images);
 
           // console.log(this.images[0].saveFolder);
         })
