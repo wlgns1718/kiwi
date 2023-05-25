@@ -108,7 +108,7 @@ import { onlyAuthUser } from "@/api/logincheck";
 import { mapState } from "vuex";
 
 export default {
-  props: ["board"],
+  props: ["board", "boardno"],
   computed: {
     ...mapState("userStore", ["userInfo"]),
   },
@@ -237,7 +237,15 @@ export default {
   },
   created() {
     //해당 보드 번호의 사진들 불러오기
-    this.getImage(this.board.boardno);
+    let boardno = this.$props.boardno;
+    if (typeof boardno == "undefined" || boardno == null) {
+      this.getImage(this.board.boardno);
+    } else {
+      console.log(this.$props.boardno, "as");
+      this.getImage(boardno);
+    }
+
+    // console.log(this.getImage);
   },
 };
 </script>
