@@ -111,7 +111,7 @@ import { onlyAuthUser } from "@/api/logincheck";
 import { mapState } from "vuex";
 
 export default {
-  props: ["board"],
+  props: ["board", "boardno"],
   computed: {
     ...mapState("userStore", ["userInfo"]),
   },
@@ -209,38 +209,52 @@ export default {
       }
     },
     getImage(boardno) {
-      let no = this.board.cntimages;
-      console.log(no);
-      if (no < 1) {
-        return;
-      }
-
-      console.log(boardno, "게시글 번호");
       http
-        .get(`/image/boardimages/${boardno}`)
-        .then(({ data }) => {
-          for (let i = 0; i < data.images.length; i++) {
-            this.images.push(
-              "http://localhost:9999/image/showimage?saveFolder=" +
-                data.images[i].saveFolder +
-                "&storeFilename=" +
-                data.images[i].storeFilename
-            );
+        .get(`/board/cntimage/${boardno}`)
+        .then((data) => {
+          console.log(data.data.cntImage);
+          if (data.data.cntImage < 1) {
+            return;
           }
-          console.log(this.images);
+          console.log(boardno, "게시글 번호");
 
-          // console.log(this.images[0].saveFolder);
+          http
+            .get(`/image/boardimages/${boardno}`)
+            .then(({ data }) => {
+              for (let i = 0; i < data.images.length; i++) {
+                this.images.push(
+                  "http://localhost:9999/image/showimage?saveFolder=" +
+                    data.images[i].saveFolder +
+                    "&storeFilename=" +
+                    data.images[i].storeFilename
+                );
+              }
+              console.log(this.images);
+
+              // console.log(this.images[0].saveFolder);
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+
+          console.log("완료!!");
         })
         .catch((error) => {
           console.log(error);
         });
-
-      console.log("완료!!");
     },
   },
   created() {
     //해당 보드 번호의 사진들 불러오기
-    this.getImage(this.board.boardno);
+    let boardno = this.$props.boardno;
+    if (typeof boardno == "undefined" || boardno == null) {
+      this.getImage(this.board.boardno);
+    } else {
+      console.log(this.$props.boardno, "as");
+      this.getImage(boardno);
+    }
+
+    // console.log(this.getImage);
   },
 };
 </script>

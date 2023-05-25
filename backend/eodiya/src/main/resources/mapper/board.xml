@@ -69,7 +69,11 @@
 	<select id="getListWhenUserInfoExistAndFollowSelect"
 		parameterType="Integer" resultMap="board">
 		select b.board_no, b.title,
+<<<<<<< HEAD
 		b.content, b.create_date, b.hit, b.scope, b.user_no, u.nickname,
+=======
+		b.content, b.create_date, b.hit, b.scope,u.nickname,
+>>>>>>> 262edb778a3e693d082ed5e1e14d11a7e59c680f
 		(select count(*)
 		from likes where b.board_no = board_no) `cnt_like`,
 		(select count(*)
@@ -164,7 +168,8 @@
 		b.hit,
 		b.scope, u.user_no, u.nickname, count(l.user_no) `cnt_like`,
 		count(r.reply_no) `cnt_reply`,
-		if(l.board_no is NOT NULL,1,0) `islike`
+		if(l.board_no is NOT NULL,1,0) `islike`,
+		(select count(*) from file where b.board_no = board_no) `cnt_image`
 		from board b join user u
 		on b.user_no = u.user_no
 		left outer join likes
@@ -254,6 +259,15 @@
 		desc;
 	</select>
 
+<<<<<<< HEAD
 
 
+=======
+	<select id="getcntImage" parameterType="Integer"
+		resultType="Integer">
+		select count(*)
+		from file
+		where board_no=#{boardno}
+	</select>
+>>>>>>> 262edb778a3e693d082ed5e1e14d11a7e59c680f
 </mapper>

@@ -2,7 +2,12 @@
   <div class="container">
     <div class="fixed-section">
       <div class="back-arrow" @click="goBack">
-        <svg height="60" viewBox="0 0 21 21" width="60" xmlns="http://www.w3.org/2000/svg">
+        <svg
+          height="60"
+          viewBox="0 0 21 21"
+          width="60"
+          xmlns="http://www.w3.org/2000/svg"
+        >
           <g
             fill="none"
             fill-rule="evenodd"
@@ -18,10 +23,12 @@
       </div>
     </div>
     <div class="board-detail-wrap">
-      <board-post-item :board="board"></board-post-item>
+      <board-post-item :board="board" :boardno="boardno"></board-post-item>
       <!-- <router-link :to="`/board/modify/${board.boardno}`">수정</router-link>
       <a @click="deleteBoard">삭제</a> -->
-      <board-reply-item @update-reply-count="updateReplyCount"></board-reply-item>
+      <board-reply-item
+        @update-reply-count="updateReplyCount"
+      ></board-reply-item>
     </div>
   </div>
 </template>
@@ -41,6 +48,8 @@ export default {
   data() {
     return {
       board: {},
+      images: [],
+      boardno: 0,
     };
   },
   created() {
@@ -48,7 +57,8 @@ export default {
       boardno: this.$route.params.no,
       userno: this.userInfo.userno,
     };
-    console.log(boardInfo);
+    this.boardno = this.$route.params.no;
+    console.log(boardInfo, this.boardno);
     http
       .post(`/board/detail`, JSON.stringify(boardInfo))
       .then(({ data }) => {
