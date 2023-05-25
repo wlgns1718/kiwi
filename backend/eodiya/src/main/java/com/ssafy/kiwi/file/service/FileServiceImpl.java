@@ -24,7 +24,6 @@ public class FileServiceImpl implements FileService {
 	@Override
 	public void insertFile(List<MultipartFile> files, int lastno) throws Exception {
 		//fileDto 생성
-		
 		List<FileDto> filedto = util.storeFiles(files,lastno);
 		for(FileDto file : filedto) {
 			fileMapper.insertFile(file);

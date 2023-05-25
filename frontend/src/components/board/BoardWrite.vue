@@ -11,10 +11,7 @@
           @blur="isTitleFocused = false"
         />
       </div>
-      <div
-        class="board-form textarea-form"
-        :class="{ 'border-highlither': isTextareaFocused }"
-      >
+      <div class="board-form textarea-form" :class="{ 'border-highlither': isTextareaFocused }">
         <textarea
           v-model="board.content"
           placeholder="본문을 입력하세요."
@@ -24,25 +21,13 @@
       </div>
       <input-view :board="board" @setFile="setFile"></input-view>
       <div v-show="!isNotice" class="board-form scope-buttons">
-        <div
-          class="scope-button"
-          :class="{ selected: board.scope === 0 }"
-          @click="setScope(0)"
-        >
+        <div class="scope-button" :class="{ selected: board.scope === 0 }" @click="setScope(0)">
           전체공개
         </div>
-        <div
-          class="scope-button"
-          :class="{ selected: board.scope === 1 }"
-          @click="setScope(1)"
-        >
+        <div class="scope-button" :class="{ selected: board.scope === 1 }" @click="setScope(1)">
           팔로우공개
         </div>
-        <div
-          class="scope-button"
-          :class="{ selected: board.scope === 2 }"
-          @click="setScope(2)"
-        >
+        <div class="scope-button" :class="{ selected: board.scope === 2 }" @click="setScope(2)">
           비공개
         </div>
       </div>
@@ -108,6 +93,20 @@ export default {
         alert("전체 사진 크기는 30MB를 넘을 수 없습니다!!");
         return;
       }
+      //확장자 제한 해주기
+      for (let i = 0; i < this.files.length; i++) {
+        let temp_ext = this.files[i].file.name;
+        let ext = temp_ext.substring(temp_ext.lastIndexOf(".") + 1);
+        if (!ext === "jpg" || !ext === "png" || !ext === "jpeg") {
+          console.log(ext);
+          alert(
+            "jpeg, jpg, png 파일만 선택해 주세요.\n\n현재 파일 : " +
+              ext.substring(ext.lastIndexOf(".") + 1)
+          );
+          return;
+        }
+      }
+
       // console.log(this.board);
       if (this.isNotice) {
         this.board.scope = 3;

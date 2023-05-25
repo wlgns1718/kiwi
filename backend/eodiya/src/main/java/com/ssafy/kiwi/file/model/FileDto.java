@@ -6,7 +6,8 @@ public class FileDto {
 	private String uploadFilename;  // 작성자가 업로드한 파일명
     private String storeFilename; // 서버 내부에서 관리하는 파일명
     private String saveFolder;
-    private int no;
+    private int boardno;
+    private int userno;
 	public String getUploadFilename() {
 		return uploadFilename;
 	}
@@ -26,17 +27,25 @@ public class FileDto {
 		this.saveFolder = saveFolder;
 	}
 
-	public int getNo() {
-		return no;
+
+	public int getBoardno() {
+		return boardno;
 	}
-	public void setNo(int no) {
-		this.no = no;
+	public void setBoardno(int boardno) {
+		this.boardno = boardno;
+	}
+	public int getUserno() {
+		return userno;
+	}
+	public void setUserno(int userno) {
+		this.userno = userno;
 	}
 	@Override
 	public String toString() {
 		return "FileDto [uploadFilename=" + uploadFilename + ", storeFilename=" + storeFilename + ", saveFolder="
-				+ saveFolder + ", no=" + no + "]";
+				+ saveFolder + ", boardno=" + boardno + ", userno=" + userno + "]";
 	}
+	
 
 
     

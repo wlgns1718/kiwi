@@ -3,8 +3,7 @@
     <div
       class="post"
       :class="{
-        'my-post-border':
-          this.userInfo != null && board.nickname === this.userInfo.nickname,
+        'my-post-border': this.userInfo != null && board.nickname === this.userInfo.nickname,
       }"
     >
       <div class="post-header">
@@ -84,9 +83,7 @@
           </div>
         </div>
         <div
-          v-if="
-            this.userInfo != null && board.nickname === this.userInfo.nickname
-          "
+          v-if="this.userInfo != null && board.nickname === this.userInfo.nickname"
           class="post-detail"
         >
           <div @click="moveBoardModify(board.boardno)">수정</div>
@@ -94,7 +91,7 @@
         </div>
       </div>
       <div class="imgbox">
-        <img src="@/assets/trip1.jpg" alt="포스트사진" class="images" />
+        <img src="" alt="포스트사진" class="images" />
         <img src="@/assets/trip2.jpg" alt="포스트사진" class="images" />
         <img src="@/assets/trip3.jpg" alt="포스트사진" class="images" />
         <img src="@/assets/trip4.jpg" alt="포스트사진" class="images" />
@@ -113,14 +110,11 @@ export default {
   computed: {
     ...mapState("userStore", ["userInfo"]),
   },
-data(){
-  return{
-    images:[
-      "folder": "",
-      "filename":"",
-    ]
-  }
-}
+  data() {
+    return {
+      images: [],
+    };
+  },
   methods: {
     moveBoardDetail(boardno) {
       if (this.$route.path !== `/board/detail/${boardno}`)
@@ -145,6 +139,7 @@ data(){
           });
       }
     },
+
     toggleLikes(board) {
       onlyAuthUser();
       if (this.userInfo === null) return;
@@ -180,6 +175,7 @@ data(){
           });
       }
     },
+
     formattedDate(createDate) {
       const now = new Date();
       const diffInMilliseconds = now - new Date(createDate);
@@ -207,25 +203,30 @@ data(){
         return `${year}년 ${month}월 ${day}일`;
       }
     },
+    getImage(boardno) {
+      let no = this.board.cntimages;
+      console.log(no);
+      if (no < 1) {
+        return;
+      }
+
+      console.log(boardno, "게시글 번호");
+      http
+        .get(`/file/boardimages/${boardno}`)
+        .then(({ data }) => {
+          this.images = data.images;
+          console.log(this.images[0].saveFolder);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+
+      console.log("완료!!");
+    },
   },
   created() {
     //해당 보드 번호의 사진들 불러오기
-    let no = this.board.cntimages;
-    console.log(no);
-    if (no < 1) {
-      return;
-    }
-
-    let boardno = this.board.boardno;
-    console.log(boardno);
-    http
-      .get(`/file/boardimages/${boardno}`)
-      .then(({ data }) => {
-        console.log(data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    this.getImage(this.board.boardno);
   },
 };
 </script>

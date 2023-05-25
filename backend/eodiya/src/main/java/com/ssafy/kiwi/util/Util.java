@@ -96,9 +96,8 @@ public class Util {
 		}
 		
         multipartFile.transferTo(new File(savefolder,storeFilename));
-        String folderpath = savefolder.getPath();
         FileDto fileDto = new FileDto();
-        fileDto.setNo(lastno);
+        fileDto.setBoardno(lastno);
         fileDto.setSaveFolder(savefolder.getPath());
         fileDto.setStoreFilename(storeFilename);
         fileDto.setUploadFilename(originalFilename);
