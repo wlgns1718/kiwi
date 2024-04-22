@@ -48,9 +48,10 @@ https://youtu.be/cNw_A4f9OMk
 >처음 경험한 웹 개발 프로젝트입니다. 기능 구현을 가장 첫 번째 목표로 생각했고, 기능의 개선, 발생할 수 있는 오류에 대한 대처는 이후에 생각하기로 했습니다. Vue.js를 사용하여 SPA 개발 방법에 대해 알게 되었고, MVVM 패턴을 이해할 수 있었습니다. 또한 MyBatis를 이용한 RESTful API를 개발하여 원하는 결과를 조회하기 위한 SQL 역량을 높일 수 있었습니다. 또한 기초적인 실수를 경험하고 해결하며 문제해결을 위한 과정과 방법을 알게 되었습니다.
 
 **트러블 슈팅**
->**Failed to configure a DataSource** : 
+<br>
+**Failed to configure a DataSource** : 
 Database에 연결할 때 필요한 정보가 없기 때문 => DB관련 정보 추가하며 해결
->
+
 **java.lang.ClassNotFoundException: javax.xml.bind.DatatypeConverter(JWT 관련 오류)** : 
 JDK 11 이 되면서 Java EE와 CORBA Module이 제거 => JAXB API의 Maven을 추가하여 해결
 
