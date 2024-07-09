@@ -60,10 +60,8 @@ public class Util {
 	}
 
 //	public static String getFullPath(String filename) {
-//		System.out.println("여깁니다!!!!!!!"+rootPath);
 //		String folder = "";
 //		LocalDate now = LocalDate.now();
-////		System.out.println(fileDir+"images\\"+now+File.separator+filename);
 //		
 //		return fileDir+"images"+File.separator+now+File.separator+filename;
 //	}
@@ -74,7 +72,6 @@ public class Util {
         }
 		logger.info("storeFile - 호출!!!!!!!! {}");
 		String originalFilename = new String(multipartFile.getOriginalFilename().getBytes("8859_1"), "UTF-8");
-//		System.out.println(originalFilename);
 		// 작성자가 업로드한 파일명 -> 서버 내부에서 관리하는 파일명
         // 파일명을 중복되지 않게끔 UUID로 정하고 ".확장자"는 그대로
 		String pos = extractExt(originalFilename);
@@ -83,12 +80,10 @@ public class Util {
 		}
 		String storeFilename = UUID.randomUUID() + "." + pos;
 		 // 파일을 저장하는 부분 -> 파일경로 + storeFilename 에 저장
-//		System.out.println("여기로 오나");
 		LocalDate now = LocalDate.now();
 		DateTimeFormatter simpledateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		
 		String today = now.format(simpledateFormat);
-//		System.out.println(today+"여긴가");
 		File savefolder = new File(fileDir+"images"+File.separator+today);
 		logger.info("saveFolder - 생성 {}", savefolder);
 		if (!savefolder.exists()) {

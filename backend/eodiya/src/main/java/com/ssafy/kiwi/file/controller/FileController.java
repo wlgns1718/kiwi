@@ -51,7 +51,6 @@ public class FileController {
 		logger.info("getBoardImages - 호출 : " + boardno);
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = HttpStatus.ACCEPTED;
-		System.out.println(boardno);
 		try {
 			List<FileDto> fileDtos = fileService.getBoardImages(boardno);
 			resultMap.put("images",fileDtos);

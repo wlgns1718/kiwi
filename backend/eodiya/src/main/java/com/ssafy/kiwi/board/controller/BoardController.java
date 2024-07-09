@@ -50,8 +50,6 @@ public class BoardController {
 	@PostMapping
 	public ResponseEntity<List<BoardDto>> listArticle(@RequestBody BoardViewDto boardviewDto) throws Exception {
 		logger.info("listArticle - 호출");
-		System.out.println(boardviewDto);
-
 		return new ResponseEntity<List<BoardDto>>(boardService.getList(boardviewDto), HttpStatus.OK);
 	}
 
@@ -59,14 +57,12 @@ public class BoardController {
 	public ResponseEntity<?> writeArticle(BoardDto boardDto,
 			@RequestParam(value = "files", required = false) List<MultipartFile> files) throws Exception {
 
-		System.out.println(boardDto);
 		logger.info("writeArticle - 호출");
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = HttpStatus.ACCEPTED;
 		try {
 			boardService.writeArticle(boardDto);
 			int lastno = boardDto.getBoardno();
-			System.out.println(files);
 			if (files != null) {
 				logger.info("파일 등록 호출");
 				fileService.insertFile(files, lastno);
@@ -84,9 +80,7 @@ public class BoardController {
 	@PostMapping("/detail")
 	public ResponseEntity<BoardDto> getArticle(@RequestBody BoardViewDto boardviewDto) throws Exception {
 		logger.info("getArticle - 호출 : " + boardviewDto);
-		System.out.println(boardviewDto);
 		boardService.updateHit(boardviewDto.getBoardno());
-		System.out.println(boardviewDto.getBoardno());
 		return new ResponseEntity<BoardDto>(boardService.getArticle(boardviewDto), HttpStatus.OK);
 	}
 
@@ -121,7 +115,6 @@ public class BoardController {
 	@PostMapping("/deletelikes")
 	public ResponseEntity<String> deleteLikes(@RequestBody LikesDto likesDto) throws Exception {
 		logger.info("deleteLikes - 호출");
-		System.out.println(likesDto);
 		if (boardService.deleteLikes(likesDto)) {
 			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 		}
@@ -132,7 +125,6 @@ public class BoardController {
 	public ResponseEntity<List<BoardDto>> getBoardListwithUserInfo(@PathVariable("userno") int userno)
 			throws Exception {
 		logger.info("getBoardListwithUserInfo - 호출 : " + userno);
-		System.out.println(userno);
 		return new ResponseEntity<List<BoardDto>>(boardService.getBoardListwithUserInfo(userno), HttpStatus.OK);
 	}
 

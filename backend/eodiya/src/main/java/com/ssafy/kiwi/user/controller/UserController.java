@@ -244,7 +244,6 @@ public class UserController {
 		HttpStatus status = HttpStatus.UNAUTHORIZED;
 		try {
 			userService.modifyInfo(userDto);
-//			System.out.println(userDto);
 			resultMap.put("message", SUCCESS);
 			status = HttpStatus.ACCEPTED;
 			resultMap.put("userInfo", userDto);
@@ -281,8 +280,6 @@ public class UserController {
 		logger.info("getImages - 호출");
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = HttpStatus.ACCEPTED;
-//		System.out.println(userDto);
-//		System.out.println(files);
 		try {
 
 			resultMap.put("userInfo", userDto);
